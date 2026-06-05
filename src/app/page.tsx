@@ -1,13 +1,15 @@
 import fixturesData from "@/data/fixtures.json";
 import tokensData from "@/data/tokens.json";
+import { LocalTime } from "./local-time";
 
 type Token = { name: string; flag: string; ticker: string; address: string };
 type Fixture = {
   match: number;
-  date: string;
-  time: string;
+  kickoffUtc: string;
   stage: string;
+  group: string;
   venue: string;
+  city: string;
   home: string;
   away: string;
 };
@@ -55,17 +57,17 @@ function TeamRow({ team }: { team: Token }) {
 function MatchCard({ fx }: { fx: Fixture }) {
   return (
     <div className="rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 transition-colors hover:border-white/25">
-      <div className="flex items-baseline justify-between text-xs text-zinc-500">
-        <span>{fx.stage}</span>
-        <span>
-          {fx.date} · {fx.time}
-        </span>
+      <div className="text-center text-xs text-zinc-500">
+        <LocalTime iso={fx.kickoffUtc} mode="date" />
       </div>
-      <div className="mt-1 divide-y divide-white/5">
-        <TeamRow team={tokens[fx.home]} />
-        <TeamRow team={tokens[fx.away]} />
+      <TeamRow team={tokens[fx.home]} />
+      <div className="py-1 text-center text-2xl font-semibold tabular-nums">
+        <LocalTime iso={fx.kickoffUtc} mode="time" />
       </div>
-      <div className="mt-1 truncate text-[11px] text-zinc-600">{fx.venue}</div>
+      <TeamRow team={tokens[fx.away]} />
+      <div className="mt-2 truncate text-center text-[11px] text-zinc-600">
+        {fx.stage} · {fx.group} · {fx.venue} ({fx.city})
+      </div>
     </div>
   );
 }
@@ -90,6 +92,9 @@ export default function Home() {
         <p className="mx-auto mt-3 max-w-xl text-sm text-zinc-400 md:text-base">
           Every World Cup team is a token. The market prices belief — match by
           match, all tournament. Fees fill one pool; champion holders share it.
+        </p>
+        <p className="mt-2 text-xs text-zinc-500">
+          Match time shown in your local time.
         </p>
       </section>
 
