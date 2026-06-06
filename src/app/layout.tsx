@@ -35,6 +35,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://sponsio.world"),
   title: "Sponsio — Trade the teams you believe in",
   description:
     "Every World Cup 2026 team is a token on Base. The market prices belief, match by match. Trading fees fill one pool — champion-token holders share it.",

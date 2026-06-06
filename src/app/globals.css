@@ -25,14 +25,7 @@ body {
   color: #ededed;
 }
 
-/* Safari/iOS paint a native ▶ overlay on videos whose autoplay was blocked —
-   hide it; the bg video is pure decoration (poster + tap-to-start cover it). */
-video::-webkit-media-controls-start-playback-button {
-  display: none !important;
-  -webkit-appearance: none;
-}
-
-/* Background strip drift (option C) */
+/* Background strip drift */
 @keyframes drift-left {
   to {
     transform: translateX(-50%);

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 
 function fmt(iso: string, mode: "date" | "time", utc = false) {
   const d = new Date(iso);
@@ -23,6 +23,8 @@ function fmt(iso: string, mode: "date" | "time", utc = false) {
  *  via the device's own tz setting). Server-rendered fallback shows the same
  *  instant in UTC, so slow-JS / no-JS visitors never see a blank — worst
  *  case is a correct time labeled UTC. */
+const emptySubscribe = () => () => {};
+
 export function LocalTime({
   iso,
   mode,
@@ -30,9 +32,13 @@ export function LocalTime({
   iso: string;
   mode: "date" | "time";
 }) {
-  const [local, setLocal] = useState(false);
-
-  useEffect(() => setLocal(true), []);
+  // true on the client, false during SSR — hydration detection without
+  // effect-driven setState (react-hooks/set-state-in-effect clean).
+  const local = useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false,
+  );
 
   if (local) return <span>{fmt(iso, mode)}</span>;
   return (
