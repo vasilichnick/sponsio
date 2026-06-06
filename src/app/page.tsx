@@ -74,7 +74,16 @@ function MatchCard({ fx }: { fx: Fixture }) {
 
 export default function Home() {
   return (
-    <div className="flex h-full flex-col">
+    <div className="relative isolate flex h-full flex-col">
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        src="/bg.mp4"
+        className="absolute inset-0 -z-10 h-full w-full object-cover"
+      />
+      <div className="absolute inset-0 -z-10 bg-black/70" />
       <header className="flex h-16 shrink-0 items-center justify-between border-b border-white/10 px-6 md:px-10">
         <div className="text-lg font-semibold tracking-tight">
           SPONSIO<span className="text-emerald-400">.fun</span>
