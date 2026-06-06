@@ -1,6 +1,5 @@
 import fixturesData from "@/data/fixtures.json";
 import tokensData from "@/data/tokens.json";
-import { BgStrips } from "./bg-strips";
 import { LocalTime } from "./local-time";
 
 type Token = { name: string; flag: string; ticker: string; address: string };
@@ -94,21 +93,7 @@ function MatchCard({ fx }: { fx: Fixture }) {
 
 export default function Home() {
   return (
-    <div className="relative isolate flex h-full flex-col">
-      <BgStrips />
-      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-black/55 via-black/25 to-black/60" />
-      <header className="absolute inset-x-0 top-0 z-20 flex h-16 items-center justify-between bg-black/20 px-6 backdrop-blur-[10px] md:px-10">
-        <div className="font-serif text-lg font-normal tracking-tight">
-          SPONSIO<span className="text-emerald-400">.fun</span>
-        </div>
-        <button
-          type="button"
-          className="rounded-full bg-white/10 px-4 py-1.5 text-sm font-semibold text-white backdrop-blur transition-colors hover:bg-white/20"
-        >
-          Get the app
-        </button>
-      </header>
-
+    <>
       <section className="shrink-0 px-6 pt-32 pb-6 text-center lg:pt-18">
         <h1 className="font-serif text-[clamp(2rem,8.5vmin,4.5rem)] leading-[0.9] font-normal uppercase tracking-tight drop-shadow-[0_2px_16px_rgba(0,0,0,0.8)] [-webkit-text-stroke:0.5px_rgba(0,0,0,0.85)]">
           Trade the teams <br className="hidden lg:block" />
@@ -121,8 +106,8 @@ export default function Home() {
       </section>
 
       <main className="min-h-0 flex-1 overflow-y-auto px-6 pb-6 md:px-10">
-        <h2 className="mb-4 text-center font-serif text-2xl font-normal uppercase tracking-tight drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)] [-webkit-text-stroke:0.35px_rgba(0,0,0,0.85)]">
-          Group Stage — Token Launch Schedule
+        <h2 className="mb-4 text-center font-serif text-2xl font-normal uppercase tracking-tight drop-shadow-[0_1px_3px_rgba(0,0,0,0.5)] [-webkit-text-stroke:0.35px_rgba(0,0,0,0.85)]">
+          FIFA World Cup 2026 Group Stage — Token Launch Schedule
         </h2>
         <div className="mx-auto grid max-w-[378px] gap-3 md:max-w-3xl md:grid-cols-2">
           {fixtures.map((fx) => (
@@ -130,36 +115,6 @@ export default function Home() {
           ))}
         </div>
       </main>
-
-      <footer className="flex h-12 shrink-0 items-center justify-between px-6 text-xs text-white md:px-10">
-        <span className="flex items-center gap-4">
-          <a
-            href="#"
-            className="drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)] transition-colors hover:text-zinc-300"
-          >
-            Privacy
-          </a>
-          <a
-            href="#"
-            className="drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)] transition-colors hover:text-zinc-300"
-          >
-            Terms
-          </a>
-        </span>
-        <span className="flex items-center gap-4">
-          <a
-            href="#"
-            className="drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)] transition-colors hover:text-zinc-300"
-          >
-            Manifesto
-          </a>
-          <a href="#" aria-label="X" className="transition-colors hover:text-zinc-300">
-            <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4">
-              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-            </svg>
-          </a>
-        </span>
-      </footer>
-    </div>
+    </>
   );
 }
