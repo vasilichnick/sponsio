@@ -8,7 +8,7 @@ const ITEMS = [
   { href: "/leaderboard", label: "Leaderboard" },
   { href: "#", label: "Manifesto" },
   { href: "/privacy", label: "Privacy" },
-  { href: "#", label: "Terms" },
+  { href: "/terms", label: "Terms" },
 ];
 
 export function Menu() {

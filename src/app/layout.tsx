@@ -77,12 +77,12 @@ export default function RootLayout({
               >
                 Privacy
               </Link>
-              <a
-                href="#"
+              <Link
+                href="/terms"
                 className="drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)] transition-colors hover:text-zinc-300"
               >
                 Terms
-              </a>
+              </Link>
             </span>
             <span className="flex items-center gap-4">
               <a
