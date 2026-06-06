@@ -56,7 +56,7 @@ export default function RootLayout({
           <div className="absolute inset-0 -z-10 bg-gradient-to-b from-black/55 via-black/25 to-black/60" />
           <header className="absolute inset-x-0 top-0 z-20 flex h-16 items-center justify-between bg-black/20 px-6 backdrop-blur-[10px] md:px-10">
             <Link href="/" className="font-serif text-lg font-normal tracking-tight">
-              SPONSIO<span className="text-emerald-400">.fun</span>
+              SPONSIO<span className="text-emerald-400">.world</span>
             </Link>
             <div className="flex items-center gap-3">
               <button

@@ -9,7 +9,7 @@ const SECTIONS: { h: string; p: string[] }[] = [
   {
     h: "1. Who we are",
     p: [
-      "Sponsio (sponsio.fun) is an information website for the Sponsio team-token market built around the 2026 World Cup. The site displays match schedules, token information, and market data. It does not custody funds, hold private keys, or operate user accounts.",
+      "Sponsio (sponsio.world) is an information website for the Sponsio team-token market built around the 2026 World Cup. The site displays match schedules, token information, and market data. It does not custody funds, hold private keys, or operate user accounts.",
     ],
   },
   {
