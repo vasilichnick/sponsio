@@ -57,7 +57,7 @@ function TeamRow({ team }: { team: Token }) {
 
 function MatchCard({ fx }: { fx: Fixture }) {
   return (
-    <div className="rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 transition-colors hover:border-white/25">
+    <div className="rounded-xl border border-white/10 bg-black/45 px-4 py-3 backdrop-blur-md transition-colors hover:border-white/25">
       <div className="text-center text-xs text-zinc-500">
         <LocalTime iso={fx.kickoffUtc} mode="date" />
       </div>
@@ -77,7 +77,7 @@ export default function Home() {
   return (
     <div className="relative isolate flex h-full flex-col">
       <BgVideo />
-      <div className="absolute inset-0 -z-10 bg-black/60" />
+      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-black/75 via-black/45 to-black/80" />
       <header className="flex h-16 shrink-0 items-center justify-between border-b border-white/10 px-6 md:px-10">
         <div className="text-lg font-semibold tracking-tight">
           SPONSIO<span className="text-emerald-400">.fun</span>
