@@ -1,5 +1,6 @@
 import fixturesData from "@/data/fixtures.json";
 import tokensData from "@/data/tokens.json";
+import { BgVideo } from "./bg-video";
 import { LocalTime } from "./local-time";
 
 type Token = { name: string; flag: string; ticker: string; address: string };
@@ -75,15 +76,8 @@ function MatchCard({ fx }: { fx: Fixture }) {
 export default function Home() {
   return (
     <div className="relative isolate flex h-full flex-col">
-      <video
-        autoPlay
-        muted
-        loop
-        playsInline
-        src="/bg.mp4"
-        className="absolute inset-0 -z-10 h-full w-full object-cover"
-      />
-      <div className="absolute inset-0 -z-10 bg-black/70" />
+      <BgVideo />
+      <div className="absolute inset-0 -z-10 bg-black/60" />
       <header className="flex h-16 shrink-0 items-center justify-between border-b border-white/10 px-6 md:px-10">
         <div className="text-lg font-semibold tracking-tight">
           SPONSIO<span className="text-emerald-400">.fun</span>
