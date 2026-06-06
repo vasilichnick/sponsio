@@ -1,15 +1,653 @@
 {
-  "_comment": "Official WC2026 schedule, added match by match. kickoffUtc is UTC ISO — the site renders it in the viewer's local time.",
+  "_comment": "Official FWC26 schedule v17 (10 Apr 2026), group stage. Times stored UTC (source ET+4). Sorted chronologically.",
   "matches": [
     {
       "match": 1,
       "kickoffUtc": "2026-06-11T19:00:00Z",
-      "stage": "First Stage",
+      "stage": "Group Stage",
       "group": "Group A",
-      "venue": "Mexico City Stadium",
       "city": "Mexico City",
       "home": "MEX",
       "away": "RSA"
+    },
+    {
+      "match": 2,
+      "kickoffUtc": "2026-06-12T02:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group A",
+      "city": "Guadalajara",
+      "home": "KOR",
+      "away": "CZE"
+    },
+    {
+      "match": 3,
+      "kickoffUtc": "2026-06-12T19:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group B",
+      "city": "Toronto",
+      "home": "CAN",
+      "away": "BIH"
+    },
+    {
+      "match": 4,
+      "kickoffUtc": "2026-06-13T01:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group D",
+      "city": "Los Angeles",
+      "home": "USA",
+      "away": "PAR"
+    },
+    {
+      "match": 6,
+      "kickoffUtc": "2026-06-13T04:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group D",
+      "city": "Vancouver",
+      "home": "AUS",
+      "away": "TUR"
+    },
+    {
+      "match": 8,
+      "kickoffUtc": "2026-06-13T19:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group B",
+      "city": "SF Bay Area",
+      "home": "QAT",
+      "away": "SUI"
+    },
+    {
+      "match": 7,
+      "kickoffUtc": "2026-06-13T22:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group C",
+      "city": "New York New Jersey",
+      "home": "BRA",
+      "away": "MAR"
+    },
+    {
+      "match": 5,
+      "kickoffUtc": "2026-06-14T01:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group C",
+      "city": "Boston",
+      "home": "HAI",
+      "away": "SCO"
+    },
+    {
+      "match": 10,
+      "kickoffUtc": "2026-06-14T17:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group E",
+      "city": "Houston",
+      "home": "GER",
+      "away": "CUW"
+    },
+    {
+      "match": 11,
+      "kickoffUtc": "2026-06-14T20:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group F",
+      "city": "Dallas",
+      "home": "NED",
+      "away": "JPN"
+    },
+    {
+      "match": 9,
+      "kickoffUtc": "2026-06-14T23:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group E",
+      "city": "Philadelphia",
+      "home": "CIV",
+      "away": "ECU"
+    },
+    {
+      "match": 12,
+      "kickoffUtc": "2026-06-15T02:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group F",
+      "city": "Monterrey",
+      "home": "SWE",
+      "away": "TUN"
+    },
+    {
+      "match": 14,
+      "kickoffUtc": "2026-06-15T16:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group H",
+      "city": "Atlanta",
+      "home": "ESP",
+      "away": "CPV"
+    },
+    {
+      "match": 16,
+      "kickoffUtc": "2026-06-15T19:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group G",
+      "city": "Seattle",
+      "home": "BEL",
+      "away": "EGY"
+    },
+    {
+      "match": 13,
+      "kickoffUtc": "2026-06-15T22:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group H",
+      "city": "Miami",
+      "home": "KSA",
+      "away": "URU"
+    },
+    {
+      "match": 15,
+      "kickoffUtc": "2026-06-16T01:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group G",
+      "city": "Los Angeles",
+      "home": "IRN",
+      "away": "NZL"
+    },
+    {
+      "match": 17,
+      "kickoffUtc": "2026-06-16T19:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group I",
+      "city": "New York New Jersey",
+      "home": "FRA",
+      "away": "SEN"
+    },
+    {
+      "match": 18,
+      "kickoffUtc": "2026-06-16T22:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group I",
+      "city": "Boston",
+      "home": "IRQ",
+      "away": "NOR"
+    },
+    {
+      "match": 19,
+      "kickoffUtc": "2026-06-17T01:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group J",
+      "city": "Kansas City",
+      "home": "ARG",
+      "away": "ALG"
+    },
+    {
+      "match": 20,
+      "kickoffUtc": "2026-06-17T04:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group J",
+      "city": "SF Bay Area",
+      "home": "AUT",
+      "away": "JOR"
+    },
+    {
+      "match": 23,
+      "kickoffUtc": "2026-06-17T17:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group K",
+      "city": "Houston",
+      "home": "POR",
+      "away": "COD"
+    },
+    {
+      "match": 22,
+      "kickoffUtc": "2026-06-17T20:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group L",
+      "city": "Dallas",
+      "home": "ENG",
+      "away": "CRO"
+    },
+    {
+      "match": 21,
+      "kickoffUtc": "2026-06-17T23:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group L",
+      "city": "Toronto",
+      "home": "GHA",
+      "away": "PAN"
+    },
+    {
+      "match": 24,
+      "kickoffUtc": "2026-06-18T02:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group K",
+      "city": "Mexico City",
+      "home": "UZB",
+      "away": "COL"
+    },
+    {
+      "match": 25,
+      "kickoffUtc": "2026-06-18T16:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group A",
+      "city": "Atlanta",
+      "home": "CZE",
+      "away": "RSA"
+    },
+    {
+      "match": 26,
+      "kickoffUtc": "2026-06-18T19:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group B",
+      "city": "Los Angeles",
+      "home": "SUI",
+      "away": "BIH"
+    },
+    {
+      "match": 27,
+      "kickoffUtc": "2026-06-18T22:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group B",
+      "city": "Vancouver",
+      "home": "CAN",
+      "away": "QAT"
+    },
+    {
+      "match": 28,
+      "kickoffUtc": "2026-06-19T01:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group A",
+      "city": "Guadalajara",
+      "home": "MEX",
+      "away": "KOR"
+    },
+    {
+      "match": 32,
+      "kickoffUtc": "2026-06-19T19:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group D",
+      "city": "Seattle",
+      "home": "USA",
+      "away": "AUS"
+    },
+    {
+      "match": 30,
+      "kickoffUtc": "2026-06-19T22:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group C",
+      "city": "Boston",
+      "home": "SCO",
+      "away": "MAR"
+    },
+    {
+      "match": 29,
+      "kickoffUtc": "2026-06-20T00:30:00Z",
+      "stage": "Group Stage",
+      "group": "Group C",
+      "city": "Philadelphia",
+      "home": "BRA",
+      "away": "HAI"
+    },
+    {
+      "match": 31,
+      "kickoffUtc": "2026-06-20T03:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group D",
+      "city": "SF Bay Area",
+      "home": "TUR",
+      "away": "PAR"
+    },
+    {
+      "match": 35,
+      "kickoffUtc": "2026-06-20T17:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group F",
+      "city": "Houston",
+      "home": "NED",
+      "away": "SWE"
+    },
+    {
+      "match": 33,
+      "kickoffUtc": "2026-06-20T20:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group E",
+      "city": "Toronto",
+      "home": "GER",
+      "away": "CIV"
+    },
+    {
+      "match": 34,
+      "kickoffUtc": "2026-06-21T00:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group E",
+      "city": "Kansas City",
+      "home": "ECU",
+      "away": "CUW"
+    },
+    {
+      "match": 36,
+      "kickoffUtc": "2026-06-21T04:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group F",
+      "city": "Monterrey",
+      "home": "TUN",
+      "away": "JPN"
+    },
+    {
+      "match": 38,
+      "kickoffUtc": "2026-06-21T16:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group H",
+      "city": "Atlanta",
+      "home": "ESP",
+      "away": "KSA"
+    },
+    {
+      "match": 39,
+      "kickoffUtc": "2026-06-21T19:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group G",
+      "city": "Los Angeles",
+      "home": "BEL",
+      "away": "IRN"
+    },
+    {
+      "match": 37,
+      "kickoffUtc": "2026-06-21T22:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group H",
+      "city": "Miami",
+      "home": "URU",
+      "away": "CPV"
+    },
+    {
+      "match": 40,
+      "kickoffUtc": "2026-06-22T01:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group G",
+      "city": "Vancouver",
+      "home": "NZL",
+      "away": "EGY"
+    },
+    {
+      "match": 43,
+      "kickoffUtc": "2026-06-22T17:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group J",
+      "city": "Dallas",
+      "home": "ARG",
+      "away": "AUT"
+    },
+    {
+      "match": 42,
+      "kickoffUtc": "2026-06-22T21:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group I",
+      "city": "Philadelphia",
+      "home": "FRA",
+      "away": "IRQ"
+    },
+    {
+      "match": 41,
+      "kickoffUtc": "2026-06-23T00:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group I",
+      "city": "New York New Jersey",
+      "home": "NOR",
+      "away": "SEN"
+    },
+    {
+      "match": 44,
+      "kickoffUtc": "2026-06-23T03:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group J",
+      "city": "SF Bay Area",
+      "home": "JOR",
+      "away": "ALG"
+    },
+    {
+      "match": 47,
+      "kickoffUtc": "2026-06-23T17:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group K",
+      "city": "Houston",
+      "home": "POR",
+      "away": "UZB"
+    },
+    {
+      "match": 45,
+      "kickoffUtc": "2026-06-23T20:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group L",
+      "city": "Boston",
+      "home": "ENG",
+      "away": "GHA"
+    },
+    {
+      "match": 46,
+      "kickoffUtc": "2026-06-23T23:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group L",
+      "city": "Toronto",
+      "home": "PAN",
+      "away": "CRO"
+    },
+    {
+      "match": 48,
+      "kickoffUtc": "2026-06-24T02:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group K",
+      "city": "Guadalajara",
+      "home": "COL",
+      "away": "COD"
+    },
+    {
+      "match": 51,
+      "kickoffUtc": "2026-06-24T19:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group B",
+      "city": "Vancouver",
+      "home": "SUI",
+      "away": "CAN"
+    },
+    {
+      "match": 52,
+      "kickoffUtc": "2026-06-24T19:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group B",
+      "city": "Seattle",
+      "home": "BIH",
+      "away": "QAT"
+    },
+    {
+      "match": 49,
+      "kickoffUtc": "2026-06-24T22:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group C",
+      "city": "Miami",
+      "home": "SCO",
+      "away": "BRA"
+    },
+    {
+      "match": 50,
+      "kickoffUtc": "2026-06-24T22:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group C",
+      "city": "Atlanta",
+      "home": "MAR",
+      "away": "HAI"
+    },
+    {
+      "match": 53,
+      "kickoffUtc": "2026-06-25T01:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group A",
+      "city": "Mexico City",
+      "home": "CZE",
+      "away": "MEX"
+    },
+    {
+      "match": 54,
+      "kickoffUtc": "2026-06-25T01:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group A",
+      "city": "Monterrey",
+      "home": "RSA",
+      "away": "KOR"
+    },
+    {
+      "match": 55,
+      "kickoffUtc": "2026-06-25T20:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group E",
+      "city": "Philadelphia",
+      "home": "CUW",
+      "away": "CIV"
+    },
+    {
+      "match": 56,
+      "kickoffUtc": "2026-06-25T20:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group E",
+      "city": "New York New Jersey",
+      "home": "ECU",
+      "away": "GER"
+    },
+    {
+      "match": 57,
+      "kickoffUtc": "2026-06-25T23:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group F",
+      "city": "Dallas",
+      "home": "JPN",
+      "away": "SWE"
+    },
+    {
+      "match": 58,
+      "kickoffUtc": "2026-06-25T23:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group F",
+      "city": "Kansas City",
+      "home": "TUN",
+      "away": "NED"
+    },
+    {
+      "match": 59,
+      "kickoffUtc": "2026-06-26T02:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group D",
+      "city": "Los Angeles",
+      "home": "TUR",
+      "away": "USA"
+    },
+    {
+      "match": 60,
+      "kickoffUtc": "2026-06-26T02:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group D",
+      "city": "SF Bay Area",
+      "home": "PAR",
+      "away": "AUS"
+    },
+    {
+      "match": 61,
+      "kickoffUtc": "2026-06-26T19:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group I",
+      "city": "Boston",
+      "home": "NOR",
+      "away": "FRA"
+    },
+    {
+      "match": 62,
+      "kickoffUtc": "2026-06-26T19:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group I",
+      "city": "Toronto",
+      "home": "SEN",
+      "away": "IRQ"
+    },
+    {
+      "match": 63,
+      "kickoffUtc": "2026-06-27T03:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group G",
+      "city": "Seattle",
+      "home": "EGY",
+      "away": "IRN"
+    },
+    {
+      "match": 64,
+      "kickoffUtc": "2026-06-27T03:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group G",
+      "city": "Vancouver",
+      "home": "NZL",
+      "away": "BEL"
+    },
+    {
+      "match": 67,
+      "kickoffUtc": "2026-06-27T21:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group L",
+      "city": "New York New Jersey",
+      "home": "PAN",
+      "away": "ENG"
+    },
+    {
+      "match": 68,
+      "kickoffUtc": "2026-06-27T21:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group L",
+      "city": "Philadelphia",
+      "home": "CRO",
+      "away": "GHA"
+    },
+    {
+      "match": 71,
+      "kickoffUtc": "2026-06-27T23:30:00Z",
+      "stage": "Group Stage",
+      "group": "Group K",
+      "city": "Miami",
+      "home": "COL",
+      "away": "POR"
+    },
+    {
+      "match": 72,
+      "kickoffUtc": "2026-06-27T23:30:00Z",
+      "stage": "Group Stage",
+      "group": "Group K",
+      "city": "Atlanta",
+      "home": "COD",
+      "away": "UZB"
+    },
+    {
+      "match": 65,
+      "kickoffUtc": "2026-06-28T00:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group H",
+      "city": "Houston",
+      "home": "CPV",
+      "away": "KSA"
+    },
+    {
+      "match": 66,
+      "kickoffUtc": "2026-06-28T00:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group H",
+      "city": "Guadalajara",
+      "home": "URU",
+      "away": "ESP"
+    },
+    {
+      "match": 69,
+      "kickoffUtc": "2026-06-28T02:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group J",
+      "city": "Kansas City",
+      "home": "ALG",
+      "away": "AUT"
+    },
+    {
+      "match": 70,
+      "kickoffUtc": "2026-06-28T02:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group J",
+      "city": "Dallas",
+      "home": "JOR",
+      "away": "ARG"
     }
   ]
 }

@@ -2,7 +2,27 @@
 
 import { useEffect, useState } from "react";
 
-/** Renders a UTC kickoff in the viewer's local timezone (client-side only). */
+function fmt(iso: string, mode: "date" | "time", utc = false) {
+  const d = new Date(iso);
+  if (mode === "date") {
+    return d.toLocaleDateString(undefined, {
+      weekday: "short",
+      month: "short",
+      day: "numeric",
+      ...(utc ? { timeZone: "UTC" } : {}),
+    });
+  }
+  return d.toLocaleTimeString(undefined, {
+    hour: "2-digit",
+    minute: "2-digit",
+    ...(utc ? { timeZone: "UTC", hourCycle: "h23" as const } : {}),
+  });
+}
+
+/** Kickoff in the viewer's local timezone (browser converts the UTC instant
+ *  via the device's own tz setting). Server-rendered fallback shows the same
+ *  instant in UTC, so slow-JS / no-JS visitors never see a blank — worst
+ *  case is a correct time labeled UTC. */
 export function LocalTime({
   iso,
   mode,
@@ -10,21 +30,15 @@ export function LocalTime({
   iso: string;
   mode: "date" | "time";
 }) {
-  const [text, setText] = useState("");
+  const [local, setLocal] = useState(false);
 
-  useEffect(() => {
-    const d = new Date(iso);
-    setText(
-      mode === "date"
-        ? d.toLocaleDateString(undefined, {
-            weekday: "long",
-            day: "numeric",
-            month: "long",
-            year: "numeric",
-          })
-        : d.toLocaleTimeString(undefined, { hour: "2-digit", minute: "2-digit" }),
-    );
-  }, [iso, mode]);
+  useEffect(() => setLocal(true), []);
 
-  return <span suppressHydrationWarning>{text}</span>;
+  if (local) return <span>{fmt(iso, mode)}</span>;
+  return (
+    <span>
+      {fmt(iso, mode, true)}
+      {mode === "time" ? " UTC" : ""}
+    </span>
+  );
 }
