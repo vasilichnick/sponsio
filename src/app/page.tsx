@@ -22,17 +22,47 @@ const uniswap = (a: string) =>
   `https://app.uniswap.org/swap?chain=base&outputCurrency=${a}`;
 const basescan = (a: string) => `https://basescan.org/token/${a}`;
 
-function TeamSide({ team, align }: { team: Token; align: "home" | "away" }) {
-  const right = align === "home";
+// Launch rule: a team's coin launches at the team's first match kickoff.
+const firstMatch: Record<string, Fixture> = {};
+for (const fx of fixtures) {
+  for (const code of [fx.home, fx.away]) {
+    if (!firstMatch[code] || fx.kickoffUtc < firstMatch[code].kickoffUtc) {
+      firstMatch[code] = fx;
+    }
+  }
+}
+
+const coins = Object.keys(tokens)
+  .map((code) => ({ code, team: tokens[code], launch: firstMatch[code] }))
+  .sort((a, b) =>
+    a.launch.kickoffUtc === b.launch.kickoffUtc
+      ? a.code.localeCompare(b.code)
+      : a.launch.kickoffUtc < b.launch.kickoffUtc
+        ? -1
+        : 1,
+  );
+
+function CoinCard({
+  team,
+  launch,
+}: {
+  team: Token;
+  launch: Fixture;
+}) {
   const live = team.address !== ZERO_ADDRESS;
   return (
-    <div className="min-w-0">
-      <div className="flex items-center justify-center gap-2.5">
-        {right && <span className="font-cond truncate font-semibold uppercase">{team.name}</span>}
-        <span className="text-3xl leading-none">{team.flag}</span>
-        {!right && <span className="font-cond truncate font-semibold uppercase">{team.name}</span>}
+    <div className="rounded-xl bg-white/85 px-3 py-4 text-center text-zinc-900 shadow-lg shadow-black/25 ring-1 ring-black/5 backdrop-blur-md transition-shadow hover:shadow-xl">
+      <div className="text-[11px] text-zinc-500">{launch.group}</div>
+      <div className="mt-1.5 text-4xl leading-none">{team.flag}</div>
+      <div className="font-cond mt-2 truncate font-semibold uppercase">
+        {team.name}
       </div>
-      <div className="mt-1.5 flex flex-col items-center gap-1.5">
+      <div className="mt-1 text-xs text-zinc-500">
+        Launch on <LocalTime iso={launch.kickoffUtc} mode="date" />
+        {" · "}
+        <LocalTime iso={launch.kickoffUtc} mode="time" />
+      </div>
+      <div className="mt-2.5 flex flex-col items-center gap-1.5">
         <span
           className={`rounded bg-zinc-100 px-1.5 py-0.5 font-mono text-xs ${live ? "text-zinc-600" : "text-zinc-400"}`}
         >
@@ -71,26 +101,6 @@ function TeamSide({ team, align }: { team: Token; align: "home" | "away" }) {
   );
 }
 
-function MatchCard({ fx }: { fx: Fixture }) {
-  return (
-    <div className="rounded-xl bg-white/85 px-5 py-4 text-zinc-900 shadow-lg shadow-black/25 ring-1 ring-black/5 backdrop-blur-md transition-shadow hover:shadow-xl">
-      <div className="text-xs text-zinc-500">
-        {fx.group} · Match {fx.match}
-      </div>
-      <div className="mt-2 grid grid-cols-[1fr_auto_1fr] items-center gap-4">
-        <TeamSide team={tokens[fx.home]} align="home" />
-        <div className="font-cond px-2 text-center text-3xl font-semibold tabular-nums">
-          <LocalTime iso={fx.kickoffUtc} mode="time" />
-        </div>
-        <TeamSide team={tokens[fx.away]} align="away" />
-      </div>
-      <div className="mt-2 text-center text-xs text-zinc-500">
-        Launch on <LocalTime iso={fx.kickoffUtc} mode="date" />
-      </div>
-    </div>
-  );
-}
-
 export default function Home() {
   return (
     <>
@@ -109,9 +119,9 @@ export default function Home() {
         <h2 className="mb-4 text-center font-serif text-2xl font-normal uppercase tracking-tight drop-shadow-[0_1px_3px_rgba(0,0,0,0.5)] [-webkit-text-stroke:0.35px_rgba(0,0,0,0.85)]">
           FIFA World Cup 2026 Group Stage — Token Launch Schedule
         </h2>
-        <div className="mx-auto grid max-w-[378px] gap-3 md:max-w-3xl md:grid-cols-2">
-          {fixtures.map((fx) => (
-            <MatchCard key={fx.match} fx={fx} />
+        <div className="mx-auto grid max-w-4xl grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+          {coins.map((c) => (
+            <CoinCard key={c.code} team={c.team} launch={c.launch} />
           ))}
         </div>
       </main>
