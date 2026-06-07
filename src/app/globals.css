@@ -1,10 +1,12 @@
 @import "tailwindcss";
 
+/* Two-font system: serif token = Archivo Black (display), sans + cond =
+   Barlow Semi Condensed (all text). --font-mono is NOT overridden, so
+   font-mono resolves to Tailwind's system mono stack (addresses, tickers). */
 @theme inline {
-  --font-sans: var(--font-barlow);
+  --font-sans: var(--font-barlow-semicond);
   --font-serif: var(--font-archivo-black);
   --font-cond: var(--font-barlow-semicond);
-  --font-mono: var(--font-jbmono);
 }
 
 /* Euphoria-style viewport lock: the page itself never scrolls.
@@ -17,7 +19,7 @@ body {
 
 html,
 body {
-  font-family: var(--font-barlow), ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-barlow-semicond), ui-sans-serif, system-ui, sans-serif;
 }
 
 body {

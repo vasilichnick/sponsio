@@ -1,37 +1,23 @@
 import type { Metadata } from "next";
-import {
-  Archivo_Black,
-  Barlow,
-  Barlow_Semi_Condensed,
-  JetBrains_Mono,
-} from "next/font/google";
+import { Archivo_Black, Barlow_Semi_Condensed } from "next/font/google";
 import Link from "next/link";
 import { BgStrips } from "./bg-strips";
 import { Menu } from "./menu";
 import "./globals.css";
 
+// Two-font system: Archivo Black is the brand/display voice (wordmark,
+// titles, countdown digits); Barlow Semi Condensed carries all running
+// text. Addresses use the system mono stack — not a brand font.
 const archivoBlack = Archivo_Black({
   variable: "--font-archivo-black",
   subsets: ["latin"],
   weight: "400",
 });
 
-const barlow = Barlow({
-  variable: "--font-barlow",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-});
-
 const barlowSemiCondensed = Barlow_Semi_Condensed({
   variable: "--font-barlow-semicond",
   subsets: ["latin"],
-  weight: ["500", "600", "700"],
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  variable: "--font-jbmono",
-  subsets: ["latin"],
-  weight: ["400", "500"],
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -49,7 +35,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${archivoBlack.variable} ${barlow.variable} ${barlowSemiCondensed.variable} ${jetbrainsMono.variable} h-full antialiased`}
+      className={`${archivoBlack.variable} ${barlowSemiCondensed.variable} h-full antialiased`}
     >
       <body className="h-full">
         <div className="relative isolate flex h-full flex-col">
