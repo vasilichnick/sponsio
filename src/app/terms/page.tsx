@@ -1,9 +1,29 @@
 import type { Metadata } from "next";
+import Link from "next/link";
+
+// Linkify the one cross-reference in emerald, matching the /rewards accent.
+function renderPara(text: string) {
+  const phrase = "Privacy Policy";
+  const i = text.indexOf(phrase);
+  if (i === -1) return text;
+  return (
+    <>
+      {text.slice(0, i)}
+      <Link
+        href="/privacy"
+        className="text-emerald-300 underline-offset-2 hover:underline"
+      >
+        {phrase}
+      </Link>
+      {text.slice(i + phrase.length)}
+    </>
+  );
+}
 
 export const metadata: Metadata = {
   title: "Terms of Use — Sponsio",
   description:
-    "Terms of Use for Sponsio: team tokens are meme coins, the Reward Pool is a discretionary promotional program, no rewards are guaranteed.",
+    "Terms of Use for Sponsio: team coins are meme coins, the Reward Pool is a discretionary promotional program, no rewards are guaranteed.",
 };
 
 const SECTIONS: { h: string; p: string[] }[] = [
@@ -17,32 +37,32 @@ const SECTIONS: { h: string; p: string[] }[] = [
   {
     h: "2. The Service",
     p: [
-      "Sponsio is an informational interface for a tournament-themed token market built around the 2026 World Cup. The Service displays match schedules, token information, and market data, and links to third-party platforms where tokens are launched and traded (including BasedBid and Uniswap on the Base network).",
+      "Sponsio is an informational interface for a tournament-themed coin market built around the 2026 World Cup. The Service displays match schedules, coin information, and market data, and links to third-party platforms where coins are launched and traded (including BasedBid and Uniswap on the Base network).",
       "The Service is strictly non-custodial. We never hold your funds, private keys, or digital assets, we operate no user accounts, and we cannot execute, reverse, or modify any transaction. All trading occurs through autonomous third-party smart contracts and platforms that we do not control, via wallets that only you control.",
     ],
   },
   {
-    h: "3. Team tokens are meme coins",
+    h: "3. Team coins are meme coins",
     p: [
-      "All team tokens referenced on the Service (the 48 World Cup team tokens and any related tokens, collectively \"Team Tokens\") are meme coins: digital collectibles inspired by sporting culture and fan enthusiasm, purchased for entertainment, cultural participation, and the expression of support for a team.",
-      "Team Tokens convey no rights of any kind. They are not shares, equity, debt, or any other security or financial instrument. They carry no ownership interest, no dividend, no interest, no revenue share, no governance rights, and no claim against us, any team, any federation, or any other person or entity. They generate no yield and entitle the holder to nothing beyond the token itself.",
-      "The price of a Team Token is driven entirely by market sentiment and speculative trading. It has no intrinsic value, its value may be extremely volatile, and it may fall to zero. You should be prepared to lose the entire amount you spend on Team Tokens.",
+      "All team coins referenced on the Service (the 48 World Cup team coins and any related coins, collectively \"Team Coins\") are meme coins: digital collectibles inspired by sporting culture and fan enthusiasm, purchased for entertainment, cultural participation, and the expression of support for a team.",
+      "Team Coins convey no rights of any kind. They are not shares, equity, debt, or any other security or financial instrument. They carry no ownership interest, no dividend, no interest, no revenue share, no governance rights, and no claim against us, any team, any federation, or any other person or entity. They generate no yield and entitle the holder to nothing beyond the coin itself.",
+      "The price of a Team Coin is driven entirely by market sentiment and speculative trading. It has no intrinsic value, its value may be extremely volatile, and it may fall to zero. You should be prepared to lose the entire amount you spend on Team Coins.",
       "This characterization is consistent with published regulatory staff guidance on meme coins (including the U.S. SEC Division of Corporation Finance staff statement on meme coins, February 2025), under which meme coins of this nature are generally not offers or sales of securities, because purchasers do not acquire a right to profits derived from the managerial efforts of others. Nothing on the Service is, or should be read as, an offer of securities, investment advice, or a promise of profit.",
-      "TEAM TOKENS DO NOT GUARANTEE ANY REWARD, RETURN, PAYOUT, OR PROFIT OF ANY KIND. Buying, holding, or trading Team Tokens — including holding the token of the eventual champion — creates no entitlement to compensation from us beyond participation, on these Terms, in the discretionary Reward Pool described below, if and to the extent it is funded and distributed.",
+      "TEAM COINS DO NOT GUARANTEE ANY REWARD, RETURN, PAYOUT, OR PROFIT OF ANY KIND. Buying, holding, or trading Team Coins — including holding the coin of the eventual champion — creates no entitlement to compensation from us beyond participation, on these Terms, in the discretionary Reward Pool described below, if and to the extent it is funded and distributed.",
     ],
   },
   {
     h: "4. The Reward Pool — a discretionary promotional program",
     p: [
-      "During the tournament we may operate a single promotional reward pool (the \"Reward Pool\") funded from fees generated by Team Token launch and trading activity. The Reward Pool is not funded by user deposits, is not a bet or wager, is not interest or yield, and is not an investment return. It is a discretionary promotional program.",
-      "Intended mechanics, described in detail on the Service: random balance snapshots are taken in each 24-hour window of the tournament; after the final, the champion team determines the champion token; each eligible wallet's share equals its average champion-token balance across all tournament snapshots divided by the sum of all such averages. Methodology, snapshot data, and claim instructions will be published.",
+      "During the tournament we may operate a single promotional reward pool (the \"Reward Pool\") funded from fees generated by Team Coin launch and trading activity. The Reward Pool is not funded by user deposits, is not a bet or wager, is not interest or yield, and is not an investment return. It is a discretionary promotional program.",
+      "Intended mechanics, described in detail on the Service: for each team, a random balance snapshot is taken on every day that team plays a match, at a random moment between kickoff and the end of that day (UTC), beginning with the team's first match; after the final, the champion team determines the champion coin; each eligible wallet's share equals its average champion-coin balance across all of the champion coin's match-day snapshots, divided by the sum of all such averages. Methodology, snapshot data, and claim instructions will be published.",
       "The size of the Reward Pool is unknown in advance, depends entirely on actual fee generation, and may be small or zero. We reserve the right to modify the methodology for accuracy or security reasons, to exclude addresses engaged in manipulation, wash trading, or exploits, to exclude contract-held balances (including liquidity pools and platform contracts) per the published methodology, to impose claim eligibility requirements including geographic restrictions and compliance checks, and to set a reasonable claim deadline after which unclaimed amounts may be redirected. If the tournament is cancelled, abandoned, or materially altered, we may adjust, postpone, or cancel the distribution. No payout is owed to any person until it is published as claimable and validly claimed.",
     ],
   },
   {
     h: "5. Fees",
     p: [
-      "Token launches and trading are subject to fees set by the third-party platforms involved (launch fees, trading fees, liquidity fees) and to blockchain network gas fees. A portion of such fees may accrue to us and may, at our discretion, fund the Reward Pool. All fees are final and non-refundable once a transaction is confirmed on-chain, regardless of outcome.",
+      "Coin launches and trading are subject to fees set by the third-party platforms involved (launch fees, trading fees, liquidity fees) and to blockchain network gas fees. A portion of such fees may accrue to us and may, at our discretion, fund the Reward Pool. All fees are final and non-refundable once a transaction is confirmed on-chain, regardless of outcome.",
     ],
   },
   {
@@ -67,14 +87,14 @@ const SECTIONS: { h: string; p: string[] }[] = [
     h: "9. Intellectual property & no affiliation",
     p: [
       "The Service's original content, design, and branding belong to us. Team names, country names, and flags are used solely as nominative identifiers of national football teams competing in a public sporting event.",
-      "Sponsio is not affiliated with, endorsed by, or sponsored by FIFA, any national football federation, any team, or any player. All trademarks belong to their respective owners. Team Tokens are independent meme coins and are not official products of any sporting organization.",
+      "Sponsio is not affiliated with, endorsed by, or sponsored by FIFA, any national football federation, any team, or any player. All trademarks belong to their respective owners. Team Coins are independent meme coins and are not official products of any sporting organization.",
     ],
   },
   {
     h: "10. Disclaimers & limitation of liability",
     p: [
       "THE SERVICE IS PROVIDED \"AS IS\" AND \"AS AVAILABLE\", WITHOUT WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING ACCURACY OF MARKET DATA, UPTIME, OR FITNESS FOR A PARTICULAR PURPOSE. DISPLAYED PRICES AND ODDS ARE INFORMATIONAL AND MAY BE DELAYED OR WRONG.",
-      "TO THE MAXIMUM EXTENT PERMITTED BY LAW, WE SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR ANY LOSS OF PROFITS, TOKENS, OR DATA, ARISING FROM YOUR USE OF THE SERVICE OR ANY THIRD-PARTY PLATFORM, EVEN IF ADVISED OF THE POSSIBILITY. OUR AGGREGATE LIABILITY FOR ALL CLAIMS SHALL NOT EXCEED ONE HUNDRED U.S. DOLLARS (USD 100).",
+      "TO THE MAXIMUM EXTENT PERMITTED BY LAW, WE SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR ANY LOSS OF PROFITS, COINS, OR DATA, ARISING FROM YOUR USE OF THE SERVICE OR ANY THIRD-PARTY PLATFORM, EVEN IF ADVISED OF THE POSSIBILITY. OUR AGGREGATE LIABILITY FOR ALL CLAIMS SHALL NOT EXCEED ONE HUNDRED U.S. DOLLARS (USD 100).",
     ],
   },
   {
@@ -95,22 +115,22 @@ export default function Terms() {
   return (
     <>
       <section className="shrink-0 px-6 pt-28 pb-5 text-center lg:pt-24">
-        <h1 className="font-serif text-3xl font-normal uppercase tracking-tight drop-shadow-[0_1px_3px_rgba(0,0,0,0.5)] md:text-4xl [-webkit-text-stroke:0.35px_rgba(0,0,0,0.85)]">
+        <h1 className="font-serif text-[clamp(2rem,8.5vmin,4.5rem)] leading-[0.9] font-normal uppercase tracking-tight [-webkit-text-stroke:0.75px_rgba(0,0,0,0.9)] [filter:drop-shadow(0_2px_4px_rgba(0,0,0,0.95))_drop-shadow(0_10px_28px_rgba(0,0,0,0.55))]">
           Terms of Use
         </h1>
-        <p className="mx-auto mt-2 max-w-xl text-sm font-medium text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.9)]">
+        <p className="mx-auto mt-3 max-w-2xl text-base font-medium text-white [filter:drop-shadow(0_1px_3px_rgba(0,0,0,0.95))_drop-shadow(0_4px_14px_rgba(0,0,0,0.7))] md:text-lg">
           Effective date: June 6, 2026
         </p>
       </section>
 
       <main className="min-h-0 flex-1 overflow-y-auto px-6 pb-6 md:px-10">
-        <div className="mx-auto max-w-2xl rounded-xl bg-white/85 px-6 py-5 text-zinc-900 shadow-lg shadow-black/25 ring-1 ring-black/5 backdrop-blur-md">
+        <div className="mx-auto max-w-2xl rounded-2xl bg-zinc-950/75 px-6 py-5 shadow-lg shadow-black/40 ring-1 ring-white/10 backdrop-blur-md">
           {SECTIONS.map((s) => (
-            <section key={s.h} className="border-b border-zinc-100 py-3 last:border-0">
-              <h2 className="font-cond text-base font-semibold uppercase">{s.h}</h2>
+            <section key={s.h} className="border-b border-white/5 py-3 last:border-0">
+              <h2 className="font-cond text-base font-semibold text-white uppercase">{s.h}</h2>
               {s.p.map((para, i) => (
-                <p key={i} className="mt-1.5 text-sm leading-relaxed text-zinc-600">
-                  {para}
+                <p key={i} className="mt-1.5 text-sm leading-relaxed text-zinc-400">
+                  {renderPara(para)}
                 </p>
               ))}
             </section>

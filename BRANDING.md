@@ -62,8 +62,6 @@ After any visual change, re-run the contrast audit
   `rounded-2xl bg-zinc-950/75 ring-1 ring-white/10 shadow-lg shadow-black/40 backdrop-blur-md`,
   rows separated by `border-white/5`, header row `border-white/10` +
   small-caps zinc-400 labels. (Reference: /coins.)
-- **Legacy light panel** (`bg-white/85 …`) survives on /leaderboard — migrate
-  to dark when touched next.
 - Menus/popovers: `bg-black/80 ring-1 ring-white/15 backdrop-blur-xl`.
 
 ## Buttons

@@ -10,6 +10,7 @@ type Block =
   | { t: "p"; text: string }
   | { t: "lead"; text: string }
   | { t: "pull"; text: string }
+  | { t: "close"; text: string }
   | { t: "versus"; pairs: string[] };
 
 const CONTENT: Block[] = [
@@ -112,26 +113,29 @@ const CONTENT: Block[] = [
   },
   {
     t: "lead",
-    text: "This is not another prediction market. This is not another sportsbook. This is not another fan token. This is not another memecoin.",
+    text: "This is not another prediction market. This is not another sportsbook. This is not another fan token.",
   },
-  { t: "pull", text: "This is the first market built for belief. This is Sponsio." },
+  {
+    t: "close",
+    text: "Sponsio is the first financial market built around belief instead of outcomes.",
+  },
 ];
 
 export default function Manifesto() {
   return (
     <>
       <section className="shrink-0 px-6 pt-28 pb-5 text-center lg:pt-24">
-        <h1 className="font-serif text-3xl font-normal uppercase tracking-tight drop-shadow-[0_1px_3px_rgba(0,0,0,0.5)] md:text-4xl [-webkit-text-stroke:0.35px_rgba(0,0,0,0.85)]">
+        <h1 className="font-serif text-[clamp(2rem,8.5vmin,4.5rem)] leading-[0.9] font-normal uppercase tracking-tight [-webkit-text-stroke:0.75px_rgba(0,0,0,0.9)] [filter:drop-shadow(0_2px_4px_rgba(0,0,0,0.95))_drop-shadow(0_10px_28px_rgba(0,0,0,0.55))]">
           Manifesto
         </h1>
       </section>
 
       <main className="min-h-0 flex-1 overflow-y-auto px-6 pb-6 md:px-10">
-        <div className="mx-auto max-w-2xl rounded-xl bg-white/85 px-6 py-6 text-zinc-900 shadow-lg shadow-black/25 ring-1 ring-black/5 backdrop-blur-md md:px-8">
+        <div className="mx-auto max-w-2xl rounded-2xl bg-zinc-950/75 px-6 py-6 shadow-lg shadow-black/40 ring-1 ring-white/10 backdrop-blur-md md:px-8">
           {CONTENT.map((b, i) => {
             if (b.t === "lead")
               return (
-                <p key={i} className="mt-5 text-lg font-semibold leading-snug first:mt-0 md:text-xl">
+                <p key={i} className="mt-5 text-lg font-semibold leading-snug text-white first:mt-0 md:text-xl">
                   {b.text}
                 </p>
               );
@@ -139,21 +143,30 @@ export default function Manifesto() {
               return (
                 <p
                   key={i}
-                  className="font-cond mt-6 border-y border-zinc-200 py-4 text-center text-xl font-semibold uppercase leading-snug tracking-tight md:text-2xl"
+                  className="font-cond mt-6 border-y border-white/10 py-4 text-center text-xl font-semibold uppercase leading-snug tracking-tight text-white md:text-2xl"
+                >
+                  {b.text}
+                </p>
+              );
+            if (b.t === "close")
+              return (
+                <p
+                  key={i}
+                  className="font-cond mt-7 text-center text-lg font-semibold uppercase leading-snug tracking-tight text-emerald-300 md:text-xl"
                 >
                   {b.text}
                 </p>
               );
             if (b.t === "versus")
               return (
-                <div key={i} className="font-cond mt-4 space-y-1 text-center text-base font-semibold uppercase text-zinc-700">
+                <div key={i} className="font-cond mt-4 space-y-1 text-center text-base font-semibold uppercase text-emerald-300">
                   {b.pairs.map((p) => (
                     <p key={p}>{p}</p>
                   ))}
                 </div>
               );
             return (
-              <p key={i} className="mt-3 text-[15px] leading-relaxed text-zinc-600">
+              <p key={i} className="mt-3 text-[15px] leading-relaxed text-zinc-400">
                 {b.text}
               </p>
             );

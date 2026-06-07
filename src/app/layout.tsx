@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://sponsio.world"),
   title: "Sponsio — Trade the teams you believe in",
   description:
-    "Every World Cup 2026 team is a token on Base. The market prices belief, match by match. Trading fees fill one pool — champion-token holders share it.",
+    "Every World Cup 2026 team is a coin on Base. The market prices belief, match by match. Trading fees fill one pool — champion-coin believers share it.",
 };
 
 export default function RootLayout({
@@ -42,16 +42,20 @@ export default function RootLayout({
           <BgStrips />
           <div className="absolute inset-0 -z-10 bg-gradient-to-b from-black/65 via-black/25 to-black/60" />
           <header className="absolute inset-x-0 top-0 z-20 flex h-16 items-center justify-between bg-black/20 px-6 backdrop-blur-[10px] md:px-10">
-            <Link href="/" className="font-serif text-lg font-normal tracking-tight">
+            <Link
+              href="/"
+              aria-label="Sponsio — home"
+              className="font-serif -mx-3 px-3 py-3 text-lg font-normal tracking-tight transition-opacity hover:opacity-75"
+            >
               SPONSIO
             </Link>
             <div className="flex items-center gap-3">
-              <button
-                type="button"
-                className="h-[42px] rounded-full bg-white/10 px-5 text-sm font-semibold text-white backdrop-blur transition-colors hover:bg-white/5"
+              <Link
+                href="/rewards"
+                className="flex h-[42px] items-center rounded-full bg-white/10 px-5 text-sm font-semibold text-white backdrop-blur transition-colors hover:bg-white/5"
               >
-                Get the app
-              </button>
+                Reward Pool
+              </Link>
               <Menu />
             </div>
           </header>
