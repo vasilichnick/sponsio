@@ -38,7 +38,7 @@ export default function RootLayout({
       className={`${archivoBlack.variable} ${barlowSemiCondensed.variable} h-full antialiased`}
     >
       <body className="h-full">
-        <div className="relative isolate flex h-full flex-col">
+        <div className="page-shell relative isolate flex h-full flex-col">
           <BgStrips />
           <div className="absolute inset-0 -z-10 bg-gradient-to-b from-black/65 via-black/25 to-black/60" />
           <header className="absolute inset-x-0 top-0 z-20 flex h-16 items-center justify-between bg-black/20 px-6 backdrop-blur-[10px] md:px-10">

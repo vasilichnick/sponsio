@@ -1,3 +1,4 @@
+import Link from "next/link";
 import fixturesData from "@/data/fixtures.json";
 import tokensData from "@/data/tokens.json";
 import { Countdown } from "./countdown";
@@ -23,7 +24,9 @@ export default function Home() {
           row — so the next in-flow section starts at the strip divider.
           min-h-fit: if content ever outgrows the half, the sections below
           get pushed down instead of overlapped. */}
-      <section id="hero" className="h-1/2 min-h-fit shrink-0 px-6 pt-32 pb-6 text-center lg:pt-18">
+      {/* Top padding scales with viewport height (not width): 128px on tall
+          phones, shrinking on short windows so the hero fits its half. */}
+      <section id="hero" className="h-1/2 min-h-fit shrink-0 px-6 pt-[max(4rem,min(8rem,14vh))] pb-6 text-center lg:pt-18">
         {/* Edge treatment: tight dark shadow defines glyph edges over bright
             photo areas; the wide soft one seats the block on busy ones. */}
         <h1 className="font-serif text-[clamp(2rem,8.5vmin,4.5rem)] leading-[0.9] font-normal uppercase tracking-tight [-webkit-text-stroke:0.75px_rgba(0,0,0,0.9)] [filter:drop-shadow(0_2px_4px_rgba(0,0,0,0.95))_drop-shadow(0_10px_28px_rgba(0,0,0,0.55))]">
@@ -60,12 +63,12 @@ export default function Home() {
           go live at kickoff — <LocalTime iso={opener.kickoffUtc} mode="date" />{" "}
           · <LocalTime iso={opener.kickoffUtc} mode="time" />
         </p>
-        <button
-          type="button"
-          className="font-cond mt-1 h-12 rounded-full bg-emerald-400 px-8 text-base font-bold uppercase tracking-wide text-zinc-950 shadow-lg shadow-black/40 transition-colors hover:bg-emerald-300"
+        <Link
+          href="/coins"
+          className="font-cond mt-1 flex h-12 items-center rounded-full bg-emerald-400 px-8 text-base font-bold uppercase tracking-wide text-zinc-950 shadow-lg shadow-black/40 transition-colors hover:bg-emerald-300"
         >
           Trade teams
-        </button>
+        </Link>
       </section>
 
       {/* Keeps the footer pinned to the viewport bottom. */}
