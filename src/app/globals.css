@@ -25,17 +25,20 @@ body {
   color: #ededed;
 }
 
-/* Background strip drift */
-@keyframes drift-left {
+/* Background strip drift. Each photo animates as its own layer; --len is
+   the full cycle length (photo count × 2/3 row height, set per row). Items
+   enter 50cqh past the right edge so the browser can raster/decode them
+   before they become visible. */
+@keyframes strip-drift {
+  from {
+    transform: translateX(calc(100cqw + 50cqh));
+  }
   to {
-    transform: translateX(-50%);
+    transform: translateX(calc(100cqw + 50cqh - var(--len)));
   }
 }
-@keyframes drift-right {
-  from {
-    transform: translateX(-50%);
-  }
-  to {
-    transform: translateX(0);
+@media (prefers-reduced-motion: reduce) {
+  .bg-strip-img {
+    animation: none !important;
   }
 }
