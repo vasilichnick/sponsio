@@ -18,10 +18,19 @@ export function BgStrips() {
     <div className="absolute inset-0 -z-10 overflow-hidden" aria-hidden>
       {ROWS.map((row, i) => (
         <div key={i} className="flex h-1/2 overflow-hidden">
-          <div className={`flex h-full w-max ${ANIM[i]}`}>
-            {Array.from({ length: 4 }, () => row).flat().map((src, j) => (
+          {/* 2 copies = seamless -50% loop (each 7-image sequence spans any
+              viewport). More copies balloon the composited layer past mobile
+              GPU texture limits → tile dropouts and re-raster flicker. */}
+          <div className={`flex h-full w-max will-change-transform ${ANIM[i]}`}>
+            {[...row, ...row].map((src, j) => (
               // eslint-disable-next-line @next/next/no-img-element
-              <img key={j} src={src} alt="" className="h-full w-auto max-w-none object-cover" />
+              <img
+                key={j}
+                src={src}
+                alt=""
+                decoding="async"
+                className="h-full w-auto max-w-none object-cover"
+              />
             ))}
           </div>
         </div>
