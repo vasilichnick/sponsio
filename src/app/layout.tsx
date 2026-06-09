@@ -45,8 +45,10 @@ export default function RootLayout({
             <Link
               href="/"
               aria-label="Sponsio — home"
-              className="font-serif -mx-3 px-3 py-3 text-lg font-normal tracking-tight transition-opacity hover:opacity-75"
+              className="font-serif -mx-3 flex items-center gap-2 px-3 py-3 text-lg font-normal tracking-tight transition-opacity hover:opacity-75"
             >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/logo-mark.png" alt="" className="h-8 w-8 object-contain" />
               SPONSIO
             </Link>
             <div className="flex items-center gap-3">
