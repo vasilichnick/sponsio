@@ -105,6 +105,10 @@ After any visual change, re-run the contrast audit
 - Em dashes (—), never hyphens, in headline/label copy.
 - Attributive nouns singular: "Launch Countdown", not "Launches".
 - De-jargon: "believers" over "holders"; plain verbs over crypto-speak.
+- The assets are **coins**, never "tokens" — they're memecoins, so "coin" is
+  accurate and on-brand; use "coin" in ALL user-facing copy. Exceptions: code
+  identifiers stay (`Token` TS type, `tokens.json`, Basescan `/token/` URL),
+  and external categories keep their real names (e.g. "fan token").
 - Uppercase comes from CSS (`uppercase`), source text stays sentence case.
 
 ## Accessibility
