@@ -35,6 +35,7 @@ export function MiniApp({
   const now = useNowSec();
   const openerTs = Math.floor(Date.parse(openerIso) / 1000);
   const [inMini, setInMini] = useState(false);
+  const [market, setMarket] = useState<"champion" | "top-scorer">("champion");
 
   // Hide the Farcaster splash once mounted. Calling ready() is mandatory —
   // without it the user is stuck on an infinite splash (the #1 Mini App bug).
@@ -106,7 +107,103 @@ export function MiniApp({
         believers split it.
       </p>
 
-      {/* Live status / countdown */}
+      {/* Belief markets switch — mirrors /coins on the site */}
+      <div
+        role="tablist"
+        aria-label="Belief markets"
+        className="mt-3 flex gap-1 rounded-full bg-white/5 p-1 ring-1 ring-white/10"
+      >
+        {(
+          [
+            { id: "champion", label: "Champion" },
+            { id: "top-scorer", label: "Top Scorer", soon: true },
+          ] as const
+        ).map((t) => (
+          <button
+            key={t.id}
+            type="button"
+            role="tab"
+            aria-selected={market === t.id}
+            onClick={() => setMarket(t.id)}
+            className={`font-cond flex flex-1 items-center justify-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold tracking-wide uppercase transition-colors ${
+              market === t.id
+                ? "bg-emerald-400 text-zinc-950"
+                : "text-zinc-300"
+            }`}
+          >
+            {t.label}
+            {"soon" in t && t.soon && (
+              <span
+                className={`rounded-full px-1.5 py-0.5 text-[8px] font-bold ${
+                  market === t.id
+                    ? "bg-zinc-950/20 text-zinc-900"
+                    : "bg-amber-400/90 text-amber-950"
+                }`}
+              >
+                Soon
+              </span>
+            )}
+          </button>
+        ))}
+      </div>
+
+      {market === "top-scorer" ? (
+        /* Market 2 — teaser only: no coins, no reward mechanics invented. */
+        <div className="mt-3 flex-1 overflow-y-auto">
+          <div className="rounded-xl bg-white/5 px-4 py-6 text-center ring-1 ring-white/10">
+            <span className="font-cond inline-block rounded-full bg-amber-400/90 px-2.5 py-1 text-[10px] font-bold tracking-wide text-amber-950 uppercase">
+              Coming soon
+            </span>
+            <h2 className="font-serif mt-3 text-lg leading-tight uppercase tracking-tight">
+              Top Scorer market
+            </h2>
+            <p className="font-cond mt-2 text-sm leading-snug text-zinc-400">
+              A second belief market. Every coin is one belief:{" "}
+              <span className="font-semibold text-white">
+                this player ends the World Cup as top scorer
+              </span>{" "}
+              — repricing with every goal.
+            </p>
+            {inMini ? (
+              <button
+                type="button"
+                onClick={() => sdk.actions.addMiniApp().catch(() => {})}
+                className="font-cond mt-4 rounded-full bg-emerald-400 px-5 py-2 text-xs font-bold tracking-wide text-zinc-950 uppercase transition-colors hover:bg-emerald-300"
+              >
+                + Add Sponsio to catch the launch
+              </button>
+            ) : (
+              <a
+                href="https://x.com/sponsio_world"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-cond mt-4 inline-block rounded-full bg-emerald-400 px-5 py-2 text-xs font-bold tracking-wide text-zinc-950 uppercase transition-colors hover:bg-emerald-300"
+              >
+                Follow for the launch
+              </a>
+            )}
+          </div>
+          {/* Skeleton hint of the player list to come — decorative only */}
+          <div aria-hidden className="mt-2 space-y-1.5">
+            {[0, 1, 2].map((i) => (
+              <div
+                key={i}
+                className="flex items-center gap-3 rounded-xl bg-white/[0.03] px-3 py-2.5 ring-1 ring-white/5"
+                style={{ opacity: 1 - i * 0.3 }}
+              >
+                <div className="h-6 w-6 rounded-full bg-white/10" />
+                <div className="flex-1 space-y-1">
+                  <div className="h-2.5 w-28 rounded bg-white/10" />
+                  <div className="h-2 w-12 rounded bg-white/5" />
+                </div>
+                <div className="h-6 w-14 rounded-lg bg-white/5" />
+              </div>
+            ))}
+          </div>
+        </div>
+      ) : (
+        <>
+          {/* Live status / countdown */}
       <div className="font-cond mt-3 flex items-center gap-2 rounded-xl bg-white/5 px-3 py-2 text-xs font-semibold tracking-wide text-zinc-300 uppercase ring-1 ring-white/10">
         {now !== null && now >= openerTs ? (
           <>
@@ -168,14 +265,16 @@ export function MiniApp({
         })}
       </div>
 
-      <a
-        href="https://sponsio.world/rewards"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="font-cond mt-3 shrink-0 text-center text-xs font-semibold tracking-wide text-zinc-400 uppercase transition-colors hover:text-emerald-300"
-      >
-        How the pool is split →
-      </a>
+          <a
+            href="https://sponsio.world/rewards"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-cond mt-3 shrink-0 text-center text-xs font-semibold tracking-wide text-zinc-400 uppercase transition-colors hover:text-emerald-300"
+          >
+            How the pool is split →
+          </a>
+        </>
+      )}
     </main>
   );
 }
