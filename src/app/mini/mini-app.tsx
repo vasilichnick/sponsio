@@ -14,24 +14,37 @@ const pad = (n: number) => String(n).padStart(2, "0");
 const emptySubscribe = () => () => {};
 
 // First-run intro: shown once (localStorage), replayable from the ? button.
+// Each beat rides one of the site's brand photos (800×1200 portrait crops —
+// made for these vertical screens) under the site's gradient + type recipes.
 const INTRO_KEY = "sponsio-mini-intro-v1";
-const INTRO: { kicker: string; title: string; body: string }[] = [
+const INTRO: { kicker: string; title: string; body: string; img: string }[] = [
   {
     kicker: "What this is",
     title: "Every coin is one belief",
     body: "48 World Cup teams, 48 coins on Base. Each coin is one belief: this team becomes champion.",
+    img: "/bg/trophy-kid.jpg",
   },
   {
     kicker: "How it trades",
     title: "Belief has a price",
     body: "Buy the beliefs you share, sell when yours fades — the market reprices every coin match by match, all tournament.",
+    img: "/bg/galata-flares.jpg",
   },
   {
     kicker: "Why it pays to be right",
     title: "One pool. One champion.",
     body: "Every trade feeds one Reward Pool. When the final settles which belief came true, its believers split the pool.",
+    img: "/bg/alahly-night.jpg",
   },
 ];
+
+// Site edge treatments (BRANDING.md) — worst-case-measured over photos.
+const T_HEAVY =
+  "[-webkit-text-stroke:0.75px_rgba(0,0,0,0.9)] [filter:drop-shadow(0_2px_4px_rgba(0,0,0,0.95))_drop-shadow(0_10px_28px_rgba(0,0,0,0.55))]";
+const T_SMALL =
+  "[filter:drop-shadow(0_1px_3px_rgba(0,0,0,0.95))_drop-shadow(0_4px_14px_rgba(0,0,0,0.7))]";
+const T_HALO =
+  "[filter:drop-shadow(0_1px_2px_rgba(0,0,0,0.9))_drop-shadow(0_2px_6px_rgba(0,0,0,0.85))]";
 
 type Coin = {
   code: string;
@@ -53,50 +66,82 @@ function Intro({ onDone }: { onDone: () => void }) {
   const s = INTRO[step];
   const last = step === INTRO.length - 1;
   return (
-    <div className="fixed inset-0 z-50 mx-auto flex h-dvh max-w-[480px] flex-col bg-[#050505] px-6 pt-5 pb-6 text-white">
-      <div className="flex items-center gap-2">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/logo-mark.png" alt="" className="h-7 w-7 object-contain" />
-        <span className="font-serif text-lg tracking-tight">SPONSIO</span>
+    <div className="fixed inset-0 z-50 mx-auto h-dvh max-w-[480px] overflow-hidden bg-[#050505] text-white">
+      {/* Photo stack: all beats mounted so switching is an instant
+          crossfade; first beat loads at high priority. */}
+      {INTRO.map((b, i) => (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          key={b.img}
+          src={b.img}
+          alt=""
+          aria-hidden
+          fetchPriority={i === 0 ? "high" : "low"}
+          decoding="async"
+          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 motion-reduce:transition-none ${
+            i === step ? "opacity-100" : "opacity-0"
+          }`}
+        />
+      ))}
+      {/* The site's hero gradient, slightly heavier for small type. */}
+      <div
+        aria-hidden
+        className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/30 to-black/85"
+      />
+
+      <div className="relative z-10 flex h-full flex-col px-6 pt-5 pb-6">
+        <div className="flex items-center gap-2">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/logo-mark.png" alt="" className="h-7 w-7 object-contain" />
+          <span className={`font-serif text-lg tracking-tight ${T_SMALL}`}>
+            SPONSIO
+          </span>
+          <button
+            type="button"
+            onClick={onDone}
+            className={`font-cond ml-auto px-2 py-1 text-xs font-semibold tracking-[0.15em] text-zinc-300 uppercase transition-colors hover:text-white ${T_SMALL}`}
+          >
+            Skip
+          </button>
+        </div>
+
+        <div className="flex min-h-0 flex-1 flex-col items-center justify-center text-center">
+          <p
+            className={`font-cond text-[11px] font-semibold tracking-[0.25em] text-emerald-300 uppercase ${T_HALO}`}
+          >
+            {s.kicker}
+          </p>
+          <h2
+            className={`font-serif mt-3 text-[2rem] leading-[0.95] uppercase tracking-tight ${T_HEAVY}`}
+          >
+            {s.title}
+          </h2>
+          <p
+            className={`font-cond mt-4 max-w-[34ch] text-base leading-snug font-medium text-white ${T_SMALL}`}
+          >
+            {s.body}
+          </p>
+        </div>
+
+        <div className="flex items-center justify-center gap-1.5 pb-5">
+          {INTRO.map((_, i) => (
+            <span
+              key={i}
+              className={`h-1.5 rounded-full transition-all ${
+                i === step ? "w-6 bg-emerald-400" : "w-1.5 bg-white/30"
+              }`}
+            />
+          ))}
+        </div>
+
         <button
           type="button"
-          onClick={onDone}
-          className="font-cond ml-auto px-2 py-1 text-xs font-semibold tracking-[0.15em] text-zinc-500 uppercase transition-colors hover:text-white"
+          onClick={() => (last ? onDone() : setStep(step + 1))}
+          className="font-cond h-12 shrink-0 rounded-full bg-emerald-400 text-base font-bold tracking-wide text-zinc-950 uppercase shadow-lg shadow-black/40 transition-colors hover:bg-emerald-300"
         >
-          Skip
+          {last ? "Show me the coins" : "Next"}
         </button>
       </div>
-
-      <div className="flex min-h-0 flex-1 flex-col items-center justify-center text-center">
-        <p className="font-cond text-[11px] font-semibold tracking-[0.25em] text-emerald-300 uppercase">
-          {s.kicker}
-        </p>
-        <h2 className="font-serif mt-3 text-[2rem] leading-[0.95] uppercase tracking-tight">
-          {s.title}
-        </h2>
-        <p className="font-cond mt-4 max-w-[34ch] text-base leading-snug text-zinc-300">
-          {s.body}
-        </p>
-      </div>
-
-      <div className="flex items-center justify-center gap-1.5 pb-5">
-        {INTRO.map((_, i) => (
-          <span
-            key={i}
-            className={`h-1.5 rounded-full transition-all ${
-              i === step ? "w-6 bg-emerald-400" : "w-1.5 bg-white/20"
-            }`}
-          />
-        ))}
-      </div>
-
-      <button
-        type="button"
-        onClick={() => (last ? onDone() : setStep(step + 1))}
-        className="font-cond h-12 shrink-0 rounded-full bg-emerald-400 text-base font-bold tracking-wide text-zinc-950 uppercase transition-colors hover:bg-emerald-300"
-      >
-        {last ? "Show me the coins" : "Next"}
-      </button>
     </div>
   );
 }
@@ -184,16 +229,32 @@ export function MiniApp({
     <main className="relative mx-auto flex h-dvh max-w-[480px] flex-col bg-[#050505] px-4 text-white">
       {showIntro && <Intro onDone={dismissIntro} />}
 
+      {/* Brand backdrop: one crowd photo behind the header zone, fading to
+          solid before the list — the site's look without its 32-image
+          strip engine (this is a webview). */}
+      <div aria-hidden className="absolute inset-0 -z-10 overflow-hidden">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/bg/fener-march.jpg"
+          alt=""
+          decoding="async"
+          className="h-3/5 w-full object-cover object-top"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/65 via-[#050505]/80 to-[#050505]" />
+      </div>
+
       {/* Header: brand + replayable explainer + add */}
       <div className="flex shrink-0 items-center gap-2 pt-5 pb-2">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/logo-mark.png" alt="" className="h-7 w-7 object-contain" />
-        <span className="font-serif text-lg tracking-tight">SPONSIO</span>
+        <span className={`font-serif text-lg tracking-tight ${T_SMALL}`}>
+          SPONSIO
+        </span>
         <button
           type="button"
           onClick={() => setIntroChoice(true)}
           aria-label="How Sponsio works"
-          className="font-cond ml-auto h-7 w-7 rounded-full bg-white/10 text-sm font-bold text-zinc-300 transition-colors hover:bg-white/15 hover:text-white"
+          className="font-cond ml-auto h-7 w-7 rounded-full bg-black/40 text-sm font-bold text-zinc-200 ring-1 ring-white/15 backdrop-blur-md transition-colors hover:bg-black/55 hover:text-white"
         >
           ?
         </button>
@@ -201,7 +262,7 @@ export function MiniApp({
           <button
             type="button"
             onClick={() => sdk.actions.addMiniApp().catch(() => {})}
-            className="font-cond rounded-full bg-white/10 px-3 py-1.5 text-xs font-semibold tracking-wide text-white uppercase transition-colors hover:bg-white/15"
+            className="font-cond rounded-full bg-black/40 px-3 py-1.5 text-xs font-semibold tracking-wide text-white uppercase ring-1 ring-white/15 backdrop-blur-md transition-colors hover:bg-black/55"
           >
             + Add
           </button>
@@ -209,12 +270,16 @@ export function MiniApp({
       </div>
 
       {/* The why, in two lines */}
-      <h1 className="font-serif shrink-0 text-[1.45rem] leading-[0.95] uppercase tracking-tight">
-        Trade the teams you <span className="text-emerald-300">believe in</span>
+      <h1
+        className={`font-serif shrink-0 text-[1.45rem] leading-[0.95] uppercase tracking-tight ${T_HEAVY}`}
+      >
+        Trade the teams you <span className={`text-emerald-300 ${T_HALO}`}>believe in</span>
       </h1>
-      <p className="font-cond mt-1.5 shrink-0 text-sm leading-snug text-zinc-400">
+      <p
+        className={`font-cond mt-1.5 shrink-0 text-sm leading-snug text-zinc-200 ${T_SMALL}`}
+      >
         Every coin is one belief —{" "}
-        <span className="font-semibold text-zinc-200">
+        <span className="font-semibold text-white">
           fees fill one pool, the champion&apos;s believers split it.
         </span>
       </p>
@@ -223,7 +288,7 @@ export function MiniApp({
       <div
         role="tablist"
         aria-label="Belief markets"
-        className="mt-3 flex shrink-0 gap-1 rounded-full bg-white/5 p-1 ring-1 ring-white/10"
+        className="mt-3 flex shrink-0 gap-1 rounded-full bg-black/45 p-1 ring-1 ring-white/15 backdrop-blur-md"
       >
         {(
           [
@@ -260,7 +325,7 @@ export function MiniApp({
       {market === "top-scorer" ? (
         /* Market 2 — teaser only: no coins, no reward mechanics invented. */
         <div className="mt-3 min-h-0 flex-1 overflow-y-auto overscroll-contain pb-6">
-          <div className="rounded-xl bg-white/5 px-4 py-6 text-center ring-1 ring-white/10">
+          <div className="rounded-xl bg-zinc-950/75 px-4 py-6 text-center ring-1 ring-white/10">
             <span className="font-cond inline-block rounded-full bg-amber-400/90 px-2.5 py-1 text-[10px] font-bold tracking-wide text-amber-950 uppercase">
               Coming soon
             </span>
@@ -314,7 +379,7 @@ export function MiniApp({
       ) : (
         <>
           {/* Market pulse: countdown until first kickoff, live count after */}
-          <div className="font-cond mt-2 flex shrink-0 items-center gap-2 rounded-xl bg-white/5 px-3 py-2 text-xs font-semibold tracking-wide text-zinc-300 uppercase ring-1 ring-white/10">
+          <div className="font-cond mt-2 flex shrink-0 items-center gap-2 rounded-xl bg-black/45 px-3 py-2 text-xs font-semibold tracking-wide text-zinc-200 uppercase ring-1 ring-white/15 backdrop-blur-md">
             {anyLive || (now !== null && now >= openerTs) ? (
               <>
                 <span className="pulse-dot h-1.5 w-1.5 rounded-full bg-emerald-400" />
@@ -340,7 +405,7 @@ export function MiniApp({
               return (
                 <div
                   key={c.code}
-                  className="flex items-center gap-3 rounded-xl bg-white/5 px-3 py-2.5 ring-1 ring-white/10"
+                  className="flex items-center gap-3 rounded-xl bg-zinc-950/75 px-3 py-2.5 ring-1 ring-white/10"
                 >
                   <span className="text-xl leading-none">{c.flag}</span>
                   <div className="min-w-0 flex-1">
