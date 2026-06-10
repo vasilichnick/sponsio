@@ -3,12 +3,11 @@ import { NextResponse } from "next/server";
 /** Farcaster Mini App manifest, served at /.well-known/farcaster.json
  *  (spec: miniapps.farcaster.xyz/docs/guides/publishing).
  *
- *  accountAssociation is intentionally EMPTY: it's a JSON Farcaster
- *  Signature over { domain: "sponsio.world" } from the project's Farcaster
- *  custody address, which only the operator can produce. Generate it at
- *  farcaster.xyz/~/developers/mini-apps/manifest (or sign with the custody
- *  wallet), then paste header/payload/signature below. Until then the app
- *  previews and runs but can't be verified/published to app stores.
+ *  accountAssociation: JSON Farcaster Signature over
+ *  { domain: "sponsio.world" } signed 2026-06-10 by the operator's account
+ *  (fid 1060519, custody key in the header). Re-sign at
+ *  farcaster.xyz/~/developers/mini-apps/manifest if ownership ever moves
+ *  to a brand account, and paste the new triple here.
  *
  *  Domain note: this manifest is bound to the apex `sponsio.world`. `www.`
  *  is a different app to Farcaster — keep every URL on the apex. */
@@ -20,9 +19,11 @@ export const dynamic = "force-static";
 export function GET() {
   return NextResponse.json({
     accountAssociation: {
-      header: "",
-      payload: "",
-      signature: "",
+      header:
+        "eyJmaWQiOjEwNjA1MTksInR5cGUiOiJjdXN0b2R5Iiwia2V5IjoiMHgyMTFFMTdGNDBFZkIyN0Y4MmNlNjMyN2NBMEI2NDVjMTdEODlhNEJCIn0",
+      payload: "eyJkb21haW4iOiJzcG9uc2lvLndvcmxkIn0",
+      signature:
+        "KlKwuIu70FnL0JlH4yCqaECixASdpmLr3Pu4mTr5+1Z/Ff1wkPVoEo/c2cMBYD7HJbsjVX0fIDBUpVAesXCuABs=",
     },
     miniapp: {
       version: "1",
