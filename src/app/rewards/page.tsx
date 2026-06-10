@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { HowItWorks } from "./how-it-works";
+import { SplitPlayground } from "./split-playground";
 
 export const metadata: Metadata = {
   title: "Split the Pool — Sponsio",
@@ -37,12 +39,16 @@ export default function Rewards() {
             Sponsio is the first financial market built around belief instead of
             outcomes.
           </p>
+
+          <HowItWorks />
+
           <p className={P}>
             A prediction market sells you a contract on a result, settles it, and
             disappears. Sponsio is different: you buy and trade{" "}
-            <span className="font-semibold text-white">team coins</span> — one for
-            every nation at the World Cup — that live for the entire tournament
-            and move with it.
+            <span className="font-semibold text-white">beliefs</span> — one coin
+            per nation at the World Cup, each one the belief that its team
+            becomes champion — and they live for the entire tournament, moving
+            with it.
           </p>
           <p className="font-mono mt-4 text-center text-sm tracking-wide text-emerald-300">
             $ARG · $BRA · $ENG · $FRA
@@ -63,7 +69,9 @@ export default function Rewards() {
             Everything builds toward one outcome — the champion.
           </p>
 
-          <h2 className={H2}>Snapshots — taken only on match days</h2>
+          <h2 id="snapshots" className={`${H2} scroll-mt-4`}>
+            Snapshots — taken only on match days
+          </h2>
           <p className={P}>
             A team&apos;s coin launches at its first kickoff. From then on,{" "}
             <span className="font-semibold text-white">
@@ -87,7 +95,9 @@ export default function Rewards() {
             days; move your capital on when they rest.
           </p>
 
-          <h2 className={H2}>The Champion Score</h2>
+          <h2 id="champion-score" className={`${H2} scroll-mt-4`}>
+            The Champion Score
+          </h2>
           <p className={P}>
             When the final is decided, the champion&apos;s coin becomes the{" "}
             <span className="font-semibold text-white">Champion Coin</span>. Sponsio
@@ -159,6 +169,8 @@ export default function Rewards() {
             averaged against the seven it missed.
           </p>
 
+          <SplitPlayground />
+
           <p className={PULL}>
             You don&apos;t win the pool. You take a slice of it — sized by how
             consistently you backed the champion on the days that mattered.
@@ -207,7 +219,7 @@ export default function Rewards() {
           <p className={P}>
             The Reward Pool is a discretionary promotional program, not an
             investment return. Its size depends entirely on real trading activity —
-            it may be large, small, or zero. Team coins are meme coins: they
+            it may be large, small, or zero. The coins are meme coins: they
             entitle you to nothing beyond the coin itself, and their price can fall
             to zero. The pool is a thank-you to the believers who were right —
             never a reason to spend more than you can afford to lose.

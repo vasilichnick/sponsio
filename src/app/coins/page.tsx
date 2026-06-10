@@ -1,56 +1,49 @@
 import type { Metadata } from "next";
-import fixturesData from "@/data/fixtures.json";
-import tokensData from "@/data/tokens.json";
+import { coinLaunches, ZERO_ADDRESS, type Token } from "@/data/launches";
 import { LocalTime } from "../local-time";
+import { CoinsFaq } from "./faq";
+import { LaunchBadge, NextLaunchIn } from "./launch-status";
+import { MarketTabs } from "./market-tabs";
 
 export const metadata: Metadata = {
-  title: "Trade Teams — Sponsio",
+  title: "Belief Markets — Sponsio",
   description:
-    "All 48 FIFA World Cup 2026 team coins in launch order. Each coin goes live at its team's first kickoff, June 11–18, 2026.",
+    "Trade belief markets for World Cup 2026 on Base. The Champion market: 48 coins, one per team — each the belief that this team becomes champion. A Top Scorer market is coming.",
 };
 
-type Token = { name: string; flag: string; ticker: string; address: string };
-type Fixture = { kickoffUtc: string; home: string; away: string };
-
-const tokens = tokensData.teams as Record<string, Token>;
-const fixtures = fixturesData.matches as Fixture[];
-
-const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 const short = (a: string) => `${a.slice(0, 6)}…${a.slice(-4)}`;
 const uniswap = (a: string) =>
   `https://app.uniswap.org/swap?chain=base&outputCurrency=${a}`;
 const basescan = (a: string) => `https://basescan.org/token/${a}`;
 
-// Launch rule: a team's coin launches at the team's first match kickoff
-// (verified against the official FWC26 schedule v17 — all 48 first matches
-// fall on June 11–18, 2026).
-const firstKickoff: Record<string, string> = {};
-for (const fx of fixtures) {
-  for (const code of [fx.home, fx.away]) {
-    if (!firstKickoff[code] || fx.kickoffUtc < firstKickoff[code]) {
-      firstKickoff[code] = fx.kickoffUtc;
-    }
-  }
-}
-
-const coins = Object.keys(tokens)
-  .map((code) => ({ code, team: tokens[code], launch: firstKickoff[code] }))
-  .sort((a, b) =>
-    a.launch === b.launch
-      ? a.code.localeCompare(b.code)
-      : a.launch < b.launch
-        ? -1
-        : 1,
-  );
+const liveCount = coinLaunches.filter(
+  (c) => c.team.address !== ZERO_ADDRESS,
+).length;
+const lastLaunch = coinLaunches[coinLaunches.length - 1].launch;
 
 // Shared column template: Country | Launch | CA (sm+) | Trade
 const COLS =
   "grid grid-cols-[minmax(0,1.7fr)_1.1fr_auto] items-center gap-3 px-4 sm:grid-cols-[minmax(0,1.7fr)_1.1fr_1fr_auto] sm:px-5";
 
-function CoinRow({ team, launch }: { team: Token; launch: string }) {
+function CoinRow({
+  team,
+  launch,
+  group,
+  opponent,
+  index,
+}: {
+  team: Token;
+  launch: string;
+  group?: string;
+  opponent: Token;
+  index: number;
+}) {
   const live = team.address !== ZERO_ADDRESS;
   return (
-    <div className={`${COLS} border-b border-white/5 py-3 last:border-0`}>
+    <div
+      className={`${COLS} row-rise border-b border-white/5 py-3 transition-colors last:border-0 hover:bg-white/[0.04]`}
+      style={{ "--rise-delay": `${Math.min(index * 22, 500)}ms` } as React.CSSProperties}
+    >
       <div className="flex min-w-0 items-center gap-3">
         <span className="text-2xl leading-none">{team.flag}</span>
         <div className="min-w-0">
@@ -59,7 +52,9 @@ function CoinRow({ team, launch }: { team: Token; launch: string }) {
           </div>
           <div className="font-mono text-[11px] text-zinc-500">
             ${team.ticker}
-            {/* CA folds in here on phones, where the column is hidden */}
+            {/* Group rides here where the CA has its own column … */}
+            {group && <span className="hidden sm:inline"> · {group}</span>}
+            {/* … and the CA folds in here on phones, where it doesn't */}
             <span className="sm:hidden"> · {short(team.address)}</span>
           </div>
         </div>
@@ -71,6 +66,10 @@ function CoinRow({ team, launch }: { team: Token; launch: string }) {
         <div className="font-mono text-xs text-zinc-500">
           <LocalTime iso={launch} mode="time" />
         </div>
+        <div className="font-cond text-[11px] font-semibold tracking-wide text-zinc-400 uppercase">
+          vs {opponent.flag} {opponent.ticker}
+        </div>
+        <LaunchBadge iso={launch} live={live} />
       </div>
       <div className="hidden sm:block">
         {live ? (
@@ -108,33 +107,137 @@ function CoinRow({ team, launch }: { team: Token; launch: string }) {
   );
 }
 
+// Market 1 — the live one. Belief: this team becomes champion. 48 team
+// coins in launch order, real schedule data, ticking next-launch clock.
+function ChampionMarket() {
+  return (
+    <>
+      <p className="mx-auto mb-4 max-w-2xl text-center text-sm leading-relaxed text-zinc-300 [filter:drop-shadow(0_1px_3px_rgba(0,0,0,0.95))_drop-shadow(0_4px_14px_rgba(0,0,0,0.7))]">
+        Back the team you believe lifts the trophy. 48 coins, in launch order —
+        each goes live at its team&apos;s first kickoff, June 11–18. Times shown
+        in your local time.
+      </p>
+      <div className="font-cond mx-auto mb-3 flex max-w-3xl flex-wrap items-center justify-center gap-x-3 gap-y-1 text-xs font-semibold tracking-[0.15em] text-zinc-300 uppercase [filter:drop-shadow(0_1px_3px_rgba(0,0,0,0.95))_drop-shadow(0_4px_14px_rgba(0,0,0,0.7))]">
+        <span>{coinLaunches.length} coins</span>
+        <span aria-hidden className="text-zinc-600">
+          ·
+        </span>
+        <span>{liveCount} live</span>
+        <span aria-hidden className="text-zinc-600">
+          ·
+        </span>
+        <NextLaunchIn
+          label={liveCount === 0 ? "first launch" : "next launch"}
+          launches={coinLaunches.map((c) => ({
+            launch: c.launch,
+            live: c.team.address !== ZERO_ADDRESS,
+          }))}
+        />
+        <span aria-hidden className="text-zinc-600">
+          ·
+        </span>
+        <span>
+          all live by <LocalTime iso={lastLaunch} mode="date" />
+        </span>
+      </div>
+      <div className="mx-auto max-w-3xl overflow-hidden rounded-2xl bg-zinc-950/75 shadow-lg shadow-black/40 ring-1 ring-white/10 backdrop-blur-md">
+        <div
+          className={`${COLS} border-b border-white/10 py-3 text-[11px] font-semibold tracking-[0.15em] text-zinc-400 uppercase`}
+        >
+          <span>Country</span>
+          <span>Launch</span>
+          <span className="hidden sm:block">CA</span>
+          <span className="text-right">Trade</span>
+        </div>
+        {coinLaunches.map((c, i) => (
+          <CoinRow
+            key={c.code}
+            team={c.team}
+            launch={c.launch}
+            group={c.group}
+            opponent={c.opponent}
+            index={i}
+          />
+        ))}
+      </div>
+      <CoinsFaq />
+    </>
+  );
+}
+
+// Market 2 — scaffolded, not live. Belief: this player ends the tournament
+// as top scorer. No coins, no reward mechanics committed here on purpose
+// (settlement still being designed); honest coming-soon + skeleton hint.
+function TopScorerMarket() {
+  return (
+    <div className="mx-auto max-w-3xl">
+      <div className="rounded-2xl bg-zinc-950/75 px-6 py-8 text-center shadow-lg shadow-black/40 ring-1 ring-white/10 backdrop-blur-md md:px-8">
+        <span className="font-cond inline-block rounded-full bg-amber-400/90 px-3 py-1 text-[11px] font-bold tracking-wide text-amber-950 uppercase">
+          Coming soon
+        </span>
+        <h2 className="font-serif mt-4 text-2xl leading-tight uppercase tracking-tight text-white md:text-3xl">
+          Top Scorer market
+        </h2>
+        <p className="mx-auto mt-3 max-w-xl text-[15px] leading-relaxed text-zinc-400">
+          A second belief market. Every coin is one belief:{" "}
+          <span className="font-semibold text-white">
+            this player ends the World Cup as top scorer.
+          </span>{" "}
+          The Champion market trades who lifts the trophy — this one trades who
+          finds the net most, repricing with every goal.
+        </p>
+        <a
+          href="https://x.com/sponsio_world"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="font-cond mt-5 inline-flex h-11 items-center rounded-full bg-emerald-400 px-6 text-sm font-bold tracking-wide text-zinc-950 uppercase transition-colors hover:bg-emerald-300"
+        >
+          Follow for the launch
+        </a>
+      </div>
+      {/* Skeleton hint — conveys "a list of player coins is coming" without
+          inventing players or data. Decorative. */}
+      <div
+        aria-hidden
+        className="mx-auto mt-3 overflow-hidden rounded-2xl bg-zinc-950/40 ring-1 ring-white/10 backdrop-blur-md"
+      >
+        {[0, 1, 2, 3].map((i) => (
+          <div
+            key={i}
+            className="flex items-center gap-3 border-b border-white/5 px-5 py-3.5 opacity-[var(--o)] last:border-0"
+            style={{ "--o": `${1 - i * 0.22}` } as React.CSSProperties}
+          >
+            <div className="h-7 w-7 shrink-0 rounded-full bg-white/10" />
+            <div className="flex-1 space-y-1.5">
+              <div className="h-3 w-32 rounded bg-white/10" />
+              <div className="h-2.5 w-16 rounded bg-white/5" />
+            </div>
+            <div className="h-7 w-16 rounded-lg bg-white/5" />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function Coins() {
   return (
     <>
       <section className="shrink-0 px-6 pt-28 pb-5 text-center lg:pt-24">
         <h1 className="font-serif text-[clamp(2rem,8.5vmin,4.5rem)] leading-[0.9] font-normal uppercase tracking-tight [-webkit-text-stroke:0.75px_rgba(0,0,0,0.9)] [filter:drop-shadow(0_2px_4px_rgba(0,0,0,0.95))_drop-shadow(0_10px_28px_rgba(0,0,0,0.55))]">
-          Trade Teams
+          Trade Belief Markets
         </h1>
         <p className="mx-auto mt-3 max-w-2xl text-base font-medium text-white [filter:drop-shadow(0_1px_3px_rgba(0,0,0,0.95))_drop-shadow(0_4px_14px_rgba(0,0,0,0.7))] md:text-lg">
-          All 48 coins in launch order — each goes live with its team&apos;s
-          first kickoff, June 11–18. Times are shown in your local time.
+          Each coin is one belief. Choose a market, then trade the belief you
+          share.
         </p>
       </section>
 
       <main className="min-h-0 flex-1 overflow-y-auto px-4 pb-6 md:px-10">
-        <div className="mx-auto max-w-3xl overflow-hidden rounded-2xl bg-zinc-950/75 shadow-lg shadow-black/40 ring-1 ring-white/10 backdrop-blur-md">
-          <div
-            className={`${COLS} border-b border-white/10 py-3 text-[11px] font-semibold tracking-[0.15em] text-zinc-400 uppercase`}
-          >
-            <span>Country</span>
-            <span>Launch</span>
-            <span className="hidden sm:block">CA</span>
-            <span className="text-right">Trade</span>
-          </div>
-          {coins.map((c) => (
-            <CoinRow key={c.code} team={c.team} launch={c.launch} />
-          ))}
-        </div>
+        <MarketTabs
+          champion={<ChampionMarket />}
+          topScorer={<TopScorerMarket />}
+        />
       </main>
     </>
   );

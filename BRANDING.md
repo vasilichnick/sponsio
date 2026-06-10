@@ -92,6 +92,33 @@ After any visual change, re-run the contrast audit
   giant track — GPU tile eviction blinks). Cycle durations 205s/250s.
 - Political/protest imagery never goes in the strip.
 
+## Motion
+
+Choreography sells match-day energy; restraint keeps it premium. The system
+lives in `globals.css` under "Motion system":
+
+- **Entrances**: `.rise` (opacity + 14px lift, 0.7s expo-out), staggered via
+  `--rise-delay` in ≤120ms steps, hero → tagline → countdown → CTA. Apply to
+  *inner wrappers only* — never transform `#hero`/`#tagline`, SeamSpacer
+  measures those boxes. Table rows use `.row-rise` (delay `i×22ms`, cap 500ms).
+- **Countdown**: digit characters are keyed by value and tick in (`.digit-in`)
+  like a scoreboard on change; at T-0 the block swaps to a pulsing "Live now".
+  A radial black ellipse (`-z-10`, aria-hidden) spotlights the cluster and
+  buys worst-case contrast.
+- **Launch tape**: one thin text marquee (`.marquee-track`, two copies,
+  −50% loop) above the home footer — real launch data, links to /coins,
+  pauses on hover. The per-image rule for photo strips doesn't apply to it
+  (small glyph layer, no GPU tile eviction). Moving track is aria-hidden;
+  the link's aria-label carries the meaning. Height-gated: hidden between
+  660–719px viewport height so the locked composition never overflows
+  (shown again under 660 where the page scrolls).
+- **Live status**: `.pulse-dot` emerald dot (ticker, /coins badges, T-0).
+- **/rewards explainer visuals**: `.spark-draw`, `.snap-flash`, `.split-grow`
+  — aria-hidden decoration beside real copy.
+- **Every animation no-ops under `prefers-reduced-motion`** via the single
+  override block at the end of the motion CSS — new keyframes must be added
+  to that block in the same commit.
+
 ## Time & data
 
 - Kickoff/launch instants: always UTC in data (`kickoffUtc`), always
@@ -102,6 +129,12 @@ After any visual change, re-run the contrast audit
 
 ## Copy
 
+- **Ontology — the coin is the belief, never the team.** Every coin is one
+  belief: *this team becomes champion.* Write "every coin is one belief",
+  never "every team is a coin" or any tokenized-team framing (that drifts
+  into fan-token / team-equity territory). Teams aren't tokenized; beliefs
+  are tradable. The championship is the belief's horizon; the price is how
+  strongly the world holds it right now.
 - Em dashes (—), never hyphens, in headline/label copy.
 - Attributive nouns singular: "Launch Countdown", not "Launches".
 - De-jargon: "believers" over "holders"; plain verbs over crypto-speak.

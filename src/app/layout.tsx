@@ -24,7 +24,19 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://sponsio.world"),
   title: "Sponsio — Trade the teams you believe in",
   description:
-    "Every World Cup 2026 team is a coin on Base. The market prices belief, match by match. Trading fees fill one pool — champion-coin believers share it.",
+    "48 coins on Base, one per World Cup 2026 team — each one a belief: this team becomes champion. The market prices belief match by match. Fees fill one pool — one belief comes true, and its believers split it.",
+  openGraph: {
+    title: "Sponsio — Trade the teams you believe in",
+    description:
+      "48 coins on Base, one per World Cup 2026 team — each one a belief: this team becomes champion. The market prices belief match by match. Fees fill one pool — one belief comes true, and its believers split it.",
+    url: "https://sponsio.world",
+    siteName: "Sponsio",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    site: "@sponsio_world",
+  },
 };
 
 export default function RootLayout({
@@ -76,6 +88,12 @@ export default function RootLayout({
               >
                 Terms
               </Link>
+              {/* Ambush-marketing hygiene: visible site-wide, not just in
+                  Terms. Hidden on the narrowest screens (covered by the
+                  /coins FAQ there). */}
+              <span className="hidden text-white/80 drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)] sm:inline">
+                Not affiliated with FIFA
+              </span>
             </span>
             <span className="flex items-center gap-4">
               <Link
@@ -84,7 +102,13 @@ export default function RootLayout({
               >
                 Manifesto
               </Link>
-              <a href="#" aria-label="X" className="transition-colors hover:text-zinc-300">
+              <a
+                href="https://x.com/sponsio_world"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Sponsio on X"
+                className="transition-colors hover:text-zinc-300"
+              >
                 <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4">
                   <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
                 </svg>
