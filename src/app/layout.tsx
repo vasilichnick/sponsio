@@ -55,6 +55,8 @@ export const metadata: Metadata = {
   },
   other: {
     "fc:miniapp": FC_MINIAPP_EMBED,
+    // Base.dev ownership verification (project: Sponsio)
+    "base:app_id": "6a29aa1d0cfd412b2ab2b186",
   },
 };
 
