@@ -37,6 +37,11 @@ export function GET() {
       subtitle: "Trade what you believe in",
       description:
         "48 World Cup 2026 coins on Base. Every coin is one belief: this team becomes champion. Fees fill one pool — the champion's believers split it.",
+      screenshotUrls: [
+        `${DOMAIN}/screens/mini-1.jpg`,
+        `${DOMAIN}/screens/mini-2.jpg`,
+        `${DOMAIN}/screens/mini-3.jpg`,
+      ],
       primaryCategory: "finance",
       tags: ["worldcup", "base", "belief", "memecoin", "football"],
       tagline: "Belief, as an asset class",

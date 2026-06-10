@@ -109,3 +109,28 @@ sign-off before any build.
       the hooked v4 pools (fallback already routes to Uniswap).
 - [ ] Consider notifications (webhookUrl + miniapp_added server events) for
       launch alerts inside Farcaster — needs a small backend.
+
+## Base App (per docs.base.org migration guide — post Apr 9 2026 model)
+
+Base App ignores farcaster.json now: standard web app + wallet, registered
+on Base.dev. /mini already complies (no FC-auth dependency; SDK calls are
+gated + degrade to links). Remaining:
+
+- [ ] **Register on Base.dev** (operator: connect wallet → new project →
+      get builder code). Paste-ready metadata:
+      · Name: Sponsio
+      · Tagline: Belief, as an asset class
+      · Description: 48 World Cup 2026 coins on Base. Every coin is one
+        belief: this team becomes champion. Fees fill one pool — the
+        champion's believers split it.
+      · Category: Finance / Trading
+      · Primary URL: https://sponsio.world/mini
+      · Icon: https://sponsio.world/icon-1024.png
+      · Screenshots: https://sponsio.world/screens/mini-1.png · mini-2.png
+        · mini-3.png
+- [ ] After coins are live + canary test: add Base App native coin surface —
+      deeplink `https://base.app/coin/base-mainnet/<CA>` as the trade path
+      in Base App contexts (their swapToken replacement).
+- [ ] Notifications via Base Notifications API (wallet-address based) —
+      pairs with the Farcaster webhook item; one small backend can serve
+      both.
