@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { coinLaunches, ZERO_ADDRESS } from "@/data/launches";
-import { LocalTime } from "./local-time";
+import { LocalTime } from "../local-time";
 
 /** Launch tape: all 48 coins drifting across a thin band above the footer —
  *  live coins show a pulsing LIVE marker, the rest their launch date. Real

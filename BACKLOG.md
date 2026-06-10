@@ -72,9 +72,40 @@ sign-off before any build.
 - [ ] Manifesto: optionally add the championship-belief instance as the v1
       anchor (deliberately left broad for now).
 
+## Hosting / infra (reviewed 2026-06-10 — site is on Vercel, static, edge-served)
+
+- [ ] **Upgrade Vercel to Pro (~$20/mo) before kickoff** — Hobby is
+      non-commercial + 100GB/mo bandwidth (~25–35k photo-heavy visits);
+      a launch spike can soft-pause the site mid-tournament.
+- [ ] Secure the Vercel account (`wxcvk2fyk7-3813`): identify owning email,
+      set real username, enable 2FA.
+- [ ] GoDaddy: domain auto-renew ON + 2FA (registrar loss = total loss).
+- [ ] External uptime monitor (UptimeRobot/BetterStack) → phone/Telegram
+      alerts, 1-min interval on https://sponsio.world.
+- [ ] Optional: wire GitHub→Vercel auto-deploy as a second deploy path
+      (current rule: manual `vercel deploy --prod` from the Mac only).
+
 ## Mechanism decisions (operator-only, from spec — still open)
 
 - [ ] Top Scorer settlement + pool structure.
 - [ ] Randomness beacon for snapshots (publish before launch).
 - [ ] Excluded-address list; pool denomination + conversion policy.
 - [ ] Claim deadline / abandonment clauses (→ Terms).
+
+## Farcaster Mini App (built 2026-06-10 — at /mini, NOT yet deployed; manifest unsigned)
+
+- [ ] Deploy to prod (operator call) — mini app only testable in Farcaster
+      once live on sponsio.world.
+- [ ] Create/confirm the Sponsio Farcaster account, then **sign the manifest**:
+      farcaster.xyz/~/developers/mini-apps/manifest for domain `sponsio.world`
+      → paste header/payload/signature into
+      `src/app/.well-known/farcaster.json/route.ts` (accountAssociation).
+      Until signed: embeds + /mini work, but no app-store listing and the
+      "+ Add" button rejects.
+- [ ] Test in the official preview tool (Farcaster dev mode → preview
+      https://sponsio.world/mini) — verify splash → ready(), swapToken on a
+      live coin, composeCast.
+- [ ] After first coins are live: confirm in-client swapToken works against
+      the hooked v4 pools (fallback already routes to Uniswap).
+- [ ] Consider notifications (webhookUrl + miniapp_added server events) for
+      launch alerts inside Farcaster — needs a small backend.

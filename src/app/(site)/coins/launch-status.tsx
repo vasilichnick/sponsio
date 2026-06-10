@@ -1,6 +1,6 @@
 "use client";
 
-import { useNowSec } from "../use-now";
+import { useNowSec } from "../../use-now";
 
 const pad = (n: number) => String(n).padStart(2, "0");
 

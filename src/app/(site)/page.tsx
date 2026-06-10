@@ -1,10 +1,10 @@
 import Link from "next/link";
 import fixturesData from "@/data/fixtures.json";
 import tokensData from "@/data/tokens.json";
-import { Countdown } from "./countdown";
+import { Countdown } from "../countdown";
 import { LaunchTicker } from "./launch-ticker";
 import { SeamSpacer } from "./seam-spacer";
-import { LocalTime } from "./local-time";
+import { LocalTime } from "../local-time";
 
 type Token = { name: string; flag: string; ticker: string; address: string };
 type Fixture = { kickoffUtc: string; home: string; away: string };

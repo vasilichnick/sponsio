@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { coinLaunches, ZERO_ADDRESS, type Token } from "@/data/launches";
-import { LocalTime } from "../local-time";
+import { LocalTime } from "../../local-time";
 import { CoinsFaq } from "./faq";
 import { LaunchBadge, NextLaunchIn } from "./launch-status";
 import { MarketTabs } from "./market-tabs";
