@@ -55,9 +55,9 @@ export const metadata: Metadata = {
   },
   other: {
     "fc:miniapp": FC_MINIAPP_EMBED,
-    // Base.dev ownership verification: app_id 6a29aa1d… was registered from
-    // the wrong account and removed 2026-06-10. Paste the new project's
-    // "base:app_id" here when re-registered from the correct account.
+    // Base.dev ownership verification (project: Sponsio, correct account;
+    // replaced the wrong-account id 6a29aa1d… on 2026-06-10)
+    "base:app_id": "6a29ac5365478aa1565a99a9",
   },
 };
 
