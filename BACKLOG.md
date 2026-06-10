@@ -116,8 +116,11 @@ Base App ignores farcaster.json now: standard web app + wallet, registered
 on Base.dev. /mini already complies (no FC-auth dependency; SDK calls are
 gated + degrade to links). Remaining:
 
-- [ ] **Register on Base.dev** (operator: connect wallet → new project →
-      get builder code). Paste-ready metadata:
+- [x] **Registered on Base.dev** (2026-06-10, correct account; domain
+      verified via base:app_id meta tag `6a29ac5365478aa1565a99a9`).
+      **Builder Code: `bc_h3behei9`** — attach as dataSuffix to any future
+      Sponsio-originated transactions (deeplinks/embedded swap) for App
+      Leaderboard attribution. Original paste-pack below for reference:
       · Name: Sponsio
       · Tagline: Belief, as an asset class
       · Description: 48 World Cup 2026 coins on Base. Every coin is one
@@ -130,7 +133,8 @@ gated + degrade to links). Remaining:
         · mini-3.png
 - [ ] After coins are live + canary test: add Base App native coin surface —
       deeplink `https://base.app/coin/base-mainnet/<CA>` as the trade path
-      in Base App contexts (their swapToken replacement).
+      in Base App contexts (their swapToken replacement). Wire Builder Code
+      `bc_h3behei9` into any tx path added here.
 - [ ] Notifications via Base Notifications API (wallet-address based) —
       pairs with the Farcaster webhook item; one small backend can serve
       both.
