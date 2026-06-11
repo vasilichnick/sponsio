@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { coinLaunches, ZERO_ADDRESS, type Token } from "@/data/launches";
 import { LocalTime } from "../../local-time";
+import { TradeButton } from "../trade-button";
 import { CoinsFaq } from "./faq";
 import { LaunchBadge, NextLaunchIn } from "./launch-status";
 import { MarketTabs } from "./market-tabs";
@@ -12,8 +13,6 @@ export const metadata: Metadata = {
 };
 
 const short = (a: string) => `${a.slice(0, 6)}…${a.slice(-4)}`;
-const uniswap = (a: string) =>
-  `https://app.uniswap.org/swap?chain=base&outputCurrency=${a}`;
 const basescan = (a: string) => `https://basescan.org/token/${a}`;
 
 const liveCount = coinLaunches.filter(
@@ -89,14 +88,15 @@ function CoinRow({
       </div>
       <div className="text-right">
         {live ? (
-          <a
-            href={uniswap(team.address)}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-cond inline-block rounded-lg bg-emerald-400 px-5 py-2 text-sm font-bold text-zinc-950 uppercase transition-colors hover:bg-emerald-300"
-          >
-            Trade
-          </a>
+          <TradeButton
+            coin={{
+              name: team.name,
+              flag: team.flag,
+              ticker: team.ticker,
+              address: team.address,
+            }}
+            code={team.ticker}
+          />
         ) : (
           <span className="font-cond inline-block cursor-not-allowed rounded-lg bg-white/5 px-5 py-2 text-sm font-bold text-zinc-600 uppercase ring-1 ring-white/10 select-none">
             Trade

@@ -138,3 +138,25 @@ gated + degrade to links). Remaining:
 - [ ] Notifications via Base Notifications API (wallet-address based) —
       pairs with the Farcaster webhook item; one small backend can serve
       both.
+
+## In-app login & trading (branch `feat/login-trade` — dev only, 2026-06-11)
+
+Privy + wagmi/viem stack built and verified (lint/types/build green,
+verifier subagent: pass, zero findings). NOT merged, NOT deployed.
+
+- [ ] **Operator, 2 min:** dashboard.privy.io → create app "Sponsio" →
+      copy App ID → `.env.local`: `NEXT_PUBLIC_PRIVY_APP_ID=<id>` →
+      restart dev server. Login/profile/swap-panel UI activates; without
+      it the site behaves exactly as production today.
+- [ ] **Canary seam:** when the first coin's v4 pool exists, record its
+      PoolKey (hooks addr, fee, tickSpacing) in `src/data/pools.ts`, then
+      wire the quoter+router ok-path in `src/lib/swap.ts` (confirm button
+      stays disarmed until then by design).
+- [ ] Gasless trading (paymaster sponsorship) — deferred by operator
+      ("skip the fees question for now"); revisit post-launch.
+- [ ] Terms/FAQ copy review before this ever ships (in-app trading changes
+      the "where does trading happen" answer; non-custodial language
+      already consistent).
+- [ ] ⚠️ LAUNCH-DAY NOTE: the working tree sits on `feat/login-trade` so
+      the dev server shows this work. Before any launch-ops deploy
+      (tokens.json updates tonight!): `git checkout main` first.

@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { Web3Providers } from "@/lib/web3";
+import { AccountChip } from "./account-chip";
 import { BgStrips } from "./bg-strips";
 import { Menu } from "./menu";
 
@@ -12,6 +14,7 @@ export default function SiteLayout({
   children: React.ReactNode;
 }>) {
   return (
+    <Web3Providers>
     <div className="page-shell relative isolate flex h-full flex-col">
       <BgStrips />
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-black/65 via-black/25 to-black/60" />
@@ -28,10 +31,11 @@ export default function SiteLayout({
         <div className="flex items-center gap-3">
           <Link
             href="/rewards"
-            className="flex h-[42px] items-center rounded-full bg-white/10 px-5 text-sm font-semibold text-white backdrop-blur transition-colors hover:bg-white/5"
+            className="hidden h-[42px] items-center rounded-full bg-white/10 px-5 text-sm font-semibold text-white backdrop-blur transition-colors hover:bg-white/5 sm:flex"
           >
             Reward Pool
           </Link>
+          <AccountChip />
           <Menu />
         </div>
       </header>
@@ -78,5 +82,6 @@ export default function SiteLayout({
         </span>
       </footer>
     </div>
+    </Web3Providers>
   );
 }
