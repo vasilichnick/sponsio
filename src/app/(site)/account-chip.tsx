@@ -16,29 +16,13 @@ export function AccountChip() {
 }
 
 function ChipInner() {
-  const { ready, authenticated, login } = usePrivy();
+  const { ready, authenticated } = usePrivy();
   const { address } = useAccount();
   const eth = useBalance({ address, query: { enabled: !!address } });
 
-  if (!ready) {
-    return (
-      <span className="h-[42px] w-24 animate-pulse rounded-full bg-white/10 backdrop-blur" />
-    );
-  }
-
-  if (!authenticated) {
-    // Ghost by design: the hero's TRADE BELIEF is the page's only emerald.
-    // Login isn't the funnel — it happens in-context at the moment of trade.
-    return (
-      <button
-        type="button"
-        onClick={login}
-        className="flex h-[42px] items-center rounded-full bg-white/10 px-5 text-sm font-semibold text-white backdrop-blur transition-colors hover:bg-white/5"
-      >
-        Log in
-      </button>
-    );
-  }
+  // Logged out → nothing in the header: login lives in the hero CTA and
+  // the Menu dropdown (Euphoria pattern — one funnel, zero competing pills).
+  if (!ready || !authenticated) return null;
 
   return (
     <Link

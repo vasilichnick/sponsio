@@ -1,7 +1,7 @@
-import Link from "next/link";
 import fixturesData from "@/data/fixtures.json";
 import tokensData from "@/data/tokens.json";
 import { Countdown } from "../countdown";
+import { HeroCta } from "./hero-cta";
 import { LaunchTicker } from "./launch-ticker";
 import { SeamSpacer } from "./seam-spacer";
 import { LocalTime } from "../local-time";
@@ -83,13 +83,12 @@ export default function Home() {
           go live at kickoff — <LocalTime iso={opener.kickoffUtc} mode="date" />{" "}
           · <LocalTime iso={opener.kickoffUtc} mode="time" />
         </p>
-        <Link
-          href="/coins"
-          className="rise font-cond mt-1 flex h-12 items-center rounded-full bg-emerald-400 px-8 text-base font-bold uppercase tracking-wide text-zinc-950 shadow-lg shadow-black/40 transition-[background-color,transform] hover:scale-[1.04] hover:bg-emerald-300 active:scale-[0.98] motion-reduce:transition-none motion-reduce:hover:scale-100"
+        <div
+          className="rise"
           style={{ "--rise-delay": "660ms" } as React.CSSProperties}
         >
-          Trade belief
-        </Link>
+          <HeroCta />
+        </div>
       </section>
 
       {/* Keeps the launch tape + footer pinned to the viewport bottom. */}
