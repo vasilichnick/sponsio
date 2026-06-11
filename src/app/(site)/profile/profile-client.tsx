@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState, useSyncExternalStore } from "react";
 import { usePrivy } from "@privy-io/react-auth";
 import { useAccount } from "wagmi";
+import { AssetIcon } from "../asset-icon";
 import { TopUpButton } from "../top-up";
 import { TradeButton } from "../trade-button";
 import { useCoinBalances } from "@/lib/use-coin-balances";
@@ -215,14 +216,19 @@ function ProfileView({
             </a>
           )}
         </div>
-        <p className="font-serif mt-2 text-5xl tracking-tight text-white">
-          Ξ{ethFormatted ? Number(ethFormatted).toFixed(4) : "0.0000"}
+        <p className="mt-2 flex items-center gap-3">
+          <AssetIcon asset="eth" size={34} />
+          <span className="font-serif text-5xl tracking-tight text-white">
+            {ethFormatted ? Number(ethFormatted).toFixed(4) : "0.0000"}
+          </span>
+          <span className="font-cond self-end pb-1 text-sm font-semibold tracking-[0.15em] text-zinc-500 uppercase">
+            ETH
+          </span>
         </p>
-        {Number(usdcFormatted) > 0 && (
-          <p className="font-mono mt-1 text-sm text-zinc-400">
-            ${Number(usdcFormatted).toFixed(2)} USDC
-          </p>
-        )}
+        <p className="font-mono mt-2.5 flex items-center gap-2 text-sm text-zinc-400">
+          <AssetIcon asset="usdc" size={16} />
+          {Number(usdcFormatted).toFixed(2)} USDC
+        </p>
         <div className="mt-4 flex gap-2">
           {address && <TopUpButtonBig address={address} primary={ethIsZero} />}
           {isEmbedded && (

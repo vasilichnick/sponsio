@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePrivy } from "@privy-io/react-auth";
 import { formatEther } from "viem";
 import { useAccount, useBalance } from "wagmi";
+import { AssetIcon } from "./asset-icon";
 import { WEB3_ENABLED } from "@/lib/web3-config";
 
 const short = (a: string) => `${a.slice(0, 6)}…${a.slice(-4)}`;
@@ -34,8 +35,9 @@ function ChipInner() {
         {address ? short(address) : "account"}
       </span>
       {eth.data && (
-        <span className="font-mono text-xs text-zinc-300">
-          Ξ{Number(formatEther(eth.data.value)).toFixed(3)}
+        <span className="font-mono flex items-center gap-1 text-xs text-zinc-300">
+          <AssetIcon asset="eth" size={13} />
+          {Number(formatEther(eth.data.value)).toFixed(3)}
         </span>
       )}
     </Link>

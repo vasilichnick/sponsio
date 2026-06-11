@@ -5,6 +5,7 @@ import { createPortal } from "react-dom";
 import { usePrivy } from "@privy-io/react-auth";
 import { useAccount } from "wagmi";
 import { getQuote, type Side } from "@/lib/swap";
+import { AssetIcon } from "./asset-icon";
 import { TopUpButton } from "./top-up";
 import { useCoinBalances } from "@/lib/use-coin-balances";
 import { uniswapUrl, WEB3_ENABLED } from "@/lib/web3-config";
@@ -141,9 +142,19 @@ function SwapPanel({
           <span className="min-w-0 truncate">
             You hold: {held ? Number(held.formatted).toLocaleString() : "0"} $
             {coin.ticker}
-            {ethFormatted && <> · Ξ{Number(ethFormatted).toFixed(4)}</>}
+            {ethFormatted && (
+              <>
+                {" · "}
+                <AssetIcon asset="eth" size={13} />{" "}
+                {Number(ethFormatted).toFixed(4)} ETH
+              </>
+            )}
             {Number(usdcFormatted) > 0 && (
-              <> · ${Number(usdcFormatted).toFixed(2)} USDC</>
+              <>
+                {" · "}
+                <AssetIcon asset="usdc" size={13} />{" "}
+                {Number(usdcFormatted).toFixed(2)} USDC
+              </>
             )}
           </span>
           {authenticated && address && (

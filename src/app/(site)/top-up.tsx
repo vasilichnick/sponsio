@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { useFundWallet } from "@privy-io/react-auth";
 import { QRCodeSVG } from "qrcode.react";
 
 /** Top up modal — the no-dead-end funding surface.
@@ -44,8 +43,6 @@ function TopUpModal({
   address: string;
   onClose: () => void;
 }) {
-  const { fundWallet } = useFundWallet();
-  const [tab, setTab] = useState<"deposit" | "card">("deposit");
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
@@ -84,29 +81,24 @@ function TopUpModal({
           </button>
         </div>
 
-        {/* Tabs */}
+        {/* Tabs — card on-ramp not integrated yet: visibly disabled */}
         <div className="mt-3 flex gap-1 rounded-full bg-white/5 p-1 ring-1 ring-white/10">
-          {(
-            [
-              ["deposit", "Deposit"],
-              ["card", "Buy with card"],
-            ] as const
-          ).map(([id, label]) => (
-            <button
-              key={id}
-              type="button"
-              onClick={() => setTab(id)}
-              className={`font-cond flex-1 rounded-full px-3 py-1.5 text-xs font-semibold tracking-wide uppercase transition-colors ${
-                tab === id ? "bg-emerald-400 text-zinc-950" : "text-zinc-300"
-              }`}
-            >
-              {label}
-            </button>
-          ))}
+          <button
+            type="button"
+            className="font-cond flex-1 rounded-full bg-emerald-400 px-3 py-1.5 text-xs font-semibold tracking-wide text-zinc-950 uppercase"
+          >
+            Deposit
+          </button>
+          <button
+            type="button"
+            disabled
+            className="font-cond flex-1 cursor-not-allowed rounded-full px-3 py-1.5 text-xs font-semibold tracking-wide text-zinc-600 uppercase"
+          >
+            Buy with card · soon
+          </button>
         </div>
 
-        {tab === "deposit" ? (
-          <div className="mt-4">
+        <div className="mt-4">
             <div className="mx-auto w-fit rounded-xl bg-white p-3">
               <QRCodeSVG value={address} size={148} marginSize={0} />
             </div>
@@ -126,35 +118,11 @@ function TopUpModal({
               Send ETH or USDC on Base only
             </p>
             <p className="mt-3 text-center text-xs leading-relaxed text-zinc-500">
-              From an exchange: withdraw to this address and pick the{" "}
+              From an exchange: withdraw to this address and choose the{" "}
               <span className="text-zinc-300">Base</span> network. From
-              another wallet: a normal send on Base. Coming from Ethereum?{" "}
-              <a
-                href="https://bridge.base.org"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-emerald-300 underline-offset-2 hover:underline"
-              >
-                bridge.base.org
-              </a>
+              another wallet: a normal send on Base.
             </p>
           </div>
-        ) : (
-          <div className="mt-4 text-center">
-            <p className="text-sm leading-relaxed text-zinc-400">
-              Card purchases run through Privy&apos;s on-ramp. If nothing
-              opens, funding methods aren&apos;t enabled yet in the Privy
-              dashboard (Settings → Funding).
-            </p>
-            <button
-              type="button"
-              onClick={() => fundWallet({ address })}
-              className="font-cond mt-4 h-11 rounded-full bg-emerald-400 px-6 text-sm font-bold tracking-wide text-zinc-950 uppercase transition-colors hover:bg-emerald-300"
-            >
-              Open card purchase
-            </button>
-          </div>
-        )}
       </div>
     </div>,
     document.body,
