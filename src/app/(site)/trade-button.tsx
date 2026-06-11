@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { usePrivy } from "@privy-io/react-auth";
+import { useFundWallet, usePrivy } from "@privy-io/react-auth";
 import { useAccount } from "wagmi";
 import { getQuote, type Side } from "@/lib/swap";
 import { useCoinBalances } from "@/lib/use-coin-balances";
@@ -53,6 +53,7 @@ function SwapPanel({
   onClose: () => void;
 }) {
   const { authenticated, login } = usePrivy();
+  const { fundWallet } = useFundWallet();
   const { address } = useAccount();
   const { ethFormatted, balances } = useCoinBalances(address);
   const [side, setSide] = useState<Side>("buy");
@@ -132,11 +133,22 @@ function SwapPanel({
           </span>
         </div>
 
-        {/* Balances */}
-        <p className="font-mono mt-2 text-[11px] text-zinc-500">
-          You hold: {held ? Number(held.formatted).toLocaleString() : "0"} $
-          {coin.ticker}
-          {ethFormatted && <> · Ξ{Number(ethFormatted).toFixed(4)}</>}
+        {/* Balances — with the no-dead-end funding entry for fresh wallets */}
+        <p className="font-mono mt-2 flex items-center gap-2 text-[11px] text-zinc-500">
+          <span>
+            You hold: {held ? Number(held.formatted).toLocaleString() : "0"} $
+            {coin.ticker}
+            {ethFormatted && <> · Ξ{Number(ethFormatted).toFixed(4)}</>}
+          </span>
+          {authenticated && address && (
+            <button
+              type="button"
+              onClick={() => fundWallet({ address })}
+              className="font-cond ml-auto shrink-0 rounded-full bg-white/10 px-3 py-1 text-[10px] font-semibold tracking-wide text-zinc-300 uppercase transition-colors hover:bg-white/15 hover:text-white"
+            >
+              Get ETH
+            </button>
+          )}
         </p>
 
         {/* Quote / status */}

@@ -29,12 +29,8 @@ export default function SiteLayout({
           SPONSIO
         </Link>
         <div className="flex items-center gap-3">
-          <Link
-            href="/rewards"
-            className="hidden h-[42px] items-center rounded-full bg-white/10 px-5 text-sm font-semibold text-white backdrop-blur transition-colors hover:bg-white/5 sm:flex"
-          >
-            Reward Pool
-          </Link>
+          {/* One-CTA discipline: Reward Pool + Manifesto live in the Menu;
+              the hero's TRADE BELIEF is the only emerald on screen. */}
           <AccountChip />
           <Menu />
         </div>
@@ -62,12 +58,6 @@ export default function SiteLayout({
           </span>
         </span>
         <span className="flex items-center gap-4">
-          <Link
-            href="/manifesto"
-            className="drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)] transition-colors hover:text-zinc-300"
-          >
-            Manifesto
-          </Link>
           <a
             href="https://x.com/sponsio_world"
             target="_blank"

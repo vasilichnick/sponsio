@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { usePrivy } from "@privy-io/react-auth";
+import { useFundWallet, usePrivy } from "@privy-io/react-auth";
 import { useAccount } from "wagmi";
 import { TradeButton } from "../trade-button";
 import { useCoinBalances } from "@/lib/use-coin-balances";
@@ -36,6 +36,7 @@ export function ProfileClient() {
 function ProfileInner() {
   const { ready, authenticated, login, logout, exportWallet, user } =
     usePrivy();
+  const { fundWallet } = useFundWallet();
   const { address } = useAccount();
   const { ethFormatted, held, isLoading } = useCoinBalances(address);
   const [copied, setCopied] = useState(false);
@@ -56,8 +57,8 @@ function ProfileInner() {
           Log in to see the beliefs you hold
         </p>
         <p className="mx-auto mt-2 max-w-md text-[15px] leading-relaxed text-zinc-400">
-          Email, Google, Apple, or passkey — a wallet is created for you on
-          the spot. Already have one? Connect it instead.
+          Email, Google, X, Farcaster, or passkey — a wallet is created for
+          you on the spot. Already have one? Connect it instead.
         </p>
         <button
           type="button"
@@ -98,6 +99,15 @@ function ProfileInner() {
             </span>
           )}
           <span className="ml-auto flex gap-2">
+            {address && (
+              <button
+                type="button"
+                onClick={() => fundWallet({ address })}
+                className="font-cond rounded-full bg-emerald-400 px-4 py-1.5 text-xs font-bold tracking-wide text-zinc-950 uppercase transition-colors hover:bg-emerald-300"
+              >
+                Get ETH
+              </button>
+            )}
             {isEmbedded && (
               <button
                 type="button"

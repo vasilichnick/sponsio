@@ -27,11 +27,13 @@ function ChipInner() {
   }
 
   if (!authenticated) {
+    // Ghost by design: the hero's TRADE BELIEF is the page's only emerald.
+    // Login isn't the funnel — it happens in-context at the moment of trade.
     return (
       <button
         type="button"
         onClick={login}
-        className="font-cond flex h-[42px] items-center rounded-full bg-emerald-400 px-5 text-sm font-bold tracking-wide text-zinc-950 uppercase transition-colors hover:bg-emerald-300"
+        className="flex h-[42px] items-center rounded-full bg-white/10 px-5 text-sm font-semibold text-white backdrop-blur transition-colors hover:bg-white/5"
       >
         Log in
       </button>
