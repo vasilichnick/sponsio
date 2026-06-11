@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { usePrivy } from "@privy-io/react-auth";
 import { useAccount } from "wagmi";
 import { getQuote, type Side } from "@/lib/swap";
@@ -69,7 +70,8 @@ function SwapPanel({
     return () => window.removeEventListener("keydown", onKey);
   }, [onClose]);
 
-  return (
+  // Portal: escape backdrop-blur ancestors (they trap `fixed` children).
+  return createPortal(
     <div className="fixed inset-0 z-50 flex items-end justify-center sm:items-center">
       <button
         type="button"
@@ -194,6 +196,7 @@ function SwapPanel({
           </a>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }

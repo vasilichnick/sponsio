@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { useFundWallet } from "@privy-io/react-auth";
 import { QRCodeSVG } from "qrcode.react";
 
@@ -53,7 +54,9 @@ function TopUpModal({
     return () => window.removeEventListener("keydown", onKey);
   }, [onClose]);
 
-  return (
+  // Portal: fixed-position dialogs must escape backdrop-blur ancestors
+  // (backdrop-filter creates a containing block that traps `fixed`).
+  return createPortal(
     <div className="fixed inset-0 z-[60] flex items-end justify-center sm:items-center">
       <button
         type="button"
@@ -153,6 +156,7 @@ function TopUpModal({
           </div>
         )}
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }
