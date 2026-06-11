@@ -139,7 +139,7 @@ function Intro({ onDone }: { onDone: () => void }) {
           onClick={() => (last ? onDone() : setStep(step + 1))}
           className="font-cond h-12 shrink-0 rounded-full bg-emerald-400 text-base font-bold tracking-wide text-zinc-950 uppercase shadow-lg shadow-black/40 transition-colors hover:bg-emerald-300"
         >
-          {last ? "Show me the coins" : "Next"}
+          {last ? "Show me the markets" : "Next"}
         </button>
       </div>
     </div>
