@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { useFundWallet, usePrivy } from "@privy-io/react-auth";
+import { usePrivy } from "@privy-io/react-auth";
 import { useAccount } from "wagmi";
+import { TopUpButton } from "../top-up";
 import { TradeButton } from "../trade-button";
 import { useCoinBalances } from "@/lib/use-coin-balances";
 import { WEB3_ENABLED } from "@/lib/web3-config";
@@ -36,9 +37,9 @@ export function ProfileClient() {
 function ProfileInner() {
   const { ready, authenticated, login, logout, exportWallet, user } =
     usePrivy();
-  const { fundWallet } = useFundWallet();
   const { address } = useAccount();
-  const { ethFormatted, held, isLoading } = useCoinBalances(address);
+  const { ethFormatted, ethIsZero, usdcFormatted, held, isLoading } =
+    useCoinBalances(address);
   const [copied, setCopied] = useState(false);
 
   if (!ready) {
@@ -96,17 +97,17 @@ function ProfileInner() {
           {ethFormatted && (
             <span className="font-mono text-sm text-zinc-300">
               Ξ{Number(ethFormatted).toFixed(4)}
+              {Number(usdcFormatted) > 0 && (
+                <span className="text-zinc-500">
+                  {" "}
+                  · ${Number(usdcFormatted).toFixed(2)}
+                </span>
+              )}
             </span>
           )}
           <span className="ml-auto flex gap-2">
             {address && (
-              <button
-                type="button"
-                onClick={() => fundWallet({ address })}
-                className="font-cond rounded-full bg-emerald-400 px-4 py-1.5 text-xs font-bold tracking-wide text-zinc-950 uppercase transition-colors hover:bg-emerald-300"
-              >
-                Get ETH
-              </button>
+              <TopUpButton address={address} emphasized={ethIsZero} />
             )}
             {isEmbedded && (
               <button

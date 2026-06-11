@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useFundWallet, usePrivy } from "@privy-io/react-auth";
+import { usePrivy } from "@privy-io/react-auth";
 import { useAccount } from "wagmi";
 import { getQuote, type Side } from "@/lib/swap";
+import { TopUpButton } from "./top-up";
 import { useCoinBalances } from "@/lib/use-coin-balances";
 import { uniswapUrl, WEB3_ENABLED } from "@/lib/web3-config";
 
@@ -53,9 +54,9 @@ function SwapPanel({
   onClose: () => void;
 }) {
   const { authenticated, login } = usePrivy();
-  const { fundWallet } = useFundWallet();
   const { address } = useAccount();
-  const { ethFormatted, balances } = useCoinBalances(address);
+  const { ethFormatted, ethIsZero, usdcFormatted, balances } =
+    useCoinBalances(address);
   const [side, setSide] = useState<Side>("buy");
   const [amount, setAmount] = useState("");
 
@@ -133,23 +134,22 @@ function SwapPanel({
           </span>
         </div>
 
-        {/* Balances — with the no-dead-end funding entry for fresh wallets */}
-        <p className="font-mono mt-2 flex items-center gap-2 text-[11px] text-zinc-500">
-          <span>
+        {/* Balances — Top up is emphasized exactly when the wallet is empty */}
+        <div className="font-mono mt-2 flex items-center gap-2 text-[11px] text-zinc-500">
+          <span className="min-w-0 truncate">
             You hold: {held ? Number(held.formatted).toLocaleString() : "0"} $
             {coin.ticker}
             {ethFormatted && <> · Ξ{Number(ethFormatted).toFixed(4)}</>}
+            {Number(usdcFormatted) > 0 && (
+              <> · ${Number(usdcFormatted).toFixed(2)} USDC</>
+            )}
           </span>
           {authenticated && address && (
-            <button
-              type="button"
-              onClick={() => fundWallet({ address })}
-              className="font-cond ml-auto shrink-0 rounded-full bg-white/10 px-3 py-1 text-[10px] font-semibold tracking-wide text-zinc-300 uppercase transition-colors hover:bg-white/15 hover:text-white"
-            >
-              Get ETH
-            </button>
+            <span className="ml-auto">
+              <TopUpButton address={address} emphasized={ethIsZero} />
+            </span>
           )}
-        </p>
+        </div>
 
         {/* Quote / status */}
         <div className="font-cond mt-3 rounded-xl bg-white/5 px-3 py-2.5 text-sm text-zinc-300 ring-1 ring-white/10">
