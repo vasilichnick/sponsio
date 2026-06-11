@@ -28,7 +28,14 @@ export function Web3Providers({ children }: { children: React.ReactNode }) {
           accentColor: "#34D399",
           logo: "https://sponsio.world/logo-mark.png",
         },
-        loginMethods: ["email", "google", "apple", "passkey", "wallet"],
+        loginMethods: [
+          "email",
+          "google",
+          "twitter",
+          "farcaster",
+          "passkey",
+          "wallet",
+        ],
         embeddedWallets: {
           ethereum: { createOnLogin: "users-without-wallets" },
         },
