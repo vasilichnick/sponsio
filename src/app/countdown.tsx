@@ -12,7 +12,7 @@ const pad = (n: number) => String(n).padStart(2, "0");
 const EDGE =
   "font-serif leading-none text-white [-webkit-text-stroke:0.75px_rgba(0,0,0,0.9)] [filter:drop-shadow(0_2px_4px_rgba(0,0,0,0.95))_drop-shadow(0_10px_28px_rgba(0,0,0,0.55))]";
 const SIZE_FULL = "text-[clamp(2rem,8vmin,4rem)]";
-const SIZE_COMPACT = "text-[clamp(1.4rem,4.2vmin,2.1rem)]";
+const SIZE_COMPACT = "text-[clamp(1.25rem,3.2vmin,1.6rem)]";
 
 /** Days/hours/minutes/seconds to a kickoff. Each digit character is keyed
  *  by its value, so a change remounts it and fires the .digit-in scoreboard
@@ -61,7 +61,7 @@ export function Countdown({
         ];
   return (
     <div
-      className={`flex items-start justify-center ${compact ? "gap-1.5 sm:gap-2" : "gap-2 sm:gap-3"}`}
+      className={`flex items-start justify-center ${compact ? "gap-1 sm:gap-1.5" : "gap-2 sm:gap-3"}`}
     >
       {units.map(([label, value], i) => (
         <Fragment key={label}>
@@ -87,7 +87,7 @@ export function Countdown({
             <span
               className={`font-cond font-semibold uppercase text-white/85 drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)] ${
                 compact
-                  ? "mt-1 text-[9px] tracking-[0.2em]"
+                  ? "mt-0.5 text-[8px] tracking-[0.18em]"
                   : "mt-1.5 text-[10px] tracking-[0.25em] sm:text-xs"
               }`}
             >

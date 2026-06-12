@@ -48,7 +48,7 @@ export default function Home() {
       {/* Symmetric offset: countdown starts as far below the seam as the
           tagline ends above it. */}
       <SeamSpacer />
-      <section className="relative flex shrink-0 flex-col items-center gap-3 px-6 text-center">
+      <section className="relative flex shrink-0 flex-col items-center gap-2.5 px-6 text-center">
         {/* Spotlight: a soft dark ellipse seats the countdown on the moving
             photos — focus and worst-case contrast in one layer. */}
         <div
@@ -61,8 +61,10 @@ export default function Home() {
         <NextLaunch />
       </section>
 
-      {/* Keeps the launch tape + footer pinned to the viewport bottom. */}
-      <div className="min-h-0 flex-1" />
+      {/* Keeps the launch tape + footer pinned to the viewport bottom.
+          The min-height is the guaranteed breathing room between the card
+          and the tape — it must never collapse to zero. */}
+      <div className="min-h-6 flex-1" />
       <LaunchTicker />
     </>
   );
