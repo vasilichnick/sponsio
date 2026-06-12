@@ -86,11 +86,10 @@ export function NextLaunch() {
   }
 
   const f = fixtures[idx];
-  const launching = debuts[idx].map((c) => tokens[c]);
 
   return (
     <div
-      className="rise w-full max-w-xl rounded-2xl bg-zinc-950/65 px-5 py-3 shadow-lg shadow-black/40 ring-1 ring-white/15 backdrop-blur-md"
+      className="rise w-full max-w-md rounded-2xl bg-zinc-950/65 px-5 py-3 shadow-lg shadow-black/40 ring-1 ring-white/15 backdrop-blur-md"
       style={{ "--rise-delay": "540ms" } as React.CSSProperties}
     >
       <div className="flex items-center justify-center gap-4">
@@ -106,20 +105,16 @@ export function NextLaunch() {
         <LocalTime iso={f.kickoffUtc} mode="time" />
       </p>
 
-      <p className="font-cond mt-1 text-center text-sm font-semibold text-emerald-300 uppercase">
-        {launching.map((t) => `$${t.ticker}`).join(" & ")}{" "}
-        {launching.length > 1 ? "go" : "goes"} live at kickoff
-      </p>
-
       <div className="mt-2">
         <Countdown targetIso={f.kickoffUtc} compact />
       </div>
 
       {/* The primary action lives inside the card — it can never be pushed
-          past the fold by the card's own height. */}
+          past the fold by the card's own height. A pill button, not a bar:
+          width from its own label, centered. */}
       <Link
         href="/coins"
-        className="font-cond mt-2.5 flex h-10 w-full items-center justify-center rounded-full bg-emerald-400 text-base font-bold tracking-wide text-zinc-950 uppercase transition-colors hover:bg-emerald-300 active:scale-[0.99]"
+        className="font-cond mx-auto mt-3 flex h-10 w-fit items-center justify-center rounded-full bg-emerald-400 px-8 text-base font-bold tracking-wide text-zinc-950 uppercase transition-colors hover:bg-emerald-300 active:scale-[0.99]"
       >
         Trade belief
       </Link>
