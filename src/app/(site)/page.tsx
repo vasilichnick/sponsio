@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { LaunchTicker } from "./launch-ticker";
 import { NextLaunch } from "./next-launch";
 import { SeamSpacer } from "./seam-spacer";
@@ -60,13 +59,6 @@ export default function Home() {
           World Cup 2026 — Next Launch
         </h2>
         <NextLaunch />
-        <Link
-          href="/coins"
-          className="rise font-cond mt-1 flex h-12 items-center rounded-full bg-emerald-400 px-8 text-base font-bold uppercase tracking-wide text-zinc-950 shadow-lg shadow-black/40 transition-[background-color,transform] hover:scale-[1.04] hover:bg-emerald-300 active:scale-[0.98] motion-reduce:transition-none motion-reduce:hover:scale-100"
-          style={{ "--rise-delay": "660ms" } as React.CSSProperties}
-        >
-          Trade belief
-        </Link>
       </section>
 
       {/* Keeps the launch tape + footer pinned to the viewport bottom. */}

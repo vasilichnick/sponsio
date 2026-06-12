@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import fixturesData from "@/data/fixtures.json";
 import tokensData from "@/data/tokens.json";
 import { Countdown } from "../countdown";
@@ -38,8 +39,8 @@ const debuts = fixtures.map((f) =>
 
 function TeamSide({ team }: { team: Token }) {
   return (
-    <div className="flex min-w-0 flex-1 flex-col items-center gap-1">
-      <span aria-hidden className="text-3xl leading-none">
+    <div className="flex min-w-0 flex-1 flex-col items-center gap-0.5">
+      <span aria-hidden className="text-2xl leading-none">
         {team.flag}
       </span>
       <span className="font-cond truncate text-sm font-bold tracking-wide text-white uppercase md:text-base">
@@ -89,7 +90,7 @@ export function NextLaunch() {
 
   return (
     <div
-      className="rise w-full max-w-xl rounded-2xl bg-zinc-950/65 px-6 py-5 shadow-lg shadow-black/40 ring-1 ring-white/15 backdrop-blur-md"
+      className="rise w-full max-w-xl rounded-2xl bg-zinc-950/65 px-5 py-4 shadow-lg shadow-black/40 ring-1 ring-white/15 backdrop-blur-md"
       style={{ "--rise-delay": "540ms" } as React.CSSProperties}
     >
       <div className="flex items-center justify-center gap-4">
@@ -100,19 +101,28 @@ export function NextLaunch() {
         <TeamSide team={tokens[f.away]} />
       </div>
 
-      <p className="font-cond mt-3 text-center text-xs font-semibold tracking-[0.15em] text-zinc-300 uppercase">
+      <p className="font-cond mt-2 text-center text-xs font-semibold tracking-[0.15em] text-zinc-300 uppercase">
         {f.group} · {f.city} — <LocalTime iso={f.kickoffUtc} mode="date" /> ·{" "}
         <LocalTime iso={f.kickoffUtc} mode="time" />
       </p>
 
-      <p className="font-cond mt-1.5 text-center text-sm font-semibold text-emerald-300 uppercase">
+      <p className="font-cond mt-1 text-center text-sm font-semibold text-emerald-300 uppercase">
         {launching.map((t) => `$${t.ticker}`).join(" & ")}{" "}
         {launching.length > 1 ? "go" : "goes"} live at kickoff
       </p>
 
-      <div className="mt-4 origin-top scale-[0.82]">
-        <Countdown targetIso={f.kickoffUtc} />
+      <div className="mt-3">
+        <Countdown targetIso={f.kickoffUtc} compact />
       </div>
+
+      {/* The primary action lives inside the card — it can never be pushed
+          past the fold by the card's own height. */}
+      <Link
+        href="/coins"
+        className="font-cond mt-4 flex h-11 w-full items-center justify-center rounded-full bg-emerald-400 text-base font-bold tracking-wide text-zinc-950 uppercase transition-colors hover:bg-emerald-300 active:scale-[0.99]"
+      >
+        Trade belief
+      </Link>
     </div>
   );
 }

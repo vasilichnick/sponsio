@@ -12,7 +12,7 @@ export function LaunchTicker() {
     <Link
       href="/coins"
       aria-label="All 48 coins and launch times"
-      className="marquee relative hidden h-9 shrink-0 overflow-hidden border-y border-white/10 bg-black/60 backdrop-blur-[6px] [@media(max-height:659px)]:block [@media(min-height:720px)]:block"
+      className="marquee relative h-9 shrink-0 overflow-hidden border-y border-white/10 bg-black/60 backdrop-blur-[6px]"
     >
       <div
         aria-hidden
