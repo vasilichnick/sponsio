@@ -32,7 +32,7 @@ export function StatusTabs({
       <div
         role="tablist"
         aria-label="Coin status"
-        className="mx-auto mb-3 flex w-fit gap-1 rounded-full bg-zinc-950/60 p-1 ring-1 ring-white/10 backdrop-blur-md"
+        className="mx-auto mb-3 flex w-fit shrink-0 gap-1 rounded-full bg-zinc-950/60 p-1 ring-1 ring-white/10 backdrop-blur-md"
       >
         {tabs.map((t) => {
           const selected = active === t.id;
@@ -60,21 +60,31 @@ export function StatusTabs({
         })}
       </div>
 
-      <div
-        role="tabpanel"
-        id="panel-status-upcoming"
-        aria-labelledby="tab-status-upcoming"
-        hidden={active !== "upcoming"}
-      >
-        {upcoming}
-      </div>
-      <div
-        role="tabpanel"
-        id="panel-status-live"
-        aria-labelledby="tab-status-live"
-        hidden={active !== "live"}
-      >
-        {live}
+      {/* Panels fill the remaining height of the locked viewport; the
+          board inside each panel is the actual scroll container. */}
+      <div className="min-h-0 flex-1">
+        <div
+          role="tabpanel"
+          id="panel-status-upcoming"
+          aria-labelledby="tab-status-upcoming"
+          hidden={active !== "upcoming"}
+          className={
+            active === "upcoming" ? "flex h-full min-h-0 flex-col" : "hidden"
+          }
+        >
+          {upcoming}
+        </div>
+        <div
+          role="tabpanel"
+          id="panel-status-live"
+          aria-labelledby="tab-status-live"
+          hidden={active !== "live"}
+          className={
+            active === "live" ? "flex h-full min-h-0 flex-col" : "hidden"
+          }
+        >
+          {live}
+        </div>
       </div>
     </>
   );

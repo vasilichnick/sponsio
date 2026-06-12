@@ -19,8 +19,11 @@ export default function MarketsLayout({
         </p>
       </section>
 
-      <main className="min-h-0 flex-1 overflow-y-auto px-4 pb-6 md:px-10">
-        <MarketNav />
+      {/* Nav sits OUTSIDE the scroll region: in the locked layout the
+          header, switcher and (on champion) status tabs never move — only
+          each market's own board panel scrolls. */}
+      <MarketNav />
+      <main className="flex min-h-0 flex-1 flex-col px-4 pb-6 md:px-10">
         {children}
       </main>
     </>

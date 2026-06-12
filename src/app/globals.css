@@ -9,30 +9,15 @@
   --font-cond: var(--font-barlow-semicond);
 }
 
-/* Euphoria-style viewport lock: the page itself never scrolls.
-   Any scrolling happens inside inner panels (the match list). */
+/* Euphoria-style viewport lock: the page itself NEVER scrolls, at any
+   viewport size — no fallback. Any scrolling happens inside inner panels
+   (the home launch section, the markets coin tables, the legal pages'
+   content panes). Every page therefore presents the same pinned
+   photo-strip background and chrome. */
 html,
 body {
   height: 100%;
   overflow: hidden;
-}
-
-/* Short-viewport fallback: the locked composition (hero half + seam mirror
-   + next-launch card + min gap + tape + footer ≈ vh/2 + 440px) closes only
-   from ~880px of height. Below that (most laptops, squat windows, landscape
-   phones), unlock page scroll and let the shell grow — percentage halves
-   collapse to content height, sections stack naturally, nothing gets
-   clipped. The primary CTA also lives inside the launch card, so no
-   viewport can ever cut it off. */
-@media (max-height: 879px) {
-  html,
-  body {
-    overflow: auto;
-  }
-  .page-shell {
-    height: auto;
-    min-height: 100%;
-  }
 }
 
 html,

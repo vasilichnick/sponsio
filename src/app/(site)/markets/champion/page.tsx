@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { coinLaunches, ZERO_ADDRESS, type Token } from "@/data/launches";
 import { LocalTime } from "../../../local-time";
-import { LaunchBadge, NextLaunchIn } from "./launch-status";
+import { LaunchBadge } from "./launch-status";
 import { StatusTabs } from "./status-tabs";
 
 export const metadata: Metadata = {
@@ -16,7 +16,6 @@ const basescan = (a: string) => `https://basescan.org/token/${a}`;
 
 const upcoming = coinLaunches.filter((c) => c.team.address === ZERO_ADDRESS);
 const tradable = coinLaunches.filter((c) => c.team.address !== ZERO_ADDRESS);
-const lastLaunch = coinLaunches[coinLaunches.length - 1].launch;
 
 // Shared column template: Country | Launch | CA (sm+) | Trade
 const COLS =
@@ -131,9 +130,9 @@ function Board({
   emptyText: string;
 }) {
   return (
-    <div className="mx-auto max-w-3xl overflow-hidden rounded-2xl bg-zinc-950/75 shadow-lg shadow-black/40 ring-1 ring-white/10 backdrop-blur-md">
+    <div className="mx-auto w-full max-w-3xl max-h-full overflow-y-auto rounded-2xl bg-zinc-950/75 shadow-lg shadow-black/40 ring-1 ring-white/10 backdrop-blur-md">
       <div
-        className={`${COLS} border-b border-white/10 py-3 text-[11px] font-semibold tracking-[0.15em] text-zinc-400 uppercase`}
+        className={`${COLS} sticky top-0 z-10 border-b border-white/10 bg-zinc-950/90 py-3 text-[11px] font-semibold tracking-[0.15em] text-zinc-400 uppercase backdrop-blur-md`}
       >
         <span>Country</span>
         <span>Launch</span>
@@ -167,34 +166,11 @@ function Board({
 export default function ChampionMarket() {
   return (
     <>
-      <p className="mx-auto mb-4 max-w-2xl text-center text-sm leading-relaxed text-zinc-300 [filter:drop-shadow(0_1px_3px_rgba(0,0,0,0.95))_drop-shadow(0_4px_14px_rgba(0,0,0,0.7))]">
+      <p className="mx-auto mb-4 max-w-2xl shrink-0 text-center text-sm leading-relaxed text-zinc-300 [filter:drop-shadow(0_1px_3px_rgba(0,0,0,0.95))_drop-shadow(0_4px_14px_rgba(0,0,0,0.7))]">
         Back the team you believe lifts the trophy. 48 coins, in launch order —
         each goes live at its team&apos;s first kickoff, June 11–18. Times shown
         in your local time.
       </p>
-      <div className="font-cond mx-auto mb-3 flex max-w-3xl flex-wrap items-center justify-center gap-x-3 gap-y-1 text-xs font-semibold tracking-[0.15em] text-zinc-300 uppercase [filter:drop-shadow(0_1px_3px_rgba(0,0,0,0.95))_drop-shadow(0_4px_14px_rgba(0,0,0,0.7))]">
-        <span>{coinLaunches.length} coins</span>
-        <span aria-hidden className="text-zinc-600">
-          ·
-        </span>
-        <span>{tradable.length} live</span>
-        <span aria-hidden className="text-zinc-600">
-          ·
-        </span>
-        <NextLaunchIn
-          label={tradable.length === 0 ? "first launch" : "next launch"}
-          launches={coinLaunches.map((c) => ({
-            launch: c.launch,
-            live: c.team.address !== ZERO_ADDRESS,
-          }))}
-        />
-        <span aria-hidden className="text-zinc-600">
-          ·
-        </span>
-        <span>
-          all live by <LocalTime iso={lastLaunch} mode="date" />
-        </span>
-      </div>
       <StatusTabs
         upcomingCount={upcoming.length}
         liveCount={tradable.length}
