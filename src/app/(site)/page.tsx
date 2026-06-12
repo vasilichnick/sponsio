@@ -1,22 +1,7 @@
 import Link from "next/link";
-import fixturesData from "@/data/fixtures.json";
-import tokensData from "@/data/tokens.json";
-import { Countdown } from "../countdown";
 import { LaunchTicker } from "./launch-ticker";
+import { NextLaunch } from "./next-launch";
 import { SeamSpacer } from "./seam-spacer";
-import { LocalTime } from "../local-time";
-
-type Token = { name: string; flag: string; ticker: string; address: string };
-type Fixture = { kickoffUtc: string; home: string; away: string };
-
-const tokens = tokensData.teams as Record<string, Token>;
-const fixtures = fixturesData.matches as Fixture[];
-
-// First launch = earliest kickoff (launch rule: a team's coin goes live at
-// the team's first match). The opening fixture launches the first two coins.
-const opener = fixtures.reduce((a, b) => (b.kickoffUtc < a.kickoffUtc ? b : a));
-const home = tokens[opener.home];
-const away = tokens[opener.away];
 
 export default function Home() {
   return (
@@ -72,17 +57,9 @@ export default function Home() {
           className="absolute inset-x-0 -inset-y-8 -z-10 mx-auto max-w-3xl bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.55),transparent_70%)]"
         />
         <h2 className="rise font-serif text-base font-normal uppercase tracking-tight [-webkit-text-stroke:0.5px_rgba(0,0,0,0.9)] [filter:drop-shadow(0_1px_3px_rgba(0,0,0,0.95))_drop-shadow(0_4px_12px_rgba(0,0,0,0.6))] md:text-xl" style={{ "--rise-delay": "500ms" } as React.CSSProperties}>
-          World Cup 2026 — Launch Countdown
+          World Cup 2026 — Next Launch
         </h2>
-        <Countdown targetIso={opener.kickoffUtc} />
-        <p className="rise font-cond text-sm font-semibold uppercase [filter:drop-shadow(0_1px_3px_rgba(0,0,0,0.95))_drop-shadow(0_4px_14px_rgba(0,0,0,0.7))] md:text-base" style={{ "--rise-delay": "580ms" } as React.CSSProperties}>
-          First coins {home.flag} {home.ticker} &{" "}
-          <span className="whitespace-nowrap">
-            {away.flag} {away.ticker}
-          </span>{" "}
-          go live at kickoff — <LocalTime iso={opener.kickoffUtc} mode="date" />{" "}
-          · <LocalTime iso={opener.kickoffUtc} mode="time" />
-        </p>
+        <NextLaunch />
         <Link
           href="/coins"
           className="rise font-cond mt-1 flex h-12 items-center rounded-full bg-emerald-400 px-8 text-base font-bold uppercase tracking-wide text-zinc-950 shadow-lg shadow-black/40 transition-[background-color,transform] hover:scale-[1.04] hover:bg-emerald-300 active:scale-[0.98] motion-reduce:transition-none motion-reduce:hover:scale-100"

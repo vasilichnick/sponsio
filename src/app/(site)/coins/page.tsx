@@ -12,8 +12,7 @@ export const metadata: Metadata = {
 };
 
 const short = (a: string) => `${a.slice(0, 6)}…${a.slice(-4)}`;
-const uniswap = (a: string) =>
-  `https://app.uniswap.org/swap?chain=base&outputCurrency=${a}`;
+const gmgn = (a: string) => `https://gmgn.ai/base/token/${a}`;
 const basescan = (a: string) => `https://basescan.org/token/${a}`;
 
 const liveCount = coinLaunches.filter(
@@ -90,7 +89,7 @@ function CoinRow({
       <div className="text-right">
         {live ? (
           <a
-            href={uniswap(team.address)}
+            href={gmgn(team.address)}
             target="_blank"
             rel="noopener noreferrer"
             className="font-cond inline-block rounded-lg bg-emerald-400 px-5 py-2 text-sm font-bold text-zinc-950 uppercase transition-colors hover:bg-emerald-300"

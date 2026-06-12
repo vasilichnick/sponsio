@@ -50,7 +50,7 @@ const SECTIONS: { h: string; p: string[] }[] = [
   {
     h: "4. Third-party services",
     p: [
-      "The site links to and relies on third-party services, including our hosting provider (Vercel), the coin launch platform (BasedBid), decentralized exchanges (Uniswap), and block explorers (Basescan). Each operates under its own privacy policy; we encourage you to review them. We are not responsible for their practices.",
+      "The site links to and relies on third-party services, including our hosting provider (Vercel), the coin launch platform (BasedBid), trading platforms and decentralized exchanges (GmGn, Uniswap), and block explorers (Basescan). Each operates under its own privacy policy; we encourage you to review them. We are not responsible for their practices.",
     ],
   },
   {

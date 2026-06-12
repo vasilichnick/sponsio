@@ -54,8 +54,9 @@ const FAQS: [string, React.ReactNode][] = [
     "Where does trading actually happen?",
     <>
       On Base, from your own wallet — Sponsio never holds your funds. Each
-      coin launches via our launch partner BasedBid and graduates to open
-      Uniswap trading as it grows.
+      coin launches via our launch partner BasedBid straight into open
+      on-chain trading. The Trade button opens the coin in GmGn, a Base
+      trading terminal — any wallet or DEX that supports Base works too.
     </>,
   ],
   [

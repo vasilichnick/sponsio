@@ -8,8 +8,7 @@ import { useNowSec } from "../use-now";
 const ZERO = "0x0000000000000000000000000000000000000000";
 // Base mainnet, CAIP-19 native-token id used by sdk.actions.swapToken.
 const BASE_ETH = "eip155:8453/native";
-const uniswap = (a: string) =>
-  `https://app.uniswap.org/swap?chain=base&outputCurrency=${a}`;
+const gmgn = (a: string) => `https://gmgn.ai/base/token/${a}`;
 const pad = (n: number) => String(n).padStart(2, "0");
 const emptySubscribe = () => () => {};
 
@@ -201,10 +200,10 @@ export function MiniApp({
   async function onTrade(c: Coin) {
     if (c.address === ZERO) return;
     if (!inMini) {
-      window.open(uniswap(c.address), "_blank", "noopener,noreferrer");
+      window.open(gmgn(c.address), "_blank", "noopener,noreferrer");
       return;
     }
-    // Native in-client swap first; fall back to Uniswap if the host
+    // Native in-client swap first; fall back to GmGn if the host
     // doesn't support swapToken.
     try {
       await sdk.actions.swapToken({
@@ -212,7 +211,7 @@ export function MiniApp({
         buyToken: `eip155:8453/erc20:${c.address}`,
       });
     } catch {
-      await sdk.actions.openUrl(uniswap(c.address)).catch(() => {});
+      await sdk.actions.openUrl(gmgn(c.address)).catch(() => {});
     }
   }
 

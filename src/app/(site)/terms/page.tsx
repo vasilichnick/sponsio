@@ -37,7 +37,7 @@ const SECTIONS: { h: string; p: string[] }[] = [
   {
     h: "2. The Service",
     p: [
-      "Sponsio is an informational interface for a tournament-themed coin market built around the 2026 World Cup. The Service displays match schedules, coin information, and market data, and links to third-party platforms where coins are launched and traded (including BasedBid and Uniswap on the Base network).",
+      "Sponsio is an informational interface for a tournament-themed coin market built around the 2026 World Cup. The Service displays match schedules, coin information, and market data, and links to third-party platforms where coins are launched and traded (including BasedBid, GmGn and Uniswap on the Base network).",
       "The Service is strictly non-custodial. We never hold your funds, private keys, or digital assets, we operate no user accounts, and we cannot execute, reverse, or modify any transaction. All trading occurs through autonomous third-party smart contracts and platforms that we do not control, via wallets that only you control.",
     ],
   },
@@ -74,7 +74,7 @@ const SECTIONS: { h: string; p: string[] }[] = [
   {
     h: "7. Third-party services",
     p: [
-      "The Service links to and depends on third parties — including BasedBid, Uniswap, the Base network, block explorers, and wallet providers — each governed by its own terms and policies. We do not control them, make no warranties about them, and accept no liability for losses arising from their use. Interacting with them is your decision and your risk.",
+      "The Service links to and depends on third parties — including BasedBid, GmGn, Uniswap, the Base network, block explorers, and wallet providers — each governed by its own terms and policies. We do not control them, make no warranties about them, and accept no liability for losses arising from their use. Interacting with them is your decision and your risk.",
     ],
   },
   {
