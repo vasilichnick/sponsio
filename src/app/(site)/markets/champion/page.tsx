@@ -19,7 +19,7 @@ const tradable = coinLaunches.filter((c) => c.team.address !== ZERO_ADDRESS);
 
 // Shared column template: Country | Launch | CA (sm+) | Trade
 const COLS =
-  "grid grid-cols-[minmax(0,1.7fr)_1.1fr_auto] items-center gap-3 px-4 sm:grid-cols-[minmax(0,1.7fr)_1.1fr_1fr_auto] sm:px-5";
+  "grid grid-cols-[minmax(0,1.7fr)_1.1fr_auto] items-center gap-3 px-4 sm:grid-cols-[minmax(0,1.7fr)_1.1fr_1fr_auto] sm:px-6 md:px-10";
 
 function CoinRow({
   team,
@@ -130,9 +130,9 @@ function Board({
   emptyText: string;
 }) {
   return (
-    <div className="mx-auto w-full max-w-3xl max-h-full overflow-y-auto rounded-2xl bg-zinc-950/75 shadow-lg shadow-black/40 ring-1 ring-white/10 backdrop-blur-md">
+    <div className="max-h-full w-full overflow-y-auto">
       <div
-        className={`${COLS} sticky top-0 z-10 border-b border-white/10 bg-zinc-950/90 py-3 text-[11px] font-semibold tracking-[0.15em] text-zinc-400 uppercase backdrop-blur-md`}
+        className={`${COLS} sticky top-0 z-10 border-b border-white/10 bg-black py-3 text-[11px] font-semibold tracking-[0.15em] text-zinc-400 uppercase`}
       >
         <span>Country</span>
         <span>Launch</span>
@@ -166,7 +166,7 @@ function Board({
 export default function ChampionMarket() {
   return (
     <>
-      <p className="mx-auto mb-4 max-w-2xl shrink-0 text-center text-sm leading-relaxed text-zinc-300 [filter:drop-shadow(0_1px_3px_rgba(0,0,0,0.95))_drop-shadow(0_4px_14px_rgba(0,0,0,0.7))]">
+      <p className="mx-auto mt-3 mb-3 max-w-2xl shrink-0 px-6 text-center text-sm leading-relaxed text-zinc-400">
         Back the team you believe lifts the trophy. 48 coins, in launch order —
         each goes live at its team&apos;s first kickoff, June 11–18. Times shown
         in your local time.

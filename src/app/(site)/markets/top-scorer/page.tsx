@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 // (settlement still being designed); honest coming-soon + skeleton hint.
 export default function TopScorerMarket() {
   return (
-    <div className="mx-auto min-h-0 w-full max-w-3xl flex-1 overflow-y-auto">
+    <div className="mx-auto min-h-0 w-full max-w-3xl flex-1 overflow-y-auto px-4 pt-4 pb-6 md:px-0">
       <div className="rounded-2xl bg-zinc-950/75 px-6 py-8 text-center shadow-lg shadow-black/40 ring-1 ring-white/10 backdrop-blur-md md:px-8">
         <span className="font-cond inline-block rounded-full bg-amber-400/90 px-3 py-1 text-[11px] font-bold tracking-wide text-amber-950 uppercase">
           Coming soon
