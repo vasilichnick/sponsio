@@ -48,22 +48,25 @@ export default function Home() {
       {/* Symmetric offset: countdown starts as far below the seam as the
           tagline ends above it. */}
       <SeamSpacer />
-      {/* The launch section is the page's inner scroll panel: on viewports
-          too short for the locked composition it scrolls internally — the
-          page itself never does. pb keeps the card clear of the tape. */}
-      <section className="relative flex min-h-0 flex-1 flex-col items-center gap-2.5 overflow-y-auto px-6 pb-7 text-center">
+      {/* Home is fully static — nothing on it scrolls. On short viewports
+          the composition compacts (the max-height variants here and in the
+          card) instead of scrolling or growing the page. */}
+      <section className="relative flex shrink-0 flex-col items-center gap-2.5 px-6 text-center [@media(max-height:879px)]:gap-1.5">
         {/* Spotlight: a soft dark ellipse seats the countdown on the moving
             photos — focus and worst-case contrast in one layer. */}
         <div
           aria-hidden
           className="absolute inset-x-0 -inset-y-8 -z-10 mx-auto max-w-3xl bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.55),transparent_70%)]"
         />
-        <h2 className="rise font-serif text-base font-normal uppercase tracking-tight [-webkit-text-stroke:0.5px_rgba(0,0,0,0.9)] [filter:drop-shadow(0_1px_3px_rgba(0,0,0,0.95))_drop-shadow(0_4px_12px_rgba(0,0,0,0.6))] md:text-xl" style={{ "--rise-delay": "500ms" } as React.CSSProperties}>
+        <h2 className="rise font-serif text-base font-normal uppercase tracking-tight [-webkit-text-stroke:0.5px_rgba(0,0,0,0.9)] [filter:drop-shadow(0_1px_3px_rgba(0,0,0,0.95))_drop-shadow(0_4px_12px_rgba(0,0,0,0.6))] md:[@media(min-height:880px)]:text-xl" style={{ "--rise-delay": "500ms" } as React.CSSProperties}>
           World Cup 2026 — Next Launch
         </h2>
         <NextLaunch />
       </section>
 
+      {/* Pins tape + footer to the bottom; the min-height is the floor of
+          breathing room between card and tape. */}
+      <div className="min-h-6 flex-1 [@media(max-height:879px)]:min-h-3" />
       <LaunchTicker />
     </>
   );

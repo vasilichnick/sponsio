@@ -29,5 +29,13 @@ export function SeamSpacer() {
     document.fonts?.ready.then(measure);
     return () => ro.disconnect();
   }, []);
-  return <div aria-hidden className="shrink-0" style={{ height: h }} />;
+  // Short viewports cap the mirrored gap — symmetry yields to fitting the
+  // static, never-scrolling composition.
+  return (
+    <div
+      aria-hidden
+      className="shrink-0 [@media(max-height:879px)]:max-h-[3vh]"
+      style={{ height: h }}
+    />
+  );
 }
