@@ -10,7 +10,7 @@ import { LocalTime } from "../local-time";
 export function LaunchTicker() {
   return (
     <Link
-      href="/coins"
+      href="/markets/champion"
       aria-label="All 48 coins and launch times"
       className="marquee relative h-9 shrink-0 overflow-hidden border-y border-white/10 bg-black/60 backdrop-blur-[6px]"
     >

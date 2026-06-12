@@ -1,6 +1,6 @@
 "use client";
 
-import { useNowSec } from "../../use-now";
+import { useNowSec } from "../../../use-now";
 
 const pad = (n: number) => String(n).padStart(2, "0");
 
@@ -56,8 +56,17 @@ export function NextLaunchIn({
 
 /** Row badge: pulsing LIVE for launched coins, a ticking "in 21h 14m" chip
  *  for coins launching within 24h, "launching…" once kickoff has passed but
- *  the address hasn't dropped yet. Nothing for far-out rows. */
-export function LaunchBadge({ iso, live }: { iso: string; live: boolean }) {
+ *  the address hasn't dropped yet. Nothing for far-out rows — unless
+ *  `always` (the hero next-launch row keeps its countdown at any range). */
+export function LaunchBadge({
+  iso,
+  live,
+  always = false,
+}: {
+  iso: string;
+  live: boolean;
+  always?: boolean;
+}) {
   const now = useNowSec();
   if (live) {
     return (
@@ -76,7 +85,7 @@ export function LaunchBadge({ iso, live }: { iso: string; live: boolean }) {
       </span>
     );
   }
-  if (t - now <= 86400) {
+  if (always || t - now <= 86400) {
     return (
       <span className="font-mono text-[11px] text-emerald-300">
         in {fmtDur(t - now, false)}

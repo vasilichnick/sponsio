@@ -68,7 +68,7 @@ function PoolSplit() {
 export function HowItWorks() {
   return (
     <div className="mt-6 grid gap-3 sm:grid-cols-3">
-      <Link href="/coins" className={CARD}>
+      <Link href="/markets/champion" className={CARD}>
         <p className={STEP}>01</p>
         <p className={TITLE}>Trade</p>
         <p className={BODY}>

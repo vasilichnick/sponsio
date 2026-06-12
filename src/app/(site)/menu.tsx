@@ -5,7 +5,7 @@ import { useState } from "react";
 
 const ITEMS = [
   { href: "/", label: "Home" },
-  { href: "/coins", label: "Markets" },
+  { href: "/markets/champion", label: "Markets" },
   { href: "/rewards", label: "Reward Pool" },
   { href: "/manifesto", label: "Manifesto" },
 ];

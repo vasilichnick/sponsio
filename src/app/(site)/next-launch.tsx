@@ -113,7 +113,7 @@ export function NextLaunch() {
           past the fold by the card's own height. A pill button, not a bar:
           width from its own label, centered. */}
       <Link
-        href="/coins"
+        href="/markets/champion"
         className="font-cond mx-auto mt-3 flex h-10 w-fit items-center justify-center rounded-full bg-emerald-400 px-8 text-base font-bold tracking-wide text-zinc-950 uppercase transition-colors hover:bg-emerald-300 active:scale-[0.99]"
       >
         Trade belief

@@ -1,6 +1,14 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  async redirects() {
+    return [
+      // Markets moved to real routes (2026-06-12). /coins lived in launch
+      // tweets and early shares — keep it working forever.
+      { source: "/coins", destination: "/markets/champion", permanent: true },
+      { source: "/markets", destination: "/markets/champion", permanent: true },
+    ];
+  },
   async headers() {
     return [
       {
