@@ -5,14 +5,15 @@ import { useNowSec } from "./use-now";
 
 const pad = (n: number) => String(n).padStart(2, "0");
 
-/** Hero-grade digit treatment — Archivo Black with the hardened
- *  stroke/shadow edge recipe (shared by digits, colons and the live line).
- *  Two sizes: full (hero) and compact (inside cards — sized so the whole
- *  card fits the locked composition's height budget). */
-const EDGE =
-  "font-serif leading-none text-white [-webkit-text-stroke:0.75px_rgba(0,0,0,0.9)] [filter:drop-shadow(0_2px_4px_rgba(0,0,0,0.95))_drop-shadow(0_10px_28px_rgba(0,0,0,0.55))]";
-const SIZE_FULL = "text-[clamp(2rem,8vmin,4rem)]";
-const SIZE_COMPACT = "text-[clamp(1.25rem,3.2vmin,1.6rem)]";
+/** Two voices: full is the hero scoreboard — Archivo Black with the
+ *  hardened stroke/shadow edge recipe (digits, colons and the live line).
+ *  Compact matches the card's meta line exactly (font-cond text-xs
+ *  semibold, no display chrome) so the counter reads as information,
+ *  not as a second hero. */
+const FULL_DIGIT =
+  "font-serif leading-none text-white [-webkit-text-stroke:0.75px_rgba(0,0,0,0.9)] [filter:drop-shadow(0_2px_4px_rgba(0,0,0,0.95))_drop-shadow(0_10px_28px_rgba(0,0,0,0.55))] text-[clamp(2rem,8vmin,4rem)]";
+const COMPACT_DIGIT =
+  "font-cond text-xs leading-none font-semibold tracking-[0.15em] text-zinc-300";
 
 /** Days/hours/minutes/seconds to a kickoff. Each digit character is keyed
  *  by its value, so a change remounts it and fires the .digit-in scoreboard
@@ -26,8 +27,7 @@ export function Countdown({
   compact?: boolean;
 }) {
   const now = useNowSec();
-  const size = compact ? SIZE_COMPACT : SIZE_FULL;
-  const digit = `${EDGE} ${size}`;
+  const digit = compact ? COMPACT_DIGIT : FULL_DIGIT;
   const diff =
     now === null
       ? null
@@ -35,7 +35,9 @@ export function Countdown({
 
   if (diff === 0) {
     return (
-      <p className={`${digit} flex items-center justify-center gap-4 uppercase`}>
+      <p
+        className={`${digit} flex items-center justify-center uppercase ${compact ? "gap-2" : "gap-4"}`}
+      >
         <span
           aria-hidden
           className="pulse-dot inline-block h-[0.45em] w-[0.45em] rounded-full bg-emerald-400"
@@ -68,7 +70,11 @@ export function Countdown({
           {i > 0 && (
             <span
               aria-hidden
-              className={`font-serif ${size} leading-none text-white [filter:drop-shadow(0_2px_4px_rgba(0,0,0,0.95))]`}
+              className={
+                compact
+                  ? COMPACT_DIGIT
+                  : "font-serif text-[clamp(2rem,8vmin,4rem)] leading-none text-white [filter:drop-shadow(0_2px_4px_rgba(0,0,0,0.95))]"
+              }
             >
               :
             </span>
@@ -85,10 +91,10 @@ export function Countdown({
               ))}
             </span>
             <span
-              className={`font-cond font-semibold uppercase text-white/85 drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)] ${
+              className={`font-cond font-semibold uppercase ${
                 compact
-                  ? "mt-0.5 text-[8px] tracking-[0.18em]"
-                  : "mt-1.5 text-[10px] tracking-[0.25em] sm:text-xs"
+                  ? "mt-0.5 text-[8px] tracking-[0.18em] text-zinc-500"
+                  : "mt-1.5 text-[10px] tracking-[0.25em] text-white/85 drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)] sm:text-xs"
               }`}
             >
               {label}

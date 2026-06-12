@@ -43,7 +43,7 @@ function TeamSide({ team }: { team: Token }) {
       <span aria-hidden className="text-2xl leading-none">
         {team.flag}
       </span>
-      <span className="font-cond truncate text-sm font-bold tracking-wide text-white uppercase md:text-base">
+      <span className="font-cond text-sm leading-[1.15] font-bold tracking-wide text-balance text-white uppercase md:text-base">
         {team.name}
       </span>
       <span className="font-mono text-[11px] text-zinc-400">
@@ -89,12 +89,12 @@ export function NextLaunch() {
 
   return (
     <div
-      className="rise w-full max-w-md rounded-2xl bg-zinc-950/65 px-5 py-3 shadow-lg shadow-black/40 ring-1 ring-white/15 backdrop-blur-md"
+      className="rise w-full max-w-sm rounded-2xl bg-zinc-950/65 px-5 pt-3 pb-5 shadow-lg shadow-black/40 ring-1 ring-white/15 backdrop-blur-md"
       style={{ "--rise-delay": "540ms" } as React.CSSProperties}
     >
-      <div className="flex items-center justify-center gap-4">
+      <div className="flex items-start justify-center gap-4">
         <TeamSide team={tokens[f.home]} />
-        <span className="font-serif text-sm text-emerald-300 uppercase [filter:drop-shadow(0_1px_2px_rgba(0,0,0,0.9))]">
+        <span className="font-cond self-center text-sm text-emerald-300 uppercase">
           vs
         </span>
         <TeamSide team={tokens[f.away]} />
