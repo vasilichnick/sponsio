@@ -27,7 +27,7 @@ function Stats({ code, belief }: { code: string; belief?: number }) {
     <div className="font-cond flex items-center gap-1.5 text-[10px] font-semibold tracking-wide uppercase">
       {rank != null && (
         <span className="rounded-full bg-white/10 px-2 py-0.5 text-zinc-300">
-          #{rank}
+          FIFA #{rank}
         </span>
       )}
       {belief != null && (
@@ -42,25 +42,30 @@ function Stats({ code, belief }: { code: string; belief?: number }) {
 /** Live coin card: flag, ticker, the belief sentence, a Trade button.
  *  No CA. Plus the rank + belief chips. */
 function LiveCard({ entry, belief }: { entry: Entry; belief?: number }) {
-  const { team, code } = entry;
+  const { team, code, group } = entry;
   return (
-    <div className="row-rise flex flex-col gap-3 rounded-xl bg-white/[0.03] p-4 ring-1 ring-white/10 transition-colors hover:bg-white/[0.05]">
+    <div className="row-rise flex flex-col gap-2 rounded-xl bg-white/[0.04] p-4 ring-1 ring-white/20 transition-colors hover:bg-white/[0.06]">
       <div className="flex items-start justify-between gap-2">
         <span className="text-3xl leading-none">{team.flag}</span>
         <Stats code={code} belief={belief} />
       </div>
-      <div className="font-mono text-xs text-emerald-300">${team.ticker}</div>
+      <div className="font-mono text-[11px] text-zinc-500">
+        ${team.ticker}
+        {group && ` · ${group}`}
+      </div>
       <p className="font-cond text-[15px] leading-snug font-semibold text-white">
         One belief: {team.name} becomes champion
       </p>
-      <a
-        href={gmgn(team.address)}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="font-cond mt-auto inline-flex h-10 items-center justify-center rounded-lg bg-emerald-400 text-sm font-bold tracking-wide text-zinc-950 uppercase transition-colors hover:bg-emerald-300"
-      >
-        Trade
-      </a>
+      <div className="mt-auto flex justify-end pt-1">
+        <a
+          href={gmgn(team.address)}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="font-cond inline-flex h-8 items-center rounded-full bg-emerald-400 px-4 text-xs font-bold tracking-wide text-zinc-950 uppercase transition-colors hover:bg-emerald-300"
+        >
+          Trade ↗
+        </a>
+      </div>
     </div>
   );
 }
@@ -81,8 +86,8 @@ function UpcomingCard({
     <div
       className={`row-rise flex flex-col gap-2 rounded-xl p-4 transition-colors ${
         hero
-          ? "bg-emerald-400/[0.06] ring-1 ring-emerald-400/30 hover:bg-emerald-400/[0.09]"
-          : "bg-white/[0.03] ring-1 ring-white/10 hover:bg-white/[0.05]"
+          ? "bg-emerald-400/[0.07] ring-1 ring-emerald-400/50 hover:bg-emerald-400/[0.10]"
+          : "bg-white/[0.04] ring-1 ring-white/20 hover:bg-white/[0.06]"
       }`}
     >
       <div className="flex items-start justify-between gap-2">
@@ -137,8 +142,8 @@ function Board({
     );
   }
   return (
-    <div className="max-h-full w-full overflow-y-auto px-1 pt-1 pb-4">
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+    <div className="max-h-full w-full overflow-y-auto px-4 pt-1 pb-4 sm:px-6 lg:px-10">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {rows.map((c) =>
           variant === "live" ? (
             <LiveCard key={c.code} entry={c} belief={belief[c.code]} />
