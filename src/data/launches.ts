@@ -1,7 +1,16 @@
 import fixturesData from "./fixtures.json";
 import tokensData from "./tokens.json";
 
-export type Token = { name: string; flag: string; ticker: string; address: string };
+export type Token = {
+  name: string;
+  flag: string;
+  ticker: string;
+  address: string;
+  // Optional explicit trade URL — set for coins launched off-Base (e.g.
+  // pump.fun/Solana), where there's no EVM address to build a GmGn link
+  // from. Presence also marks the coin live. Base coins omit it.
+  tradeUrl?: string;
+};
 type Fixture = { kickoffUtc: string; group?: string; home: string; away: string };
 
 export const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";

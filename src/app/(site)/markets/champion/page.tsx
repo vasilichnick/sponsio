@@ -14,8 +14,16 @@ export const metadata: Metadata = {
 
 const gmgn = (a: string) => `https://gmgn.ai/base/token/${a}`;
 
-const upcoming = coinLaunches.filter((c) => c.team.address === ZERO_ADDRESS);
-const tradable = coinLaunches.filter((c) => c.team.address !== ZERO_ADDRESS);
+// A coin is live once it has a real on-chain address (Base) OR an explicit
+// trade URL (off-Base launches, e.g. pump.fun/Solana).
+const isLive = (t: { address: string; tradeUrl?: string }) =>
+  t.address !== ZERO_ADDRESS || !!t.tradeUrl;
+// Where its Trade button points: the explicit URL if set, else GmGn on Base.
+const tradeHref = (t: { address: string; tradeUrl?: string }) =>
+  t.tradeUrl ?? gmgn(t.address);
+
+const upcoming = coinLaunches.filter((c) => !isLive(c.team));
+const tradable = coinLaunches.filter((c) => isLive(c.team));
 
 type Entry = (typeof coinLaunches)[number];
 
@@ -58,7 +66,7 @@ function LiveCard({ entry, belief }: { entry: Entry; belief?: number }) {
       </p>
       <div className="mt-auto flex justify-end pt-1">
         <a
-          href={gmgn(team.address)}
+          href={tradeHref(team)}
           target="_blank"
           rel="noopener noreferrer"
           className="font-cond inline-flex h-8 items-center rounded-full bg-emerald-400 px-4 text-xs font-bold tracking-wide text-zinc-950 uppercase transition-colors hover:bg-emerald-300"
