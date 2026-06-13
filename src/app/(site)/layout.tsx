@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { BgStrips } from "./bg-strips";
-import { Menu } from "./menu";
 
 /** Site chrome: animated photo-strip background, header, pinned footer.
  *  Lives in the (site) route group so /mini (the Farcaster Mini App)
@@ -32,7 +31,6 @@ export default function SiteLayout({
           >
             Reward Pool
           </Link>
-          <Menu />
         </div>
       </header>
       {children}
