@@ -1,5 +1,5 @@
 {
-  "_comment": "Official FWC26 schedule v17 (10 Apr 2026), group stage. Times stored UTC (source ET+4). Sorted chronologically.",
+  "_comment": "Official FWC26 schedule, verified against api.fifa.com calendar (season 285023) on 2026-06-13. Times stored UTC. Sorted chronologically; match = official FIFA match number.",
   "matches": [
     {
       "match": 1,
@@ -38,15 +38,6 @@
       "away": "PAR"
     },
     {
-      "match": 6,
-      "kickoffUtc": "2026-06-13T04:00:00Z",
-      "stage": "Group Stage",
-      "group": "Group D",
-      "city": "Vancouver",
-      "home": "AUS",
-      "away": "TUR"
-    },
-    {
       "match": 8,
       "kickoffUtc": "2026-06-13T19:00:00Z",
       "stage": "Group Stage",
@@ -72,6 +63,15 @@
       "city": "Boston",
       "home": "HAI",
       "away": "SCO"
+    },
+    {
+      "match": 6,
+      "kickoffUtc": "2026-06-14T04:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group D",
+      "city": "Vancouver",
+      "home": "AUS",
+      "away": "TUR"
     },
     {
       "match": 10,
@@ -560,6 +560,24 @@
       "away": "IRQ"
     },
     {
+      "match": 65,
+      "kickoffUtc": "2026-06-27T00:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group H",
+      "city": "Houston",
+      "home": "CPV",
+      "away": "KSA"
+    },
+    {
+      "match": 66,
+      "kickoffUtc": "2026-06-27T00:00:00Z",
+      "stage": "Group Stage",
+      "group": "Group H",
+      "city": "Guadalajara",
+      "home": "URU",
+      "away": "ESP"
+    },
+    {
       "match": 63,
       "kickoffUtc": "2026-06-27T03:00:00Z",
       "stage": "Group Stage",
@@ -612,24 +630,6 @@
       "city": "Atlanta",
       "home": "COD",
       "away": "UZB"
-    },
-    {
-      "match": 65,
-      "kickoffUtc": "2026-06-28T00:00:00Z",
-      "stage": "Group Stage",
-      "group": "Group H",
-      "city": "Houston",
-      "home": "CPV",
-      "away": "KSA"
-    },
-    {
-      "match": 66,
-      "kickoffUtc": "2026-06-28T00:00:00Z",
-      "stage": "Group Stage",
-      "group": "Group H",
-      "city": "Guadalajara",
-      "home": "URU",
-      "away": "ESP"
     },
     {
       "match": 69,
