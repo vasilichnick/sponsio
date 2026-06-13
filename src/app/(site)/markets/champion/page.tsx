@@ -63,7 +63,7 @@ function LiveCard({ entry, belief }: { entry: Entry; belief?: number }) {
           rel="noopener noreferrer"
           className="font-cond inline-flex h-8 items-center rounded-full bg-emerald-400 px-4 text-xs font-bold tracking-wide text-zinc-950 uppercase transition-colors hover:bg-emerald-300"
         >
-          Trade ↗
+          Trade
         </a>
       </div>
     </div>
@@ -171,8 +171,8 @@ export default async function ChampionMarket() {
     <>
       <p className="mx-auto mt-3 mb-3 max-w-2xl shrink-0 px-6 text-center text-sm leading-relaxed text-zinc-400">
         Back the team you believe lifts the trophy. 48 coins, in launch order —
-        each goes live at its team&apos;s first kickoff, June 11–18. Times shown
-        in your local time.
+        each goes live at its team&apos;s first kickoff. Times shown in your
+        local time.
       </p>
       <StatusTabs
         upcomingCount={upcoming.length}
