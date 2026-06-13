@@ -23,7 +23,12 @@ const tradeHref = (t: { address: string; tradeUrl?: string }) =>
   t.tradeUrl ?? gmgn(t.address);
 
 const upcoming = coinLaunches.filter((c) => !isLive(c.team));
-const tradable = coinLaunches.filter((c) => isLive(c.team));
+// Live tab shows the most recently launched coins first (newest on top);
+// coinLaunches is launch-ascending, so sort the live set descending by
+// kickoff (stable for same-kickoff pairs). Upcoming stays nearest-first.
+const tradable = coinLaunches
+  .filter((c) => isLive(c.team))
+  .sort((a, b) => (a.launch < b.launch ? 1 : a.launch > b.launch ? -1 : 0));
 
 type Entry = (typeof coinLaunches)[number];
 
