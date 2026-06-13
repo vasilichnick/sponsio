@@ -21,10 +21,10 @@ export function StatusTabs({
   upcomingCount: number;
   liveCount: number;
 }) {
-  const [active, setActive] = useState<Status>("upcoming");
+  const [active, setActive] = useState<Status>("live");
   const tabs: { id: Status; label: string; count: number }[] = [
-    { id: "upcoming", label: "Upcoming", count: upcomingCount },
     { id: "live", label: "Live", count: liveCount },
+    { id: "upcoming", label: "Upcoming", count: upcomingCount },
   ];
 
   return (
