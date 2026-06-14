@@ -15,6 +15,12 @@ type Fixture = { kickoffUtc: string; group?: string; home: string; away: string 
 
 export const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 
+/** A coin is live once it has a real on-chain address (Base) OR an explicit
+ *  trade URL (off-Base launches, e.g. pump.fun). Single source of truth so
+ *  the coin cards and the launch ticker never disagree about liveness. */
+export const isLive = (t: Pick<Token, "address" | "tradeUrl">) =>
+  t.address !== ZERO_ADDRESS || !!t.tradeUrl;
+
 const tokens = tokensData.teams as Record<string, Token>;
 const fixtures = fixturesData.matches as Fixture[];
 

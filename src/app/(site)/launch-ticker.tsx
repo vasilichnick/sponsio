@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { coinLaunches, ZERO_ADDRESS } from "@/data/launches";
+import { coinLaunches, isLive } from "@/data/launches";
 import { LocalTime } from "../local-time";
 
 /** Launch tape: all 48 coins drifting across a thin band above the footer —
@@ -30,7 +30,7 @@ export function LaunchTicker() {
                 <span className="font-semibold text-white">
                   ${team.ticker}
                 </span>
-                {team.address !== ZERO_ADDRESS ? (
+                {isLive(team) ? (
                   <span className="flex items-center gap-1 font-semibold text-emerald-300">
                     <span className="pulse-dot h-1.5 w-1.5 rounded-full bg-emerald-400" />
                     LIVE

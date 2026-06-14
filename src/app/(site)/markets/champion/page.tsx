@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { coinLaunches, ZERO_ADDRESS, type Token } from "@/data/launches";
+import { coinLaunches, isLive, type Token } from "@/data/launches";
 import { FIFA_RANK } from "@/data/rankings";
 import { getBeliefMap } from "@/lib/belief";
 import { LocalTime } from "../../../local-time";
@@ -14,10 +14,6 @@ export const metadata: Metadata = {
 
 const gmgn = (a: string) => `https://gmgn.ai/base/token/${a}`;
 
-// A coin is live once it has a real on-chain address (Base) OR an explicit
-// trade URL (off-Base launches, e.g. pump.fun/Solana).
-const isLive = (t: { address: string; tradeUrl?: string }) =>
-  t.address !== ZERO_ADDRESS || !!t.tradeUrl;
 // Where its Trade button points: the explicit URL if set, else GmGn on Base.
 const tradeHref = (t: { address: string; tradeUrl?: string }) =>
   t.tradeUrl ?? gmgn(t.address);
