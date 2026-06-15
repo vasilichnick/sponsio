@@ -58,6 +58,9 @@ function LiveCard({ entry, belief }: { entry: Entry; belief?: number }) {
         <span className="text-3xl leading-none">{team.flag}</span>
         <Stats code={code} belief={belief} />
       </div>
+      <div className="font-cond text-base font-bold tracking-wide text-white uppercase">
+        {team.name}
+      </div>
       <div className="font-mono text-[11px] text-zinc-500">
         ${team.ticker}
         {group && ` · ${group}`}
