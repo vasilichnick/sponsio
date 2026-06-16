@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { coinLaunches, isLive, type Token } from "@/data/launches";
 import { FIFA_RANK } from "@/data/rankings";
 import { getBeliefMap } from "@/lib/belief";
+import { getCoinStats, formatVolUsd, type CoinStat } from "@/lib/coin-stats";
 import { LocalTime } from "../../../local-time";
+import { CopyAddress } from "./copy-address";
 import { LaunchBadge } from "./launch-status";
 import { StatusTabs } from "./status-tabs";
 
@@ -11,6 +13,10 @@ export const metadata: Metadata = {
   description:
     "Trade belief markets for World Cup 2026 on Base. The Champion market: 48 coins, one per team — each the belief that this team becomes champion. A Top Scorer market is coming.",
 };
+
+// Fresher than the 5-min site default: live coin stats (price/volume/txns)
+// move fast, so this market regenerates every 2 minutes.
+export const revalidate = 120;
 
 const gmgn = (a: string) => `https://gmgn.ai/base/token/${a}`;
 
@@ -48,15 +54,33 @@ function Stats({ code, belief }: { code: string; belief?: number }) {
   );
 }
 
-/** Live coin card: flag, ticker, the belief sentence, a Trade button.
- *  No CA. Plus the rank + belief chips. */
-function LiveCard({ entry, belief }: { entry: Entry; belief?: number }) {
+/** Live coin card: flag, name, ticker, the belief sentence, plus live on-chain
+ *  stats from based.bid (ATH multiple, 24h txns + volume) and a Trade button.
+ *  Stats are omitted on coins that haven't traded yet. */
+function LiveCard({
+  entry,
+  belief,
+  stat,
+}: {
+  entry: Entry;
+  belief?: number;
+  stat?: CoinStat;
+}) {
   const { team, code, group } = entry;
+  const showAth = stat?.athPct != null && stat.athPct > 100.5;
+  const showFlow = (stat?.txns24 ?? 0) > 0;
   return (
-    <div className="row-rise flex flex-col gap-2 rounded-xl bg-white/[0.04] p-4 ring-1 ring-white/20 transition-colors hover:bg-white/[0.06]">
+    <div className="row-rise flex flex-col gap-2 rounded-2xl bg-white/[0.04] p-5 ring-1 ring-white/20 transition-colors hover:bg-white/[0.06]">
       <div className="flex items-start justify-between gap-2">
         <span className="text-3xl leading-none">{team.flag}</span>
-        <Stats code={code} belief={belief} />
+        <div className="flex items-center gap-1.5">
+          <Stats code={code} belief={belief} />
+          {showAth && (
+            <span className="font-cond rounded-full bg-emerald-400/15 px-2 py-0.5 text-[10px] font-semibold tracking-wide text-emerald-300 uppercase">
+              ATH {stat!.athPct!.toFixed(1)}%
+            </span>
+          )}
+        </div>
       </div>
       <div className="font-cond text-base font-bold tracking-wide text-white uppercase">
         {team.name}
@@ -68,12 +92,26 @@ function LiveCard({ entry, belief }: { entry: Entry; belief?: number }) {
       <p className="font-cond text-[15px] leading-snug font-semibold text-white">
         One belief: {team.name} becomes champion
       </p>
-      <div className="mt-auto flex justify-end pt-1">
+      {/* Trading block: the critical info — contract address (copyable),
+          live txns + volume, and the Trade CTA. */}
+      <div className="mt-auto flex flex-col gap-3 border-t border-white/5 pt-3">
+        <div className="flex items-center justify-between gap-2">
+          <CopyAddress address={team.address} />
+          <span className="font-mono text-[11px] tracking-wide text-zinc-400">
+            {showFlow ? (
+              <>
+                {stat!.txns24} txs · {formatVolUsd(stat!.vol24Usd)} vol
+              </>
+            ) : (
+              <span className="text-zinc-600">No trades yet</span>
+            )}
+          </span>
+        </div>
         <a
           href={tradeHref(team)}
           target="_blank"
           rel="noopener noreferrer"
-          className="font-cond inline-flex h-8 items-center rounded-full bg-emerald-400 px-4 text-xs font-bold tracking-wide text-zinc-950 uppercase transition-colors hover:bg-emerald-300"
+          className="font-cond inline-flex h-9 w-full items-center justify-center rounded-full bg-emerald-400 text-xs font-bold tracking-wide text-zinc-950 uppercase transition-colors hover:bg-emerald-300"
         >
           Trade
         </a>
@@ -96,7 +134,7 @@ function UpcomingCard({
   const { team, code, group, opponent, launch } = entry;
   return (
     <div
-      className={`row-rise flex flex-col gap-2 rounded-xl p-4 transition-colors ${
+      className={`row-rise flex flex-col gap-2 rounded-2xl p-5 transition-colors ${
         hero
           ? "bg-emerald-400/[0.07] ring-1 ring-emerald-400/50 hover:bg-emerald-400/[0.10]"
           : "bg-white/[0.04] ring-1 ring-white/20 hover:bg-white/[0.06]"
@@ -138,11 +176,13 @@ function UpcomingCard({
 function Board({
   rows,
   belief,
+  stats,
   variant,
   emptyText,
 }: {
   rows: Entry[];
   belief: Record<string, number>;
+  stats?: Record<string, CoinStat>;
   variant: "live" | "upcoming";
   emptyText: string;
 }) {
@@ -155,10 +195,15 @@ function Board({
   }
   return (
     <div className="max-h-full w-full overflow-y-auto px-4 pt-1 pb-4 sm:px-6 lg:px-10">
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
         {rows.map((c) =>
           variant === "live" ? (
-            <LiveCard key={c.code} entry={c} belief={belief[c.code]} />
+            <LiveCard
+              key={c.code}
+              entry={c}
+              belief={belief[c.code]}
+              stat={stats?.[c.team.address.toLowerCase()]}
+            />
           ) : (
             <UpcomingCard
               key={c.code}
@@ -178,7 +223,19 @@ function Board({
 // Upcoming (launch schedule, nearest first). Each card carries the team's
 // FIFA rank and its live "World belief" (Polymarket-implied win %).
 export default async function ChampionMarket() {
-  const belief = await getBeliefMap();
+  const [belief, stats] = await Promise.all([getBeliefMap(), getCoinStats()]);
+  // Live tab ordered by 24h trading volume (most traded on top). Coins with no
+  // recorded volume fall to the bottom, newest-first among themselves.
+  const vol = (e: Entry) => stats[e.team.address.toLowerCase()]?.vol24Usd ?? 0;
+  const liveByVolume = [...tradable].sort((a, b) =>
+    vol(b) !== vol(a)
+      ? vol(b) - vol(a)
+      : a.launch < b.launch
+        ? 1
+        : a.launch > b.launch
+          ? -1
+          : 0,
+  );
   return (
     <>
       <p className="mx-auto mt-3 mb-3 max-w-2xl shrink-0 px-6 text-center text-sm leading-relaxed text-zinc-400">
@@ -199,8 +256,9 @@ export default async function ChampionMarket() {
         }
         live={
           <Board
-            rows={tradable}
+            rows={liveByVolume}
             belief={belief}
+            stats={stats}
             variant="live"
             emptyText="First coins go live at kickoff — see Upcoming for the schedule."
           />
