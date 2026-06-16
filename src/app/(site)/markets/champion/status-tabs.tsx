@@ -32,7 +32,7 @@ export function StatusTabs({
       <div
         role="tablist"
         aria-label="Coin status"
-        className="mx-auto mb-3 flex w-fit shrink-0 gap-1 rounded-full bg-zinc-950/60 p-1 ring-1 ring-white/10 backdrop-blur-md"
+        className="mx-auto mt-3 mb-3 flex w-fit shrink-0 gap-1 rounded-full bg-zinc-950/60 p-1 ring-1 ring-white/10 backdrop-blur-md"
       >
         {tabs.map((t) => {
           const selected = active === t.id;

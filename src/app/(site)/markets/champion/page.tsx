@@ -70,7 +70,7 @@ function LiveCard({
   const showAth = stat?.athPct != null && stat.athPct > 100.5;
   const showFlow = (stat?.txns24 ?? 0) > 0;
   return (
-    <div className="row-rise flex flex-col gap-2 rounded-2xl bg-white/[0.04] p-5 ring-1 ring-white/20 transition-colors hover:bg-white/[0.06]">
+    <div className="row-rise flex flex-col gap-2 rounded-3xl bg-white/[0.04] p-5 ring-1 ring-white/20 transition-colors hover:bg-white/[0.06]">
       <div className="flex items-start justify-between gap-2">
         <span className="text-3xl leading-none">{team.flag}</span>
         <div className="flex items-center gap-1.5">
@@ -111,7 +111,7 @@ function LiveCard({
           href={tradeHref(team)}
           target="_blank"
           rel="noopener noreferrer"
-          className="font-cond inline-flex h-9 w-full items-center justify-center rounded-full bg-emerald-400 text-xs font-bold tracking-wide text-zinc-950 uppercase transition-colors hover:bg-emerald-300"
+          className="font-cond inline-flex h-9 w-1/3 items-center justify-center self-end rounded-full bg-emerald-400 text-xs font-bold tracking-wide text-zinc-950 uppercase transition-colors hover:bg-emerald-300"
         >
           Trade
         </a>
@@ -134,7 +134,7 @@ function UpcomingCard({
   const { team, code, group, opponent, launch } = entry;
   return (
     <div
-      className={`row-rise flex flex-col gap-2 rounded-2xl p-5 transition-colors ${
+      className={`row-rise flex flex-col gap-2 rounded-3xl p-5 transition-colors ${
         hero
           ? "bg-emerald-400/[0.07] ring-1 ring-emerald-400/50 hover:bg-emerald-400/[0.10]"
           : "bg-white/[0.04] ring-1 ring-white/20 hover:bg-white/[0.06]"
@@ -238,11 +238,6 @@ export default async function ChampionMarket() {
   );
   return (
     <>
-      <p className="mx-auto mt-3 mb-3 max-w-2xl shrink-0 px-6 text-center text-sm leading-relaxed text-zinc-400">
-        Back the team you believe lifts the trophy. 48 coins, in launch order —
-        each goes live at its team&apos;s first kickoff. Times shown in your
-        local time.
-      </p>
       <StatusTabs
         upcomingCount={upcoming.length}
         liveCount={tradable.length}
