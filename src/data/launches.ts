@@ -10,6 +10,10 @@ export type Token = {
   // pump.fun/Solana), where there's no EVM address to build a GmGn link
   // from. Presence also marks the coin live. Base coins omit it.
   tradeUrl?: string;
+  // ISO instant the coin was set live. A freshly launched coin pins to the
+  // top of the Live tab for a grace window (see /markets/champion) before it
+  // settles into volume order. Optional — older coins omit it.
+  liveSince?: string;
 };
 type Fixture = { kickoffUtc: string; group?: string; home: string; away: string };
 

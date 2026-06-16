@@ -224,18 +224,33 @@ function Board({
 // FIFA rank and its live "World belief" (Polymarket-implied win %).
 export default async function ChampionMarket() {
   const [belief, stats] = await Promise.all([getBeliefMap(), getCoinStats()]);
-  // Live tab ordered by 24h trading volume (most traded on top). Coins with no
-  // recorded volume fall to the bottom, newest-first among themselves.
+  // Live tab order: a freshly launched coin pins to the top for a 24h grace
+  // window (newest first), regardless of volume; after that it settles into
+  // volume order (most traded first, newest launch breaks ties).
+  const GRACE_MS = 24 * 60 * 60 * 1000;
+  const now = Date.now();
+  const isNew = (e: Entry) => {
+    const ls = e.team.liveSince;
+    return ls != null && now - new Date(ls).getTime() < GRACE_MS;
+  };
   const vol = (e: Entry) => stats[e.team.address.toLowerCase()]?.vol24Usd ?? 0;
-  const liveByVolume = [...tradable].sort((a, b) =>
-    vol(b) !== vol(a)
+  const liveSorted = [...tradable].sort((a, b) => {
+    const na = isNew(a);
+    const nb = isNew(b);
+    if (na !== nb) return na ? -1 : 1; // new coins above established ones
+    if (na && nb)
+      return (
+        new Date(b.team.liveSince!).getTime() -
+        new Date(a.team.liveSince!).getTime()
+      ); // newest launch first
+    return vol(b) !== vol(a)
       ? vol(b) - vol(a)
       : a.launch < b.launch
         ? 1
         : a.launch > b.launch
           ? -1
-          : 0,
-  );
+          : 0;
+  });
   return (
     <>
       <StatusTabs
@@ -251,7 +266,7 @@ export default async function ChampionMarket() {
         }
         live={
           <Board
-            rows={liveByVolume}
+            rows={liveSorted}
             belief={belief}
             stats={stats}
             variant="live"
