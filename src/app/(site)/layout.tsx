@@ -1,15 +1,22 @@
 import Link from "next/link";
+import { getRewardPool, formatEth } from "@/lib/reward-pool";
 import { BgStrips } from "./bg-strips";
+
+// ISR: regenerate every 5 min so the live Reward Pool figure stays current
+// (the eth_getBalance call is a POST, which Next's data cache won't cache).
+// Still a prerendered/static render — the home page never scrolls.
+export const revalidate = 300;
 
 /** Site chrome: animated photo-strip background, header, pinned footer.
  *  Lives in the (site) route group so /mini (the Farcaster Mini App)
  *  renders bare — Farcaster hosts draw their own header, and the strip
  *  engine is too heavy for a webview splash. */
-export default function SiteLayout({
+export default async function SiteLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const pool = await getRewardPool();
   return (
     <div className="page-shell relative isolate flex h-full flex-col">
       <BgStrips />
@@ -24,12 +31,34 @@ export default function SiteLayout({
           <img src="/logo-mark.png" alt="" className="h-8 w-8 object-contain" />
           SPONSIO
         </Link>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center">
+          {/* One wide button: "Reward Pool" and the live pool size inline on a
+              single row, split by a thin divider — emerald mono amount + pulse
+              dot. Falls back to just "Reward Pool" when the on-chain read is
+              unavailable. Tighter padding on small screens so the wide title
+              still clears the header at 390px. */}
           <Link
             href="/rewards"
-            className="flex h-[42px] items-center rounded-full bg-white/10 px-5 text-sm font-semibold text-white backdrop-blur transition-colors hover:bg-white/5"
+            aria-label={
+              pool != null ? `Reward Pool: ${formatEth(pool)}` : "Reward Pool"
+            }
+            className="flex h-[42px] items-center gap-2.5 rounded-full bg-white/10 px-4 backdrop-blur transition-colors hover:bg-white/5 sm:px-5"
           >
-            Reward Pool
+            <span className="text-sm font-semibold whitespace-nowrap text-white">
+              Reward Pool
+            </span>
+            {pool != null && (
+              <>
+                <span aria-hidden className="h-4 w-px bg-white/20" />
+                <span className="flex items-center gap-1.5 font-mono text-sm font-bold whitespace-nowrap text-emerald-300">
+                  <span
+                    aria-hidden
+                    className="pulse-dot h-1.5 w-1.5 rounded-full bg-emerald-400"
+                  />
+                  {formatEth(pool)}
+                </span>
+              </>
+            )}
           </Link>
         </div>
       </header>
