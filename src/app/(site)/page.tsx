@@ -1,8 +1,18 @@
+import { upcomingFixtures } from "@/lib/upcoming";
 import { LaunchTicker } from "./launch-ticker";
 import { NextLaunch } from "./next-launch";
 import { SeamSpacer } from "./seam-spacer";
 
-export default function Home() {
+// Re-fetch live fixtures at most hourly; the schedule moves slowly. With no
+// API_FOOTBALL_KEY this still renders fine — NextLaunch falls back to the
+// bundled group-stage fixtures.
+export const revalidate = 3600;
+
+export default async function Home() {
+  // upcomingFixtures never throws: null with no key or on any failure, in
+  // which case NextLaunch uses the bundled @/data/fixtures.json.
+  const live = await upcomingFixtures();
+
   return (
     <>
       {/* Hero owns exactly the top half — the same box as the upper photo
@@ -61,7 +71,7 @@ export default function Home() {
         <h2 className="rise font-serif text-base font-normal uppercase tracking-tight [-webkit-text-stroke:0.5px_rgba(0,0,0,0.9)] [filter:drop-shadow(0_1px_3px_rgba(0,0,0,0.95))_drop-shadow(0_4px_12px_rgba(0,0,0,0.6))] md:[@media(min-height:880px)]:text-xl" style={{ "--rise-delay": "500ms" } as React.CSSProperties}>
           World Cup 2026 — Next Launch
         </h2>
-        <NextLaunch />
+        <NextLaunch fixtures={live ?? undefined} />
       </section>
 
       {/* Pins tape + footer to the bottom; the min-height is the floor of

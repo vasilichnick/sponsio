@@ -7,8 +7,6 @@ import { Countdown } from "../countdown";
 import { LocalTime } from "../local-time";
 import { useNowSec } from "../use-now";
 
-const ZERO = "0x0000000000000000000000000000000000000000";
-
 type Token = { name: string; flag: string; ticker: string; address: string };
 type Fixture = {
   match: number;
@@ -20,22 +18,7 @@ type Fixture = {
 };
 
 const tokens = tokensData.teams as Record<string, Token>;
-const fixtures = fixturesData.matches as Fixture[];
-
-// A team's coin launches at the team's first match (same rule as
-// @/data/launches — computed by min-scan so it doesn't depend on the
-// JSON being sorted). debuts[i] = coins that go live at fixture i.
-const firstFixture: Record<string, Fixture> = {};
-for (const fx of fixtures) {
-  for (const code of [fx.home, fx.away]) {
-    if (!firstFixture[code] || fx.kickoffUtc < firstFixture[code].kickoffUtc) {
-      firstFixture[code] = fx;
-    }
-  }
-}
-const debuts = fixtures.map((f) =>
-  [f.home, f.away].filter((c) => firstFixture[c] === f),
-);
+const bundledFixtures = fixturesData.matches as Fixture[];
 
 function TeamSide({ team }: { team: Token }) {
   return (
@@ -56,23 +39,32 @@ function TeamSide({ team }: { team: Token }) {
   );
 }
 
-/** The next coin launch as a match card: who plays whom, where and when
- *  (viewer-local), which coins go live at that kickoff, and the countdown.
- *  Selection is live — the moment a kickoff passes, the card advances to
- *  the following launch, so the home page never shows a stale "Live now". */
-export function NextLaunch() {
+/** The next upcoming match as a card: who plays whom, where and when
+ *  (viewer-local), and the live countdown. Selection is live — the moment a
+ *  kickoff passes, the card advances to the following fixture, so the home
+ *  page always shows the genuine next match for the whole championship.
+ *
+ *  Fixtures come from the optional `fixtures` prop (live data from
+ *  @/lib/upcoming, which can include knockouts) and fall back to the bundled
+ *  group-stage @/data/fixtures.json when no live data is available. */
+export function NextLaunch({ fixtures }: { fixtures?: Fixture[] }) {
   const now = useNowSec();
+  const source = fixtures ?? bundledFixtures;
 
-  // Next launch = earliest fixture that debuts a coin not yet live on-chain,
-  // with a kickoff still in the future. During SSR (now === null) the time
-  // test is skipped — address state alone picks the fixture and the client
-  // corrects within one tick.
+  // Next match = the soonest fixture whose kickoff is still in the future.
+  // During SSR (now === null) the time test is skipped, so the statically
+  // prerendered HTML shows the earliest fixture and the client corrects to
+  // the true next one within one tick.
   let idx = -1;
-  fixtures.forEach((f, i) => {
-    const eligible =
-      debuts[i].some((c) => tokens[c].address === ZERO) &&
-      (now === null || Date.parse(f.kickoffUtc) / 1000 > now);
-    if (eligible && (idx === -1 || f.kickoffUtc < fixtures[idx].kickoffUtc)) {
+  source.forEach((f, i) => {
+    const upcoming = now === null || Date.parse(f.kickoffUtc) / 1000 > now;
+    // Only render fixtures whose teams we actually have coins for.
+    const known = tokens[f.home] && tokens[f.away];
+    if (
+      upcoming &&
+      known &&
+      (idx === -1 || f.kickoffUtc < source[idx].kickoffUtc)
+    ) {
       idx = i;
     }
   });
@@ -83,12 +75,12 @@ export function NextLaunch() {
         className="rise font-cond text-sm font-semibold uppercase [filter:drop-shadow(0_1px_3px_rgba(0,0,0,0.95))_drop-shadow(0_4px_14px_rgba(0,0,0,0.7))] md:text-base"
         style={{ "--rise-delay": "540ms" } as React.CSSProperties}
       >
-        All 48 beliefs are live — every coin is trading now.
+        The tournament is complete — every belief has played out.
       </p>
     );
   }
 
-  const f = fixtures[idx];
+  const f = source[idx];
 
   return (
     <div
