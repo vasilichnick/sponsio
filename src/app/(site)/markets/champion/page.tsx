@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { coinLaunches, isLive, type Token } from "@/data/launches";
 import { FIFA_RANK } from "@/data/rankings";
 import { getBeliefMap } from "@/lib/belief";
@@ -70,7 +71,15 @@ function LiveCard({
   const showAth = stat?.athPct != null && stat.athPct > 100.5;
   const showFlow = (stat?.txns24 ?? 0) > 0;
   return (
-    <div className="row-rise flex flex-col gap-2 rounded-3xl bg-white/[0.04] p-5 ring-1 ring-white/20 transition-colors hover:bg-white/[0.06]">
+    <div className="row-rise relative flex flex-col gap-2 rounded-3xl bg-white/[0.04] p-5 ring-1 ring-white/20 transition-colors hover:bg-white/[0.06]">
+      {/* Stretched link: the whole card opens this team's coin page. It's a
+          sibling overlay (z-0), never a wrapper — so the Trade <a> and the
+          copyable CA below sit at z-10 and act independently (no nested <a>). */}
+      <Link
+        href={`/markets/champion/${code}`}
+        aria-label={`${team.name} — open coin page`}
+        className="absolute inset-0 z-0 rounded-3xl"
+      />
       <div className="flex items-start justify-between gap-2">
         <span className="text-3xl leading-none">{team.flag}</span>
         <div className="flex items-center gap-1.5">
@@ -96,7 +105,11 @@ function LiveCard({
           live txns + volume, and the Trade CTA. */}
       <div className="mt-auto flex flex-col gap-3 border-t border-white/5 pt-3">
         <div className="flex items-center justify-between gap-2">
-          <CopyAddress address={team.address} />
+          {/* z-10: stays clickable above the stretched card link (it's a
+              <button>, so safe to overlap the link — never nested). */}
+          <span className="relative z-10 inline-flex">
+            <CopyAddress address={team.address} />
+          </span>
           <span className="font-mono text-[11px] tracking-wide text-zinc-400">
             {showFlow ? (
               <>
@@ -107,11 +120,13 @@ function LiveCard({
             )}
           </span>
         </div>
+        {/* z-10: a separate link to the trading terminal (new tab). Sits above
+            the stretched card link so clicking Trade never opens the coin page. */}
         <a
           href={tradeHref(team)}
           target="_blank"
           rel="noopener noreferrer"
-          className="font-cond inline-flex h-9 w-1/3 items-center justify-center self-end rounded-full bg-emerald-400 text-xs font-bold tracking-wide text-zinc-950 uppercase transition-colors hover:bg-emerald-300"
+          className="font-cond relative z-10 inline-flex h-9 w-1/3 items-center justify-center self-end rounded-full bg-emerald-400 text-xs font-bold tracking-wide text-zinc-950 uppercase transition-colors hover:bg-emerald-300"
         >
           Trade
         </a>

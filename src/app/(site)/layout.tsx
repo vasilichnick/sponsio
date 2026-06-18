@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { getRewardPool, formatEth } from "@/lib/reward-pool";
-import { BgStrips } from "./bg-strips";
+import { SiteBackdrop } from "./site-backdrop";
 
 // ISR: regenerate every 5 min so the live Reward Pool figure stays current
 // (the eth_getBalance call is a POST, which Next's data cache won't cache).
@@ -19,8 +19,7 @@ export default async function SiteLayout({
   const pool = await getRewardPool();
   return (
     <div className="page-shell relative isolate flex h-full flex-col">
-      <BgStrips />
-      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-black/65 via-black/25 to-black/60" />
+      <SiteBackdrop />
       <header className="absolute inset-x-0 top-0 z-20 flex h-16 items-center justify-between bg-black/20 px-6 backdrop-blur-[10px] md:px-10">
         <Link
           href="/"

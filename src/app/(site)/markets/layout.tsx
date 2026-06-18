@@ -1,7 +1,9 @@
-import { MarketNav } from "./market-nav";
+import { MarketsChrome } from "./markets-chrome";
 
 /** Shared chrome for every belief market (/markets/*): the page header and
- *  the market switcher. Each market page renders only its own board. */
+ *  the market switcher. Each market page renders only its own board. The
+ *  hero + switcher live in MarketsChrome (a client gate) so a single coin
+ *  page (/markets/champion/[code]) can drop them and run content-first. */
 export default function MarketsLayout({
   children,
 }: Readonly<{
@@ -9,20 +11,7 @@ export default function MarketsLayout({
 }>) {
   return (
     <>
-      <section className="shrink-0 px-6 pt-28 pb-5 text-center lg:pt-24">
-        <h1 className="font-serif text-[clamp(2rem,8.5vmin,4.5rem)] leading-[0.9] font-normal uppercase tracking-tight [-webkit-text-stroke:0.75px_rgba(0,0,0,0.9)] [filter:drop-shadow(0_2px_4px_rgba(0,0,0,0.95))_drop-shadow(0_10px_28px_rgba(0,0,0,0.55))]">
-          Trade Belief Markets
-        </h1>
-        <p className="mx-auto mt-3 max-w-2xl text-base font-medium text-white [filter:drop-shadow(0_1px_3px_rgba(0,0,0,0.95))_drop-shadow(0_4px_14px_rgba(0,0,0,0.7))] md:text-lg">
-          Each coin is one belief. Choose a market, then trade the belief you
-          share.
-        </p>
-      </section>
-
-      {/* Nav sits OUTSIDE the scroll region: in the locked layout the
-          header, switcher and (on champion) status tabs never move — only
-          each market's own board panel scrolls. */}
-      <MarketNav />
+      <MarketsChrome />
       {/* Data zone: solid #000 — the animated photo strips stop reading
           here (the layer is opaque and its ::after paints black behind the
           footer too, at negative z so footer text stays on top). The
