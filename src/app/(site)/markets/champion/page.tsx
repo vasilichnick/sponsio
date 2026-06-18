@@ -47,7 +47,7 @@ function Stats({ code, belief }: { code: string; belief?: number }) {
       )}
       {belief != null && (
         <span className="rounded-full bg-emerald-400/15 px-2 py-0.5 text-emerald-300">
-          belief {belief > 0 ? `${belief}%` : "<1%"}
+          belief {belief >= 1 ? `${belief}%` : "<1%"}
         </span>
       )}
     </div>

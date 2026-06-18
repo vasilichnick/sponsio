@@ -91,7 +91,7 @@ export async function getBeliefMap(): Promise<Record<string, number>> {
       }
       const yes = Array.isArray(prices) ? Number(prices[0]) : NaN;
       if (!Number.isFinite(yes)) continue;
-      out[code] = Math.round(yes * 100);
+      out[code] = Math.round(yes * 1000) / 10; // 1 decimal — keep the tail distinct (no 2% tie pile-up); mirrors belief.py
     }
     return out;
   } catch {
