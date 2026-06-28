@@ -81,7 +81,7 @@ export function BgStrips() {
     }),
   );
   return (
-    <div className="absolute inset-0 -z-10 overflow-hidden" aria-hidden>
+    <div className="fixed inset-0 -z-10 overflow-hidden" aria-hidden>
       {ROWS.map((row, r) => (
         <div
           key={r}

@@ -26,6 +26,7 @@ export type CoinStat = {
   txns24: number; // 24h trade count
   vol24Usd: number; // 24h volume, USD
   spark: number[]; // recent price series (oldest→newest) for the sparkline
+  marketCapUsd: number | null; // live market cap, USD (null when based.bid omits it)
 };
 
 type RawToken = {
@@ -35,6 +36,8 @@ type RawToken = {
   volume24h?: string | number;
   totalTransaction24h?: number;
   recentPrices?: number[];
+  marketCap?: string | number; // based.bid market-cap field (name may vary)
+  fdv?: string | number; // fallback if based.bid labels it FDV
 };
 
 const num = (v: unknown): number => {
@@ -91,6 +94,7 @@ export async function getCoinStats(): Promise<Record<string, CoinStat>> {
           txns24: typeof tk.totalTransaction24h === "number" ? tk.totalTransaction24h : 0,
           vol24Usd: num(tk.volume24h),
           spark: Array.isArray(tk.recentPrices) ? tk.recentPrices.filter((n) => Number.isFinite(n)) : [],
+          marketCapUsd: num(tk.marketCap ?? tk.fdv) || null,
         };
       }
       if (res.nextPage == null) break;
