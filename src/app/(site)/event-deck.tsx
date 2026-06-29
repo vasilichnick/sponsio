@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { animate, motion, useMotionValue, useTransform } from "motion/react";
 import { coinLaunches, type Token } from "@/data/launches";
 import type { CoinStat } from "@/lib/coin-stats";
@@ -100,9 +101,26 @@ export function EventDeck({
   stats: Record<string, CoinStat>;
 }) {
   const [pos, setPos] = useState(0);
+  const router = useRouter();
   const x = useMotionValue(0);
   const rotate = useTransform(x, [-220, 220], [-9, 9]);
   const current = matches[pos];
+
+  // Live auto-refresh: while the tab is visible, re-pull the server's match list
+  // every ~45s so a finished match drops and the next one slides to the front
+  // with no manual reload. Skipped when the tab is hidden (no wasted work).
+  useEffect(() => {
+    const id = setInterval(() => {
+      if (document.visibilityState === "visible") router.refresh();
+    }, 45000);
+    return () => clearInterval(id);
+  }, [router]);
+
+  // Keep the cursor in range when the list shrinks (a finished match left it);
+  // at the front, the next match simply takes pos 0.
+  useEffect(() => {
+    setPos((p) => Math.min(p, Math.max(0, matches.length - 1)));
+  }, [matches.length]);
 
   // delta +1 = next match (throws LEFT); delta -1 = previous (throws RIGHT).
   const go = useCallback(
