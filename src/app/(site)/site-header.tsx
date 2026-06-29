@@ -122,7 +122,7 @@ export function SiteHeader({ poolLabel }: { poolLabel: string | null }) {
             { href: "/about", label: "About" },
             { href: "/", label: "Markets" },
             { href: "/coming-soon", label: "Leaderboard" },
-            { href: "/coming-soon", label: "Docs" },
+            { href: "/docs", label: "Docs" },
           ].map((item) => (
             <Link
               key={item.label}
