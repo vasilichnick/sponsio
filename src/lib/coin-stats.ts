@@ -18,7 +18,7 @@ const BASED_BID = "https://www.based.bid/";
 const BOARD = process.env.BASED_BID_BOARD || "mq9llr7m-uwglybx7";
 const ACTION_ID =
   process.env.BASED_BID_ACTION_ID ||
-  "708b5358e37d5b0800f6544a3bea7e355aed602766";
+  "70de13e4d70466c55e9d439123e63a9f23e3a76323";
 const MAX_PAGES = 8; // 12 tokens/page; safety cap well above our roster.
 
 export type CoinStat = {
@@ -26,7 +26,7 @@ export type CoinStat = {
   txns24: number; // 24h trade count
   vol24Usd: number; // 24h volume, USD
   spark: number[]; // recent price series (oldest→newest) for the sparkline
-  marketCapUsd: number | null; // live market cap, USD (null when based.bid omits it)
+  marketCapUsd: number | null; // live market cap, USD = price × supply (null for untraded coins)
 };
 
 type RawToken = {
@@ -36,8 +36,9 @@ type RawToken = {
   volume24h?: string | number;
   totalTransaction24h?: number;
   recentPrices?: number[];
-  marketCap?: string | number; // based.bid market-cap field (name may vary)
-  fdv?: string | number; // fallback if based.bid labels it FDV
+  marketCap?: string | number; // based.bid market cap — usually "0" for pre-graduation tokens
+  currentPrice?: string | number; // live USD price per token
+  totalSupply?: string | number; // token supply, human units (not raw/decimals)
 };
 
 const num = (v: unknown): number => {
@@ -94,7 +95,7 @@ export async function getCoinStats(): Promise<Record<string, CoinStat>> {
           txns24: typeof tk.totalTransaction24h === "number" ? tk.totalTransaction24h : 0,
           vol24Usd: num(tk.volume24h),
           spark: Array.isArray(tk.recentPrices) ? tk.recentPrices.filter((n) => Number.isFinite(n)) : [],
-          marketCapUsd: num(tk.marketCap ?? tk.fdv) || null,
+          marketCapUsd: num(tk.marketCap) || num(tk.currentPrice) * num(tk.totalSupply) || null,
         };
       }
       if (res.nextPage == null) break;
