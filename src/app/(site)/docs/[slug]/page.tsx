@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { DOCS_PAGES, pageBySlug } from "@/data/docs";
+import { DOCS_PAGES, pageBySlug, sectionOf } from "@/data/docs";
 import { Markdown } from "../markdown";
 
 // Prerender every docs page so each chapter is its own deep-linkable URL.
@@ -31,11 +31,12 @@ export default async function DocPage({
   const idx = DOCS_PAGES.findIndex((p) => p.slug === slug);
   const prev = idx > 0 ? DOCS_PAGES[idx - 1] : null;
   const next = idx < DOCS_PAGES.length - 1 ? DOCS_PAGES[idx + 1] : null;
+  const section = sectionOf(slug);
 
   return (
     <>
       <p className="font-cond mb-2 text-[11px] font-semibold tracking-[0.2em] text-emerald-400/80 uppercase">
-        The Belief Economy
+        {section?.title}
       </p>
       <h1 className="font-serif mb-6 text-3xl leading-tight font-normal tracking-tight text-white sm:text-4xl">
         {page.title}
