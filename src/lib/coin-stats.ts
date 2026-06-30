@@ -18,7 +18,7 @@ const BASED_BID = "https://www.based.bid/";
 const BOARD = process.env.BASED_BID_BOARD || "mq9llr7m-uwglybx7";
 const ACTION_ID =
   process.env.BASED_BID_ACTION_ID ||
-  "70de13e4d70466c55e9d439123e63a9f23e3a76323";
+  "70f41975008a788c01b6241e596f32fc9f8a9b3c67";
 const MAX_PAGES = 8; // 12 tokens/page; safety cap well above our roster.
 
 export type CoinStat = {
